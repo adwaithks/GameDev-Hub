@@ -1,0 +1,43 @@
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    position: sticky;
+    z-index: 1;
+    top: 0;
+    align-items: center;
+    background-color: rgb(29, 29, 29);
+}
+
+.nav__options {
+    display: flex;
+    align-items: center;
+    width: 45%;
+    height: 60px;
+    justify-content: space-around;
+}
+
+.optionh4 {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.optionh4:hover {
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+.options {
+    text-decoration: none;
+    padding: 10px;
+    width: 130px;
+    text-align: center;
+}
+
+.logo {
+    background: none;
+    height: 60px;
+    margin-left: 40px;
+}

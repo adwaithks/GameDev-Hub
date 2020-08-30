@@ -1,0 +1,99 @@
+.gamesRow {
+    width: 100%;
+    background-color: black;
+    display: flex;
+    margin-top: 50px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.thumbsup {
+    font-size: 30px !important;
+    margin-right: 50px;
+}
+
+.thumbsdown {
+    font-size: 30px !important;
+}
+
+.heading {
+    margin-top: 50px;
+    letter-spacing: 1px;
+    max-width: 200px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.allgames {
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+}
+
+.game {
+    height: 550px;
+    margin-top: 20px;
+    margin-bottom: 100px;
+    margin-right: 80px;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 430px;
+    overflow-wrap: break-word;
+    opacity: 0.9;
+}
+
+.game>img {
+    margin-bottom: 10px;
+}
+
+.game:hover {
+    opacity: 1;
+}
+
+.game > h2 {
+    text-transform: uppercase;
+    margin-top: 10px;
+    font-weight: bolder;
+    color: white;
+    text-shadow: pink 0px 0px 10px;
+}
+
+.game > .description {
+    margin-top: 10px;
+}
+
+.game > p {
+    object-fit: contain;
+    margin-top: 10px;
+    color: white;
+    font-size: 18px;
+    word-wrap: break-word;
+}
+
+.button_group {
+    display: flex;
+    height: 50px;
+    margin-top: 20px;
+    width: 400px;
+    border-radius: 10px;
+} 
+
+.button_group>button {
+    background-color: rgb(34, 33, 33);
+    height: 40px;
+    width: 140px;
+    border: none;
+    font-size: 18px;
+    padding: 10px;
+    cursor: pointer;
+    color: white;
+    background-color: rgb(34, 33, 33);
+}
+
+.button_group>button:hover {
+    opacity: 0.5;
+}
