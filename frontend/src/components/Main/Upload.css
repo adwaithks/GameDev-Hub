@@ -1,17 +1,18 @@
 .coreInfo {
-    width: 60%;
+    width: 30%;
     text-align: center;
+    margin-bottom: 20px;
     margin: 0 auto;
     border-radius: 10px;
-    height: 600px;
+    height: 630px;
     box-shadow: -1px 1px 36px 10px red;
-    margin-top: 80px;
+    margin-top: 60px;
     padding: 20px;
 }
 
 .uploadhead>h1 {
     text-align: center;
-    margin-top: 50px;
+    margin-top: 150px;
 }
 
 .name {
@@ -24,7 +25,7 @@
 
 
 .name>input {
-    width: 500px;
+    width: 90%;
     height: 50px;
     border-radius: 5px;
     padding: 10px;

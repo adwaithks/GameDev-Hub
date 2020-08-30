@@ -2,8 +2,9 @@
     display: flex;
     justify-content: space-between;
     height: 60px;
-    position: sticky;
-    z-index: 1;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
     top: 0;
     align-items: center;
     background-color: rgb(29, 29, 29);

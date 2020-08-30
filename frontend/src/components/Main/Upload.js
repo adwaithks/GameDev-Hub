@@ -21,6 +21,7 @@ function Upload() {
             url: imgurl,
             hosturl: hosturl
         }
+        event.preventDefault();
         await fetch('http://localhost:8000/create/game', {
             method: 'POST',
             headers: {
@@ -32,11 +33,13 @@ function Upload() {
         .then(res => res.json())
         .then(finalRes => {
             if (!finalRes._id) {
-                setOpen(true);
+                console.log(finalRes);
                 setResponse(finalRes);
-            }else {
                 setOpen(true);
+            }else {
+                console.log(finalRes);
                 setResponse('Game created successfully');
+                setOpen(true);  
             }            
         })
         .catch(err => {
@@ -50,22 +53,22 @@ function Upload() {
 
     return (
         <div className="upload">
-            <Collapse style={{position: 'fixed', zIndex: '1', top: '0', width: '100%'}} in={open}>
+                    <Collapse style={{position: 'fixed', zIndex: '1', top: '0', width: '100%'}} in={open}>
                         <Alert
-                        severity="success"
-                        action={
-                            <CloseIcon
-                            fontSize="small"
-                            onClick={() => {
-                                setOpen(false);
-                            }}
+                            severity="success"
+                            action={
+                                <CloseIcon
+                                fontSize="small"
+                                onClick={() => {
+                                    setOpen(false);
+                                }}
+                                >
+                                </CloseIcon>
+                                }
                             >
-                            </CloseIcon>
+                            {
+                                response
                             }
-                        >
-                        {
-                            response
-                        }
                         </Alert>
                     </Collapse> 
             <div className="uploadhead">
@@ -92,7 +95,6 @@ function Upload() {
                                     <button className="create" type="submit">Create</button>
                                 </form>
                         </div>
-            
         </div>
     )
 }

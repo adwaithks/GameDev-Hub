@@ -149,7 +149,7 @@ function AllGames() {
                 allGames.map(eachGame => (
                     <div key={eachGame._id} className="game" style={{WebkitBoxShadow: `-1px 1px 36px 10px ${array[Math.floor(Math.random() * array.length)]}`}}>
                         <h2>{eachGame.name}</h2>
-                        <img style={{marginTop: '20px' ,height: '250px', width: '200px'}} src={eachGame.imageURL} alt=""/>
+                        {eachGame.imageURL.includes('http') ? <img style={{marginTop: '20px' ,height: '250px', width: '200px'}} src={eachGame.imageURL} alt=""/> : <div style={{backgroundColor:'black' ,marginTop: '20px' ,height: '250px', width: '200px'}}></div>}
                         <p className="description"> {eachGame.description}</p>
                         <p>Created by {eachGame.creator}</p>
                 <p>{eachGame.likes} Likes</p>
