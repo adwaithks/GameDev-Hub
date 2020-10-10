@@ -1,0 +1,92 @@
+.gamepage {
+  color: white;
+  margin-top: 120px;
+  margin-left: auto;
+  width: 80%;
+  margin-right: auto;
+}
+
+.infoimage {
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  height: 480px;
+  width: 380px;
+}
+
+.gamedescription {
+  padding: 10px;
+  margin-top: 70px;
+  text-overflow: inherit;
+  line-height: 40px;
+}
+
+.mainsection {
+  display: flex;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: rgb(32, 32, 32);
+}
+
+.hline {
+  height: 3px;
+  background-color: red;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.downloadbtn {
+  width: 130px;
+  margin-top: -55px;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 50px;
+  color: white;
+  border: none;
+  outline: none;
+  background-color: rgb(110, 7, 7);
+}
+
+.downloadbtn:hover {
+  background-color: red;
+}
+
+.gameinfo2 > * {
+  margin-bottom: 10px;
+  font-weight: 400;
+}
+
+.gameInformation {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-left: 100px;
+}
+
+.gameInformation > h1 {
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.gameInformation > h3 {
+  font-weight: 400;
+}
+
+.downloadIcon {
+  color: white !important;
+  cursor: pointer;
+  font-size: 30px !important;
+}
+
+.buttongroup {
+  display: flex;
+  align-items: center;
+}
+
+.buttongroup > p {
+  margin-right: 20px;
+  margin-left: 2px;
+}

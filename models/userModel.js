@@ -20,7 +20,17 @@ const userSchema = mongoose.Schema({
         min: 6
     },
     popularity: {
-        type: String
+        type: Number
+    },
+    signal: {
+        type: Number
+    },
+    noOfCreatedGames: {
+        type: Number,
+        default: 0
+    },
+    rating: {
+        type: Number
     },
     createdGames: [{
         type: mongoose.Types.ObjectId,
@@ -29,6 +39,14 @@ const userSchema = mongoose.Schema({
     favouriteGames: [{
         type: mongoose.Types.ObjectId,
         ref: 'Game'
+    }],
+    likedGames: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Games'
+    }],
+    purchasedGames: [{
+        type: mongoose.Types.ObjectId,
+        ref: 'Games'
     }]
 });
 

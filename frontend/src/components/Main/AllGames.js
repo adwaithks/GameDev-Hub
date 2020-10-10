@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react'
 import './AllGames.css';
-import Alert from '@material-ui/lab/Alert';
-import Collapse from '@material-ui/core/Collapse';
-import CloseIcon from '@material-ui/icons/Close';
+import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
+import Markdown from 'markdown-to-jsx';
+import ThumbDownAltIcon from '@material-ui/icons/ThumbDownAlt';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 
 function AllGames() {
 
     const [allGames, setAllGames] = useState([]);
-    const [array, setArray] = useState(['red', 'orange', 'green', 'pink']);
-    const [open, setOpen] = useState(false);
-    const [response, setResponse] = useState('');
-    const [temp, setTemp] = useState(0);
+    //const [collapseState, setCollapseState] = useState('success');
+    //const [liked, setLiked] = useState(false);
+    //const [likeState, setLIkeState] = useState('Like');
+    //const [fav, setFav] = useState(false);
+    const [isAuth, setIsAuth] = useState(false);
+    //const [favState, setFavState] = useState('Fav');
+    //const [open, setOpen] = useState(false);
+    //const [response, setResponse] = useState('');
+    //const [temp, setTemp] = useState(0);
 
 
     useEffect(() => {
@@ -29,136 +37,114 @@ function AllGames() {
             })
         }
         fetchAllGames();
-        setArray(['red', 'orange', 'green', 'pink']);
         
-    }, [temp]);
+    }, []);
 
-    const likeHandler = async (event) => {
-        console.log('clicked', event.target.value);
+    /**const getAGame = async (event) => {
         event.preventDefault();
-        const token = localStorage.getItem('Access-Token');
-        await fetch(`http://localhost:8000/${event.target.value}/like`, {
+        await fetch(`http://localhost:8000/game/${event.target.value}`, {
             method: 'GET',
             headers: {
-                'Access-Token': 'Bearer ' + token
+                'Access-Token': 'Bearer ' + localStorage.getItem('Access-Token')
             }
         })
         .then(res => res.json())
             .then(finalRes => {
                 console.log(finalRes);
-                setTemp(Date.now());
+                setgameId(event.target.value);
             })
             .catch(err => {
                 console.log(err);
             })
+    }**/
+
+
+    const visitProfile = async (author) => {
+        const me = async () => {
+            await fetch('http://localhost:8000/api/user/me', {
+                method: 'GET',
+                headers: {
+                    'Access-Token': 'Bearer ' + localStorage.getItem('Access-Token')
+                }
+            })
+            .then(res => res.json())
+            .then(finalRes2 => {
+                console.log(finalRes2);
+                if (finalRes2.username) {
+                    setIsAuth(true);         
+                }else {
+                    setIsAuth(false);
+                }
+            })
+            .catch(err => {
+                setIsAuth(false);
+                console.log(err);
+            })
+            }
+            me();
+            if (isAuth) {
+                window.location.href = 'http://localhost:3000/myprofile';      
+            }else {
+                window.open(`http://localhost:3000/profile/${author}`, '_blank');        
+            }
     }
 
-    const dislikeHandler = async (event) => {
-        event.preventDefault();
-        const token = localStorage.getItem('Access-Token');
-        await fetch(`http://localhost:8000/${event.target.value}/dislike`, {
-            method: 'GET',
-            headers: {
-                'Access-Token': 'Bearer ' + token
-            }
-        })
-        .then(res => res.json())
+    const gameExplore = (id) => {
+        window.location.href = `http://localhost:3000/game/${id}`;        
+    }
+
+
+    const playHandler = async (id) => {
+            await fetch(`http://localhost:8000/game/getready/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Access-Token':'Bearer ' + localStorage.getItem('Access-Token')
+                
+                }
+            })
+            .then(res => res.json())
             .then(finalRes => {
                 console.log(finalRes);
-                setTemp(Date.now());
+                window.location.href = `/play?game=${finalRes}`;
             })
             .catch(err => {
                 console.log(err);
             })
     }
 
-    const favHandler = async (event) => {
-        event.preventDefault();
-        console.log(event.target.value);
-        const token = localStorage.getItem('Access-Token');
-        await fetch(`http://localhost:8000/${event.target.value}/makefavourite`, {
-            method: 'GET',
-            headers: {
-                'Access-Token': 'Bearer ' + token
-            }
-        })
-        .then(res => res.json())
-        .then(finalRes => {
-                console.log(finalRes);
-                setOpen(true);
-                setResponse(finalRes);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    const unfavHandler = async (event) => {
-        event.preventDefault();
-        console.log(event.target.value);
-        const token = localStorage.getItem('Access-Token');
-        await fetch(`http://localhost:8000/${event.target.value}/removefavourite`, {
-            method: 'GET',
-            headers: {
-                'Access-Token': 'Bearer ' + token
-            }
-        })
-        .then(res => res.json())
-            .then(finalRes => {
-                console.log(finalRes);
-                setOpen(true);
-                setResponse(finalRes);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }
-
-    const playHandler = (event) => {
-        event.preventDefault();
-        console.log('clicked', event.target.value);
-        window.location.href = `/play?game=${event.target.value}`;
-    }
 
     return (
         <div className="allgames">
-            <div className="heading">
-                <h1>ALL GAMES</h1>
-            </div>
-            <Collapse style={{position: 'fixed', zIndex: '1', top: '0', width: '100%'}} in={open}>
-                <Alert
-                severity="success"
-                action={
-                    <CloseIcon
-                    fontSize="small"
-                    onClick={() => {
-                        setOpen(false);
-                    }}
-                    >
-                    </CloseIcon>
-                    }
-                >
-                {
-                    response
-                }
-                </Alert>
-            </Collapse>
+            <h1 style={{color: 'white', fontSize: '30px', textAlign:'center', marginTop:'150px', fontWeight: '400'}}>ALL GAMES</h1>
             <div className="gamesRow">
-                
             {
                 allGames.map(eachGame => (
-                    <div key={eachGame._id} className="game" style={{WebkitBoxShadow: `-1px 1px 36px 10px ${array[Math.floor(Math.random() * array.length)]}`}}>
-                        <h2>{eachGame.name}</h2>
-                        {eachGame.imageURL.includes('http') ? <img style={{marginTop: '20px' ,height: '250px', width: '200px'}} src={eachGame.imageURL} alt=""/> : <div style={{backgroundColor:'black' ,marginTop: '20px' ,height: '250px', width: '200px'}}></div>}
-                        <p className="description"> {eachGame.description}</p>
-                        <p>Created by {eachGame.creator}</p>
-                <p>{eachGame.likes} Likes</p>
+                    <div key={eachGame._id} className="game">
+                      <h2 className="heading">{eachGame.name}</h2>
+                        <div className="author_info" onClick={() => {visitProfile(eachGame.creator)}}>
+                            <div style={{borderRadius: '50%', backgroundColor: 'orange', height: '40px', width: '40px'}}>
+                                <p style={{color: 'white', fontSize: '30px', fontWeight:'400'}}>{eachGame.creator.slice(0,1).toUpperCase()}</p> 
+                            </div>
+                            <p style={{color: 'white', fontSize: '15px'}}>@{eachGame.creator}</p>
+                        </div>
+                        <div className="image">
+                            {eachGame.imageURL.includes('http') ? <img style={{height: '250px', width: '200px', marginTop: '-18px', marginLeft: '50px'}} src={eachGame.imageURL} alt=""/> : <div style={{backgroundColor:'black' ,height: '250px', width: '200px', marginTop: '-18px', marginLeft: '50px', border: 'solid white 1px'}}></div>}
+                        </div>
+                        <p className="author">Created by {eachGame.creator}</p>
+                        <div className="descriptionContainer">
+                            <p className="description"><Markdown>{eachGame.description}</Markdown></p>
+                        </div>
+                        <button onClick={() => {gameExplore(eachGame._id)}} className="explore">Explore</button>
                         <div className="button_group">
-                            <button value={eachGame._id} onClick={likeHandler}>Like</button>  
-                            <button value={eachGame._id} onClick={dislikeHandler}>Dislike</button>
-                            <button value={eachGame._id} onClick={favHandler}>Fav</button>
-                            <button value={eachGame._id} onClick={unfavHandler}>UnFav</button>
-                            <button value={eachGame.hostURL} onClick={playHandler}>Play</button>
+                            <GetAppIcon className="thumbsup" />
+                            <p className="likes">{eachGame.downloads}</p>
+                            <ThumbUpAltIcon className="thumbsup" />
+                            <p className="likes">{eachGame.likes}</p>
+                            <ThumbDownAltIcon className="thumbsup" ></ThumbDownAltIcon>  
+                            <p className="likes">{eachGame.dislikes}</p>
+                            <FavoriteIcon className="thumbsup"></FavoriteIcon>
+                            <p className="likes">{eachGame.favourites}</p>
+                            <PlayCircleOutlineIcon className="playbtn" onClick={() => playHandler(eachGame._id)}>Play</PlayCircleOutlineIcon>
                         </div>
                     </div>
                 ))

@@ -1,0 +1,9 @@
+.landing>h1 {
+    color: white;
+}
+
+.landing {
+    border: white solid 1px;
+    width: 90%;
+    height: 400px;
+}

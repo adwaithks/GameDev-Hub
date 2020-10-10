@@ -52,18 +52,50 @@ router.post('/register', async (req, res) => {
 });
 
 
-router.get('/me', jwtVerification, async (req, res) => {
+router.get('/profile/:author', jwtVerification, async (req, res) => {
     const user = await User.findOne({
         email: req.user.email
     })
     if (!user) return res.json('Internal Server Error');
+
+    const doc = await User.findOne({
+        username: req.params.author
+    })
     res.json({
-        _id: user._id,
-        email: user.email,
-        username: user.username,
-        createdGames: user.createdGames,
-        favouriteGames: user.favouriteGames
+        _id: doc._id,
+        email: doc.email,
+        username: doc.username,
+        createdGames: doc.createdGames,
+        favouriteGames: doc.favouriteGames,
+        noOfCreatedGames: doc.noOfCreatedGames,
+        rating: doc.rating,
+        signal: doc.signal,
+        popularity: doc.popularity
     });
+})
+
+router.get('/me', jwtVerification, async (req, res) => {
+    try {
+        const user = await User.findOne({
+            email: req.user.email
+        })
+        if (!user) return res.json('Internal Server Error');
+        console.log(user);
+        res.status(200).json({
+            _id: user._id,
+            email: user.email,
+            username: user.username,
+            createdGames: user.createdGames,
+            favouriteGames: user.favouriteGames,
+            noOfCreatedGames: user.noOfCreatedGames,
+            rating: user.rating,
+            signal: user.signal,
+            popularity: user.popularity
+        });
+    } catch (error) {
+        res.status(500).json('Internal Server Error');
+    }
+    
 })
 
 router.post('/login', async (req, res) => {

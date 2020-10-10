@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import './NavigationTab.css';
 
 function NavigationTab() {
 
-  const [colors, setColors] = useState(['red', 'orange', 'green', 'pink']);
   const logoutHandler = () => {
     localStorage.removeItem('Access-Token');
     window.location.href = "/login";
   }
   return (
-    <nav className="navigation" style={{boxShadow: `-1px 1px 56px -10px ${colors[Math.floor(Math.random() * colors.length)]}`}}>
+    <nav className="navigation" >
         <div>
           <Link to="/myprofile"> 
             <img className="logo" src="" alt=""/>
@@ -35,4 +34,4 @@ function NavigationTab() {
   )
 }
 
-export default NavigationTab
+export default NavigationTab;

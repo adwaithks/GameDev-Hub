@@ -65,10 +65,9 @@ function Login() {
                 }
                 </Alert>
             </Collapse>
-            <div className="signup__container">
-                
+            <div className="login__container">
                 <div className="container__child signup__thumbnail">
-                    <div className="thumbn`ail__content">
+                    <div className="thumbnail__content">
                         <h1 className="heading--primary">“People who know how to make games need to start focusing on the task of making real life better for as many people as possible.”</h1>
                         <h2 className="heading--secondary">― Jane McGonigal</h2>
                     </div>
@@ -77,11 +76,11 @@ function Login() {
             <div className="container__child signup__form">
             <h1 className="mainheading">Login</h1>
                 <form onSubmit={sendLoginInfo}>
-                    <div className="form-group">
+                    <div className="form-group-login">
                         <label>Email</label>
                         <input className="form-control" type="text" name="email" id="email" onChange={event => setEmail(event.target.value)} value={email}  placeholder="james.bond@spectre.com" required />
                     </div>
-                    <div className="form-group">
+                    <div className="form-group-login">
                         <label>Password</label>
                         <input className="form-control" type="password" onChange={event => setPassword(event.target.value)} value={password}  name="password" id="password" placeholder="********" required />
                     </div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './MyProfile.css';
+import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
 function MyProfile() {
 
@@ -56,7 +57,7 @@ function MyProfile() {
                 .then(res => res.json())
                 .then(finalRes2 => {
                     console.log(finalRes2);
-                    setLetter(finalRes2.username.slice(0,1).toUpperCase())
+                    setLetter(finalRes2.username.slice(0,1).toUpperCase());
                     setMe(finalRes2);         
                 })
                 .catch(err => {
@@ -67,9 +68,10 @@ function MyProfile() {
             myCreatedGames();
             myfav();
         
-    }, [temp])
+    }, [temp]);
 
     const removefavHandler = async (event) => {
+        event.preventDefault();
         await fetch(`http://localhost:8000/${event.target.value}/removefavourite`, {
                 method: 'GET',
                 headers: {
@@ -88,6 +90,7 @@ function MyProfile() {
 
     return (
         <div className="profile">
+            {document.cookie = `token=${localStorage.getItem('Access-Token')}`}
             <h1 className="profile__heading">MY PROFILE</h1>
             <div className="usersection">
                 <div className="logo__username">
@@ -95,6 +98,15 @@ function MyProfile() {
                         <h1>{letter}</h1>
                     </div>
                         <h3>{me.username}</h3>
+                </div>
+                <div className="stats">
+                    <h2 style={{marginTop: '20px', fontWeight: '800'}}>STATS</h2>
+                    <div className="statsoptions">
+                        <p>Rating: -</p>
+                        <p>Created Games: {me.noOfCreatedGames}</p>
+                        <p>Popularity: -</p>
+                        <p>Signal: -</p>
+                    </div>   
                 </div>
             </div>
             <div className="gamesection">
@@ -111,7 +123,7 @@ function MyProfile() {
                                 <div className="gameinfo">
                                     <h1>{each.name}</h1>
                                     <h3>{each.description}</h3>
-                                    <button>Play</button>
+                                    <PlayCircleOutlineIcon className="play_btn">Play</PlayCircleOutlineIcon>
                                 </div>
                             </div>
                         ))
