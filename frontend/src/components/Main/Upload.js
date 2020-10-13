@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import './Upload.css';
+import MultiSelect from "react-multi-select-component";
 
 
 function Upload() {
@@ -10,6 +11,9 @@ function Upload() {
     const [imgurl, setImgURL] = useState('');
     const [hosturl, setHostURL] = useState('');
     const [name, setName] = useState('');
+    //const [categoryselected, setcategoryselected] = useState([]);
+    //const [platformselected, setplatformselected] = useState([]);
+
 
 
 
@@ -33,17 +37,37 @@ function Upload() {
                         <label className="imgl" htmlFor="">Purchase Fee($):</label>
                         <input type="text" name="fee" onChange={event => setFee(event.target.value)} value={fee} placeholder="Leave it blank, if no fee to be incurred" maxLength="10"/>
                     </div>
+                    <div className="name4">
+                        <label className="imgl" htmlFor="">Select category:</label>
+                        <select className="categories"  name="category" multiple="multiple">
+                            <option value="action">Action</option>
+                            <option value="roleplaying">Role Playing</option>
+                            <option value="simulation">Simulation</option>
+                            <option value="sports">Sports</option>
+                            <option value="strategy">Strategy</option>
+                        </select>
+                    </div>
+                    <div className="name4">
+                    <label className="imgl" htmlFor="">Select Platform:</label>
+                        <select className="platforms" name="platform" multiple="multiple">
+                            <option value="Mac">Mac</option>
+                            <option value="windows">Windows</option>
+                            <option value="Android">Android</option>
+                            <option value="iOS">iOS</option>
+                            <option value="Linux">Linux</option>
+                        </select>
+                    </div>
                     <div className="name">
                         <label className="imgl" htmlFor="">Cover Image URL: </label>
-                        <input type="text" name="imageURL" onChange={event => setImgURL(event.target.value)} value={imgurl} placeholder="Cover image for the game" required/>
+                        <input type="url" name="imageURL" onChange={event => setImgURL(event.target.value)} value={imgurl} placeholder="Cover image for the game" required/>
                     </div>
                     <div className="name">
                         <label className="hostl" htmlFor="">Hosted URL<span>(Already Hosted?):</span></label>
-                        <input type="text" name="hostURL" onChange={event => setHostURL(event.target.value)} value={hosturl} placeholder="URL to hosted game" />
+                        <input type="url" name="hostURL" onChange={event => setHostURL(event.target.value)} value={hosturl} placeholder="URL to hosted game" />
                     </div>
                         <label className="imgl" htmlFor="">Game files(zip file only):</label>
                         <div className="fileuploadandsubmit">
-                            <input type="file" name="zipFile"/>
+                            <input id="uploadedFile" type="file" name="zipFile"/>
                         </div>            
                         <button className="create" type="submit" value="Create">Submit</button> 
                 </form>

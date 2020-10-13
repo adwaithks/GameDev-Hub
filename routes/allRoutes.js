@@ -48,6 +48,8 @@ router.post(
       longdescription: req.fields.ldescription,
       description: req.fields.sdescription,
       creator: user.username,
+      category: req.fields.category,
+      platform: req.fields.platform,
       price: req.fields.fee,
       imageURL: req.fields.imageURL,
       hostURL: req.fields.hostURL,
@@ -106,6 +108,34 @@ router.get("/game/:id", async (req, res) => {
   } catch (error) {
     res.json("Internal Server Error");
   }
+});
+
+router.get("/trending", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.json("Internal Server Error");
+
+  const game = await Game.find()
+    .sort({
+      downloads: -1,
+    })
+    .limit(10);
+  res.status(200).json(game);
+});
+
+router.get("/mostfavourites", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.json("Internal Server Error");
+
+  const game = await Game.find()
+    .sort({
+      favourites: -1,
+    })
+    .limit(10);
+  res.status(200).json(game);
 });
 
 router.get("/allgames", async (req, res) => {

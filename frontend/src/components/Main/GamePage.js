@@ -17,28 +17,29 @@ function GamePage() {
   const [sdesc, setsDesc] = useState("");
   const [ldesc, setlDesc] = useState("");
   const [disliked, setDisliked] = useState(0);
+  const [purchasedGames, setPurchasedGames] = useState([]);
   const [me, setMe] = useState({});
+  const [gameid, setGameid] = useState("");
   const [downloads, setDownloads] = useState(0);
   const [severity, setSeverity] = useState("error");
-  const [fav, setFav] = useState(false);
+  const [fav, setFav] = useState([]);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
   const [temp, setTemp] = useState(0);
 
   useEffect(() => {
-    const gameid = window.location.href.split("/")[4];
+    const gameid_ = window.location.href.split("/")[4];
 
     const fetchGame = async () => {
-      await fetch(`http://localhost:8000/game/${gameid}`, {
+      await fetch(`http://localhost:8000/game/${gameid_}`, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((finalRes) => {
+          //console.log(finalRes._id);
           setInfo(finalRes);
-
-          if (finalRes.price !== "Free") {
-            setPrice(finalRes.price);
-          }
+          setGameid(finalRes._id);
+          setPrice(finalRes.price);
           setLiked(finalRes.likes);
           setsDesc(finalRes.description);
           setlDesc(finalRes.longdescription);
@@ -59,7 +60,10 @@ function GamePage() {
         .then((res) => res.json())
         .then((finalRes2) => {
           console.log(finalRes2);
+          setPurchasedGames(finalRes2.purchasedGames);
+          setFav(finalRes2.favouriteGames);
           setMe(finalRes2);
+          //console.log(fav);
         })
         .catch((err) => {
           console.log(err);
@@ -156,6 +160,74 @@ function GamePage() {
       });
   };
 
+  const FavButtonSelect = (props) => {
+    const favourites = props.favourites;
+    console.log("fav" + props.favourites);
+    const gameid = props.gameid;
+    console.log(typeof gameid);
+
+    if (favourites.includes(gameid)) {
+      return (
+        <FavoriteIcon
+          onClick={() => {
+            unfavHandler(gameid);
+          }}
+          className="downloadIcon"
+          style={{ cursor: "pointer" }}
+        ></FavoriteIcon>
+      );
+    } else {
+      return (
+        <FavoriteBorderIcon
+          className="downloadIcon"
+          onClick={() => {
+            favHandler(gameid);
+          }}
+          style={{ cursor: "pointer" }}
+        ></FavoriteBorderIcon>
+      );
+    }
+  };
+
+  const ButtonSelect = (props) => {
+    const price = props.price;
+    const gameid = props.gameid;
+    const purchasedGames = props.purchasedGames;
+    //console.log(price);
+    //console.log(gameid);
+    //console.log(purchasedGames);
+    if (price === "Free") {
+      return (
+        <button
+          className="downloadbtn"
+          onClick={() => {
+            downloadHandler(info.gameFile);
+          }}
+        >
+          Download
+        </button>
+      );
+    }
+    if (price !== "Free" && !purchasedGames.includes(gameid)) {
+      return (
+        <button className="downloadbtn" onClick={purchaseHandler}>
+          Purchase
+        </button>
+      );
+    } else if (price !== "Free" && purchasedGames.includes(gameid)) {
+      return (
+        <button
+          className="downloadbtn"
+          onClick={() => {
+            downloadHandler(info.gameFile);
+          }}
+        >
+          Download
+        </button>
+      );
+    }
+  };
+
   return (
     <div className="gamepage">
       <Collapse
@@ -184,59 +256,44 @@ function GamePage() {
               {info.name}
             </h1>
           </div>
-          {price ? (
-            <button className="downloadbtn" onClick={purchaseHandler}>
-              Purchase
-            </button>
-          ) : (
-            <button
-              className="downloadbtn"
-              onClick={() => {
-                downloadHandler(info.gameFile);
-              }}
-            >
-              Download
-            </button>
-          )}
-          <p style={{ width: "600px" }}>{sdesc}</p>
+          <ButtonSelect
+            gameid={info._id}
+            price={price}
+            purchasedGames={purchasedGames}
+          />
+          <p className="short_desc">{sdesc}</p>
 
           <div className="gameinfo2">
             <h3>Author: {info.creator}</h3>
             <h3>Price: ${info.price}</h3>
             <div className="buttongroup">
-              <GetAppIcon className="downloadIcon"></GetAppIcon>
-              <p>{downloads}</p>
-              <ThumbUpAltIcon
-                onClick={() => {
-                  likeHandler(info._id);
-                }}
-                className="downloadIcon"
-              ></ThumbUpAltIcon>
-              <p>{liked}</p>
-              <ThumbDownAltIcon
-                onClick={() => {
-                  dislikeHandler(info._id);
-                }}
-                className="downloadIcon"
-              ></ThumbDownAltIcon>
-              <p>{disliked}</p>
-              {fav ? (
-                <FavoriteIcon
+              <div>
+                <GetAppIcon className="downloadIcon"></GetAppIcon>
+                <p>{downloads}</p>
+                <ThumbUpAltIcon
                   onClick={() => {
-                    unfavHandler(info._id);
+                    likeHandler(info._id);
                   }}
                   className="downloadIcon"
-                  style={{ cursor: "pointer" }}
-                ></FavoriteIcon>
-              ) : (
-                <FavoriteBorderIcon
-                  className="downloadIcon"
+                ></ThumbUpAltIcon>
+                <p>{liked}</p>
+                <ThumbDownAltIcon
                   onClick={() => {
-                    favHandler(info._id);
+                    dislikeHandler(info._id);
                   }}
-                  style={{ cursor: "pointer" }}
-                ></FavoriteBorderIcon>
-              )}
+                  className="downloadIcon"
+                ></ThumbDownAltIcon>
+                <p>{disliked}</p>
+                <FavButtonSelect key={fav} gameid={info._id} favourites={fav} />
+              </div>
+              <div className="tagContainer_">
+                <div className="category">
+                  <p>{info.category}</p>
+                </div>
+                <div className="platform">
+                  <p>{info.platform}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

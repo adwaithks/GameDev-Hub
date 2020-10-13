@@ -25,6 +25,18 @@ const gameSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+  category: [
+    {
+      type: String,
+      default: "Not Specified",
+    },
+  ],
+  platform: [
+    {
+      type: String,
+      default: "Not Specified",
+    },
+  ],
   downloads: {
     type: Number,
     default: 0,

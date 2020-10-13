@@ -1,0 +1,21 @@
+.trending_images {
+  height: 320px;
+  width: 270px;
+  border-radius: 10px;
+  transition: ease-in 0.1s;
+  margin-right: 20px;
+}
+
+.trending_images:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 500px) {
+  .trending_images {
+    height: 300px;
+    width: 250px;
+    border-radius: 10px;
+    transition: ease-in 0.1s;
+    margin-right: 20px;
+  }
+}

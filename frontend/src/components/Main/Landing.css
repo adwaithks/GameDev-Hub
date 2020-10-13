@@ -1,9 +1,84 @@
-.landing>h1 {
-    color: white;
+.trendingrow {
+  display: flex;
+  width: 95%;
+  margin-left: auto;
+  padding: 5px;
+  margin-right: auto;
+  cursor: pointer;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  height: fit-content;
+  overflow-x: scroll;
 }
 
-.landing {
-    border: white solid 1px;
-    width: 90%;
+.banner {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.banner_img {
+  width: 100%;
+  border-radius: 3px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+  transition: ease-in 0.4s;
+  opacity: 1;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+  height: 650px;
+}
+
+.banner_img:hover {
+  opacity: 1;
+}
+
+.banner > img {
+  background-image: linear-gradient(to bottom, red, orange);
+}
+
+.trendingrow::-webkit-scrollbar {
+  display: none;
+}
+
+.trendingrow > img {
+  display: flex;
+}
+
+.favsrow {
+  padding: 5px;
+  display: flex;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  cursor: pointer;
+  height: fit-content;
+  overflow-x: scroll;
+}
+
+.favsrow::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .banner_img {
+    width: 100%;
+    border-radius: 3px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+    transition: ease-in 0.4s;
+    opacity: 1;
     height: 400px;
+  }
+
+  .banner {
+    margin-top: 80px;
+    width: 100%;
+    opacity: 0.9;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

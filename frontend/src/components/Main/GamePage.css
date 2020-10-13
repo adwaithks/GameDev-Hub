@@ -2,7 +2,7 @@
   color: white;
   margin-top: 120px;
   margin-left: auto;
-  width: 80%;
+  width: 90%;
   margin-right: auto;
 }
 
@@ -12,6 +12,14 @@
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
   height: 480px;
   width: 380px;
+  margin-bottom: 20px;
+}
+
+.short_desc {
+  width: fit-content;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  overflow-wrap: break-word;
 }
 
 .gamedescription {
@@ -23,9 +31,46 @@
 
 .mainsection {
   display: flex;
+  justify-content: space-between;
   padding: 15px;
   border-radius: 10px;
   background-color: rgb(32, 32, 32);
+}
+
+.tagContainer_ {
+  display: flex;
+  margin-top: 20px;
+  width: fit-content;
+  text-align: center;
+}
+
+.tagContainer_ > .platform {
+  background-color: green;
+  letter-spacing: 0.5;
+  width: 100px;
+  font-size: 15px;
+  font-weight: 400;
+  border-radius: 2px;
+  color: white;
+}
+
+.tagContainer_ > .category {
+  background-color: red;
+  color: white;
+  font-weight: 400;
+  letter-spacing: 0.5;
+  margin-right: 10px;
+  width: 100px;
+  font-size: 15px;
+  border-radius: 2px;
+}
+
+code {
+  background-color: rgb(15, 15, 15);
+  font-size: 18px;
+  font-weight: 400;
+  font-family: Ubuntu, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 .hline {
@@ -39,7 +84,6 @@
 
 .downloadbtn {
   width: 130px;
-  margin-top: -55px;
   font-size: 18px;
   border-radius: 10px;
   cursor: pointer;
@@ -61,9 +105,10 @@
 
 .gameInformation {
   display: flex;
+  width: 100%;
+  margin-left: 40px;
   flex-direction: column;
   justify-content: space-around;
-  margin-left: 100px;
 }
 
 .gameInformation > h1 {
@@ -82,11 +127,53 @@
 }
 
 .buttongroup {
+  margin-top: 20px;
+  display: flex;
+  width: fit-content;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttongroup > div {
   display: flex;
   align-items: center;
 }
 
-.buttongroup > p {
+.buttongroup > div > p {
   margin-right: 20px;
   margin-left: 2px;
+}
+
+@media (max-width: 1060px) {
+  .infoimage {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+    height: 330px;
+    width: 270px;
+    margin-bottom: 20px;
+  }
+
+  .mainsection {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgb(32, 32, 32);
+  }
+
+  .gameInformation {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .buttongroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
