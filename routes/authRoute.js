@@ -93,6 +93,7 @@ router.get("/me", jwtVerification, async (req, res) => {
       username: user.username,
       createdGames: user.createdGames,
       purchasedGames: user.purchasedGames,
+      comments: user.comments,
       favouriteGames: user.favouriteGames,
       noOfCreatedGames: user.noOfCreatedGames,
       rating: user.rating,

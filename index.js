@@ -8,11 +8,13 @@ const allRoutes = require("./routes/allRoutes");
 const authRoute = require("./routes/authRoute");
 const cors = require("cors");
 const cookieparser = require("cookie-parser");
+const scheduleModel = require("./models/scheduleModel");
 
 app.use(express.json());
 app.use(cookieparser());
 app.use(morgan("dev"));
 app.use(cors());
+app.set("view engine", "ejs");
 
 mongoose
   .connect(process.env.DB_CONNECTION_URI, {

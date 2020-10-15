@@ -4,6 +4,31 @@
   padding: 20px;
 }
 
+.upload_options {
+  height: 80px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+}
+
+.upload_options > button {
+  float: right;
+  width: 170px;
+  height: 37px;
+  border-radius: 10px;
+  font-size: 15px;
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
+  color: white;
+  cursor: pointer;
+  background-color: rgb(189, 0, 31);
+}
+
+.upload_options > button:hover {
+  background-color: red;
+}
+
 .name2 > textarea {
   height: 300px;
   width: 70%;

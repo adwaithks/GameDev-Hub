@@ -134,6 +134,36 @@ code {
   align-items: center;
 }
 
+.comment {
+  width: 100%;
+  border-radius: 10px;
+  height: fit-content;
+  padding: 10px;
+  display: flex;
+  margin-bottom: 20px;
+  flex-direction: column;
+  background-color: rgb(49, 49, 49);
+}
+
+.header_ {
+  display: flex;
+  justify-content: space-between;
+}
+
+.comment > * {
+  color: white;
+}
+
+.comment_user {
+  width: fit-content;
+  color: rgb(255, 0, 0);
+  font-weight: 400;
+}
+
+.ocomment {
+  margin-top: 7px;
+}
+
 .buttongroup > div {
   display: flex;
   align-items: center;
@@ -142,6 +172,56 @@ code {
 .buttongroup > div > p {
   margin-right: 20px;
   margin-left: 2px;
+}
+
+.commentInput {
+  margin-top: 40px;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.commentInput > input {
+  width: 90%;
+  height: 40px;
+  margin-right: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  padding: 8px;
+}
+
+.showComments {
+  margin-top: 20px;
+  height: 400px;
+  overflow-y: scroll;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.showComments::-webkit-scrollbar {
+  display: none;
+}
+
+.commentInput > button {
+  width: 100px;
+  font-size: 17px;
+  cursor: pointer;
+  background-color: rgb(104, 0, 0);
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+}
+
+.commentInput > button:hover {
+  background-color: red;
 }
 
 @media (max-width: 1060px) {

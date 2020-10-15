@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./MyProfile.css";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
-import { Link } from 'react-router-dom';
-
+import { Link } from "react-router-dom";
 
 function MyProfile() {
   const [mygames, setMygames] = useState([]);
@@ -26,6 +25,7 @@ function MyProfile() {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/404";
         });
     };
 
@@ -43,6 +43,7 @@ function MyProfile() {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/404";
         });
     };
 
@@ -61,6 +62,7 @@ function MyProfile() {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/404";
         });
     };
     me();
@@ -107,7 +109,16 @@ function MyProfile() {
           </div>
         </div>
       </div>
-      <div style={{backgroundColor: 'red', height: '3px', marginLeft: 'auto', marginBottom: '20px' ,marginRight: 'auto', width: '70%'}}></div>
+      <div
+        style={{
+          backgroundColor: "red",
+          height: "3px",
+          marginLeft: "auto",
+          marginBottom: "20px",
+          marginRight: "auto",
+          width: "70%",
+        }}
+      ></div>
 
       <div className="gamesection">
         <div className="createdgamesRow">
@@ -128,7 +139,9 @@ function MyProfile() {
                 />
               </div>
               <div className="gameinfo">
-                <Link to={'/game/' + each._id} ><h1>{each.name}</h1></Link>
+                <Link to={"/game/" + each._id}>
+                  <h1>{each.name}</h1>
+                </Link>
                 <h3>{each.description}</h3>
                 <PlayCircleOutlineIcon className="play_btn">
                   Play
@@ -137,7 +150,16 @@ function MyProfile() {
             </div>
           ))}
         </div>
-        <div style={{backgroundColor: 'red', height: '3px', marginLeft: 'auto', marginBottom: '20px' ,marginRight: 'auto', width: '70%'}}></div>
+        <div
+          style={{
+            backgroundColor: "red",
+            height: "3px",
+            marginLeft: "auto",
+            marginBottom: "20px",
+            marginRight: "auto",
+            width: "70%",
+          }}
+        ></div>
         <div className="favgamesRow">
           <div className="favgame">
             <h1>My Favourites</h1>
@@ -156,7 +178,9 @@ function MyProfile() {
                 />
               </div>
               <div className="gameinfo">
-                <Link to={'/game/' + each._id} ><h1>{each.name}</h1></Link>
+                <Link to={"/game/" + each._id}>
+                  <h1>{each.name}</h1>
+                </Link>
                 <h3>{each.description}</h3>
                 <div>
                   <button>Play</button>

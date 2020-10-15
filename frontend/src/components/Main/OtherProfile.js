@@ -19,6 +19,7 @@ function OtherProfile() {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/404";
         });
     };
 
@@ -33,6 +34,7 @@ function OtherProfile() {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/404";
         });
     };
 
@@ -51,6 +53,7 @@ function OtherProfile() {
         })
         .catch((err) => {
           console.log(err);
+          window.location.href = "/404";
         });
     };
     me();

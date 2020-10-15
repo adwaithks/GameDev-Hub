@@ -75,6 +75,12 @@ const gameSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  comments: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Game", gameSchema);

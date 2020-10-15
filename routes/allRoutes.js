@@ -3,9 +3,170 @@ const router = require("express").Router();
 const Game = require("../models/gameModel");
 const User = require("../models/userModel");
 const formidable = require("express-formidable");
-//const decompress = require("decompress");
+const Schedule = require("../models/scheduleModel");
+const schedule = require("node-schedule");
 const fs = require("fs");
 const path = require("path");
+const Comment = require("../models/commentModel");
+
+router.post(
+  "/schedule",
+  formidable({
+    encoding: "utf-8",
+    uploadDir: "./uploads/games/zips",
+    multiples: false,
+  }),
+  jwtVerification,
+  async (req, res) => {
+    const user = await User.findOne({
+      email: req.user.email,
+    });
+    if (!user) return res.json("Internal Server Error");
+
+    if (req.files.zipFile) {
+      const filename = req.files.zipFile.path.match(/(\upload_.*)/g).toString();
+      newfilename = filename + ".zip";
+      try {
+        fs.renameSync(
+          `./uploads/games/zips/${filename}`,
+          `./uploads/games/zips/${newfilename}`
+        );
+        //fs.mkdirSync(`./uploads/games/files/${filename}`);
+        console.log("filename" + filename);
+      } catch (error) {
+        return res.status(500).json("Internal Server Error");
+      }
+    }
+    if (!req.fields.fee) {
+      req.fields.fee = "Free";
+    }
+    if (!req.fields.hostURL) {
+      req.fields.hostURL = "";
+    }
+
+    const newSchedule = new Schedule({
+      release: req.fields.datetime,
+      name: req.fields.gname,
+      gameFile: newfilename,
+      longdescription: req.fields.ldescription,
+      description: req.fields.sdescription,
+      creator: user.username,
+      category: req.fields.category,
+      platform: req.fields.platform,
+      price: req.fields.fee,
+      imageURL: req.fields.imageURL,
+      hostURL: req.fields.hostURL,
+    });
+
+    let datetime = req.fields.datetime;
+    let amorpm = req.fields.amorpm;
+
+    let temp = datetime.split("T");
+    let date = temp[0].split("-");
+    let time = temp[1].split(":");
+
+    console.log(
+      date[0] +
+        " " +
+        (parseInt(date[1]) - 1) +
+        " " +
+        date[2] +
+        " " +
+        time[0] +
+        " " +
+        time[1] +
+        " " +
+        amorpm
+    );
+
+    const scheduleNewJob = async (
+      year,
+      month,
+      date,
+      hour,
+      minutes,
+      amorpm,
+      id,
+      user
+    ) => {
+      let newdate = new Date(year, month, date, hour, minutes, amorpm);
+      if (newdate === "Invalid Date") {
+        return res.status(500).json("Invalid Date");
+      }
+      console.log("New release scheduled on " + newdate);
+      let j = schedule.scheduleJob(newdate, async function () {
+        const game = await Schedule.findOne({
+          _id: id,
+        });
+        console.log("after finding the game from schedule::::" + game);
+
+        const newgame_ = new Game({
+          name: game.name,
+          gameFile: game.gameFile,
+          longdescription: game.longdescription,
+          description: game.description,
+          creator: game.creator,
+          category: game.category,
+          platform: game.platform,
+          price: game.price,
+          imageURL: game.imageURL,
+          hostURL: game.hostURL,
+        });
+
+        await Schedule.findOneAndDelete({ _id: id }, (err) => {
+          if (err) console.log(err);
+          console.log("successfully deleted from schedule!");
+        });
+
+        await user.createdGames.push(newgame_._id);
+        user.noOfCreatedGames += 1;
+
+        await user
+          .save()
+          .then()
+          .catch((err) => {
+            return res.json("Internal Server Error");
+          });
+        await newgame_
+          .save()
+          .then()
+          .catch((err) => {
+            console.log(err);
+          });
+        console.log("Now Released:::::" + newgame_);
+      });
+    };
+
+    await newSchedule
+      .save()
+      .then()
+      .catch((err) => {
+        return res.status(500).json("Internal Server Error");
+      });
+
+    scheduleNewJob(
+      date[0],
+      parseInt(date[1]) - 1,
+      date[2],
+      time[0],
+      time[1],
+      amorpm,
+      newSchedule._id,
+      user
+    );
+
+    res.redirect("http://localhost:3000/myprofile");
+  }
+);
+
+router.get("/myschedules", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.json("Internal Server Error");
+  const schedules = await Schedule.find();
+  res.json(schedules);
+});
 
 router.post(
   "/create/game",
@@ -76,6 +237,106 @@ router.post(
   }
 );
 
+/**           COMMENT ROUTES  START        **/
+
+router.post("/game/:gameid/makecomment", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    username: req.user.username,
+  });
+  if (!user) return res.json({ message: "a" });
+
+  const game = await Game.findOne({
+    _id: req.params.gameid,
+  });
+  if (!game) return res.json({ message: "b" });
+
+  console.log(user.username);
+  const newComment = await new Comment({
+    comment: req.body.comment,
+    commentBy: user.username,
+    game: game._id,
+  });
+
+  console.log(newComment);
+  await newComment
+    .save()
+    .then((doc) => {
+      console.log("doc::::" + doc);
+    })
+    .catch((err) => {});
+
+  game.comments.push(newComment._id);
+  user.comments.push(newComment._id);
+  await game
+    .save()
+    .then()
+    .catch((err) => {});
+  await user
+    .save()
+    .then(() => {
+      return res.json("OK");
+    })
+    .catch((err) => {});
+});
+
+router.get("/game/:id/comments", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    username: req.user.username,
+  });
+  console.log(user);
+  if (!user) return res.json({ message: "User does not exist" });
+  const game = await Game.findOne({
+    _id: req.params.id,
+  });
+  if (!game) return res.json({ message: "User does not exist" });
+  const gamecommentids = game.comments;
+  const final = await Comment.find({ _id: { $in: gamecommentids } });
+  console.log(final);
+  res.status(200).json(final);
+});
+
+router.get(
+  "/game/:id/removecomment/:commentid",
+  jwtVerification,
+  async (req, res) => {
+    const user = await User.findOne({
+      username: req.user.username,
+    });
+    if (!user) return res.json({ message: "User does not exist1" });
+
+    if (!user.comments.includes(req.params.commentid)) {
+      return res.json({ message: "User does not have right to delete" });
+    }
+
+    const game = await Game.findOne({
+      _id: req.params.id,
+    });
+    if (!game) return res.json({ message: "User does not exist2" });
+
+    const comment = await Comment.findOne({
+      _id: req.params.commentid,
+    });
+    if (!comment) return res.json({ message: "User does not exist3" });
+    user.comments.pull(req.params.commentid);
+    game.comments.pull(req.params.commentid);
+
+    await user
+      .save()
+      .then()
+      .catch((err) => {});
+    await game
+      .save()
+      .then((doc) => {
+        res.json("OK");
+      })
+      .catch((err) => {
+        return res.status(500).json("Internal Server Error");
+      });
+  }
+);
+
+/**           COMMENT ROUTES  END        **/
+
 router.get("/profile/:username", async (req, res) => {
   const username = req.params.username;
   const user = await User.findOne({
@@ -96,7 +357,7 @@ router.get("/profile/:username", async (req, res) => {
   });
 });
 
-router.get("/game/:id", async (req, res) => {
+router.get("/game/:id/view", async (req, res) => {
   try {
     const gameid = req.params.id;
     const game = await Game.findOne({
