@@ -12,6 +12,7 @@ import MyProfile from "./components/Main/MyProfile";
 import GamePage from "./components/Main/GamePage";
 import Landing from "./components/Main/Landing";
 import Play from "./components/Main/Play";
+import Teaser from "./components/Main/Teaser";
 import PaymentPage from "./components/Main/PaymentPage";
 import OtherProfile from "./components/Main/OtherProfile";
 import NotFound from "./components/Main/NotFound";
@@ -29,6 +30,8 @@ function App() {
           <Route path="/404" component={NotFound} />
           <Route path="/profile/*" component={OtherProfile} />
           <Route path="/game/*" component={GamePage} />
+          <Route path="/createteaser" component={Teaser} />
+
           {localStorage.getItem("Access-Token") && (
             <Route path="/home" component={Landing} />
           )}

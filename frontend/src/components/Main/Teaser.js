@@ -1,0 +1,198 @@
+import React, { useState } from "react";
+import Dropzone from "react-dropzone";
+import "./Teaser.css";
+
+function Teaser() {
+  const [desc, setDesc] = useState("");
+  const [fee, setFee] = useState("");
+  const [category, setcategory] = useState("action");
+  const [platform, setplatform] = useState("Mac");
+  const [schedule, setSchedule] = useState("");
+  const [video, setVideo] = useState();
+  const [name, setName] = useState("");
+  const [files, setFiles] = useState();
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    console.log(files);
+    const formData = new FormData();
+    formData.append("release", schedule);
+    formData.append("name", name);
+    formData.append("desc", desc);
+    formData.append("fee", fee);
+    formData.append("platform", platform);
+    formData.append("category", category);
+    let count = 0;
+    for (const i in files) {
+      formData.append("files", files[i]);
+      count = count + 1;
+    }
+    for (const i in video) {
+      formData.append("video", files[i]);
+    }
+    formData.append("fileCount", count);
+
+    console.log(formData);
+    const response = await fetch("http://localhost:8000/uploadsss", {
+      method: "POST",
+      headers: {
+        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+      },
+      body: formData,
+    });
+
+    console.log(response);
+  };
+
+  const onDrop = (acceptedFiles) => {
+    console.log("dropped");
+    setFiles(acceptedFiles);
+  };
+
+  const onDrop2 = (acceptedFiles) => {
+    console.log("dropped");
+    setVideo(acceptedFiles);
+  };
+
+  const categoryHandler = (e) => {
+    setcategory(e.target.value);
+  };
+
+  const platformHandler = (e) => {
+    setplatform(e.target.value);
+  };
+
+  return (
+    <div className="teaser">
+      <h1
+        style={{
+          color: "white",
+          marginTop: "150px",
+          fontSize: "800",
+          color: "red",
+        }}
+      >
+        Publish Teaser
+      </h1>
+      <div className="upload_form" style={{ marginTop: "50px" }}>
+        <form onSubmit={submitHandler}>
+          <div className="name" style={{ marginTop: "-10px" }}>
+            <label className="namel" htmlFor="">
+              Name:
+            </label>
+            <input
+              type="text"
+              placeholder="Name of the game"
+              name="gname"
+              onChange={(event) => setName(event.target.value)}
+              value={name}
+              placeholder="Name of the game"
+              required
+            />
+          </div>
+          <div className="name">
+            <label className="descl" htmlFor="">
+              Short Description:{" "}
+            </label>
+            <input
+              type="text"
+              name="sdescription"
+              onChange={(event) => setDesc(event.target.value)}
+              value={desc}
+              placeholder="Not more than 200 chars"
+              maxLength="200"
+              required
+            />
+          </div>
+
+          <div className="name3">
+            <label className="imgl" htmlFor="">
+              Purchase Fee($):
+            </label>
+            <input
+              type="text"
+              name="fee"
+              onChange={(event) => setFee(event.target.value)}
+              value={fee}
+              placeholder="Leave it blank, if no fee to be incurred"
+              maxLength="10"
+            />
+          </div>
+          <div className="name4">
+            <label className="imgl" htmlFor="">
+              Select category:
+            </label>
+            <select
+              onChange={categoryHandler}
+              className="categories"
+              name="category"
+            >
+              <option value="action">Action</option>
+              <option value="roleplaying">Role Playing</option>
+              <option value="simulation">Simulation</option>
+              <option value="sports">Sports</option>
+              <option value="strategy">Strategy</option>
+            </select>
+          </div>
+          <div className="name4">
+            <label className="imgl" htmlFor="">
+              Select Platform:
+            </label>
+            <select
+              onChange={platformHandler}
+              className="platforms"
+              name="platform"
+            >
+              <option value="Mac">Mac</option>
+              <option value="windows">Windows</option>
+              <option value="Android">Android</option>
+              <option value="iOS">iOS</option>
+              <option value="Linux">Linux</option>
+            </select>
+          </div>
+          <div className="name4">
+            <label for="datetime">Release date:</label>
+            <input
+              onChange={(e) => {
+                setSchedule(e.target.value);
+              }}
+              className="date_time"
+              type="date"
+              name="datetime"
+            />
+          </div>
+          <div style={{ marginTop: "40px" }}>
+            <Dropzone className="dropzone" onDrop={onDrop}>
+              {({ getRootProps, getInputProps }) => (
+                <div className="droparea" {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <h3 style={{ color: "darkgray", padding: "80px" }}>
+                    Drag & Drop some early game images Images (.png)
+                  </h3>
+                </div>
+              )}
+            </Dropzone>
+          </div>
+
+          <div style={{ marginTop: "40px" }}>
+            <Dropzone className="dropzone" onDrop={onDrop2}>
+              {({ getRootProps, getInputProps }) => (
+                <div className="droparea" {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <h3 style={{ color: "darkgray", padding: "80px" }}>
+                    Drag & Drop video trailer (.mp4)
+                  </h3>
+                </div>
+              )}
+            </Dropzone>
+          </div>
+
+          <button className="create" type="submit" value="Create">
+            Publish
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+export default Teaser;

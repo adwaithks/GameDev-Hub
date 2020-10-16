@@ -111,32 +111,39 @@ function Landing() {
         </h1>
         <div className="upcomingreleases">
           {upcomingreleases.map((each) => (
-            <Link
-              style={{ textDecoration: "none", color: "darkgray" }}
-              to={"/game/" + each._id}
-            >
-              <div className="upcoming">
-                <img
+            <div className="upcoming">
+              <img
+                style={{
+                  textAlign: "center",
+                  borderRadius: "50%",
+                  height: "250px",
+                  width: "250px",
+                }}
+                className="upcoming_img"
+                src={each.imageURL}
+              />
+              <div className="textContain">
+                <h3
                   style={{
                     textAlign: "center",
-                    borderRadius: "50%",
-                    height: "250px",
-                    width: "250px",
+                    marginTop: "10px",
+                    marginLeft: "-20px",
+                    color: "white",
                   }}
-                  className="upcoming_img"
-                  src={each.imageURL}
-                />
-                <div className="textContain">
-                    <h3 style={{ textAlign: "center", marginLeft: "-20px" }}>
-                    {each.name}
-                    </h3>
-                    <p style={{ textAlign: "center", marginLeft: "0px" }}>
-                    Releasing on {each.release}
-                    </p>
-                </div>
-                
+                >
+                  {each.name}
+                </h3>
+                <p
+                  style={{
+                    textAlign: "center",
+                    color: "darkgray",
+                    marginLeft: "-15px",
+                  }}
+                >
+                  Releasing on {each.release}
+                </p>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>

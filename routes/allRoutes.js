@@ -1,6 +1,8 @@
 const jwtVerification = require("./jwtVerification");
 const router = require("express").Router();
 const Game = require("../models/gameModel");
+const mongoose = require("mongoose");
+const Teaser = require("../models/teaserModel");
 const User = require("../models/userModel");
 const formidable = require("express-formidable");
 const Schedule = require("../models/scheduleModel");
@@ -8,6 +10,8 @@ const schedule = require("node-schedule");
 const fs = require("fs");
 const path = require("path");
 const Comment = require("../models/commentModel");
+
+// Schedule routes
 
 router.post(
   "/schedule",
@@ -23,39 +27,33 @@ router.post(
     });
     if (!user) return res.json("Internal Server Error");
 
-    if (req.files.zipFile) {
-      const filename = req.files.zipFile.path.match(/(\upload_.*)/g).toString();
-      newfilename = filename + ".zip";
-      try {
-        fs.renameSync(
-          `./uploads/games/zips/${filename}`,
-          `./uploads/games/zips/${newfilename}`
-        );
-        //fs.mkdirSync(`./uploads/games/files/${filename}`);
-        console.log("filename" + filename);
-      } catch (error) {
-        return res.status(500).json("Internal Server Error");
-      }
-    }
+    const filename = req.files.files.path.match(/(\upload_.*)/g).toString();
+    newfilename = filename + ".zip";
+
+    fs.renameSync(
+      `./uploads/games/zips/${filename}`,
+      `./uploads/games/zips/${newfilename}`
+    );
+
     if (!req.fields.fee) {
       req.fields.fee = "Free";
     }
-    if (!req.fields.hostURL) {
-      req.fields.hostURL = "";
+    if (!req.fields.hosturl) {
+      req.fields.hosturl = "";
     }
 
     const newSchedule = new Schedule({
       release: req.fields.datetime,
-      name: req.fields.gname,
+      name: req.fields.name,
       gameFile: newfilename,
-      longdescription: req.fields.ldescription,
-      description: req.fields.sdescription,
+      longdescription: req.fields.ldesc,
+      description: req.fields.sdesc,
       creator: user.username,
       category: req.fields.category,
       platform: req.fields.platform,
       price: req.fields.fee,
-      imageURL: req.fields.imageURL,
-      hostURL: req.fields.hostURL,
+      imageURL: req.fields.imgurl,
+      hostURL: req.fields.hosturl,
     });
 
     let datetime = req.fields.datetime;
@@ -90,9 +88,7 @@ router.post(
       user
     ) => {
       let newdate = new Date(year, month, date, hour, minutes, amorpm);
-      if (newdate === "Invalid Date") {
-        return res.status(500).json("Invalid Date");
-      }
+
       console.log("New release scheduled on " + newdate);
       let j = schedule.scheduleJob(newdate, async function () {
         const game = await Schedule.findOne({
@@ -113,20 +109,15 @@ router.post(
           hostURL: game.hostURL,
         });
 
-        await Schedule.findOneAndDelete({ _id: id }, (err) => {
+        /**await Schedule.deleteOne({ _id: id }, (err) => {
           if (err) console.log(err);
-          console.log("successfully deleted from schedule!");
-        });
+          console.log(":::::::successfully deleted from schedule!");
+        });**/
 
         await user.createdGames.push(newgame_._id);
         user.noOfCreatedGames += 1;
 
-        await user
-          .save()
-          .then()
-          .catch((err) => {
-            return res.json("Internal Server Error");
-          });
+        await user.save().then().catch();
         await newgame_
           .save()
           .then()
@@ -137,12 +128,7 @@ router.post(
       });
     };
 
-    await newSchedule
-      .save()
-      .then()
-      .catch((err) => {
-        return res.status(500).json("Internal Server Error");
-      });
+    await newSchedule.save().then().catch();
 
     scheduleNewJob(
       date[0],
@@ -154,8 +140,7 @@ router.post(
       newSchedule._id,
       user
     );
-
-    res.redirect("http://localhost:3000/myprofile");
+    res.json("Scheduled successfully!!");
   }
 );
 
@@ -167,6 +152,8 @@ router.get("/myschedules", jwtVerification, async (req, res) => {
   const schedules = await Schedule.find();
   res.json(schedules);
 });
+
+//game create routes
 
 router.post(
   "/create/game",
@@ -181,59 +168,109 @@ router.post(
       email: req.user.email,
     });
     if (!user) return res.json("Internal Server Error");
+    console.log(req.files.files);
 
-    if (req.files.zipFile) {
-      const filename = req.files.zipFile.path.match(/(\upload_.*)/g).toString();
-      newfilename = filename + ".zip";
-      try {
-        fs.renameSync(
-          `./uploads/games/zips/${filename}`,
-          `./uploads/games/zips/${newfilename}`
-        );
-        //fs.mkdirSync(`./uploads/games/files/${filename}`);
-        console.log("filename" + filename);
-      } catch (error) {
-        return res.status(500).json("Internal Server Error");
-      }
-    }
+    const filename = req.files.files.path.match(/(\upload_.*)/g).toString();
+    const newfilename = filename + ".zip";
+    fs.renameSync(
+      `./uploads/games/zips/${filename}`,
+      `./uploads/games/zips/${filename}.zip`
+    );
+    console.log("filename" + filename);
+
     if (!req.fields.fee) {
       req.fields.fee = "Free";
     }
-    if (!req.fields.hostURL) {
+    if (!req.fields.hosturl) {
       req.fields.hostURL = "";
     }
+    console.log(req.fields);
 
     const newGame = new Game({
-      name: req.fields.gname,
+      name: req.fields.name,
       gameFile: newfilename,
-      longdescription: req.fields.ldescription,
-      description: req.fields.sdescription,
+      longdescription: req.fields.ldesc,
+      description: req.fields.sdesc,
       creator: user.username,
       category: req.fields.category,
       platform: req.fields.platform,
       price: req.fields.fee,
-      imageURL: req.fields.imageURL,
-      hostURL: req.fields.hostURL,
+      imageURL: req.fields.imgurl,
+      hostURL: req.fields.hosturl,
     });
 
     await user.createdGames.push(newGame._id);
     user.noOfCreatedGames += 1;
 
-    await user
-      .save()
-      .then()
-      .catch((err) => {
-        return res.json("Internal Server Error");
-      });
+    await user.save().then().catch();
     await newGame
       .save()
       .then((doc) => {
-        //await decompress(`./uploads/games/zips/${newfilename}`, `./uploads/games/files/${filename}`);
-        res.redirect("http://localhost:3000/myprofile");
+        res.json("Success");
       })
       .catch((err) => {
         return res.status(500).json("Internal Server Error");
       });
+  }
+);
+
+router.post(
+  "/uploadsss",
+  formidable({
+    encoding: "utf-8",
+    uploadDir: "./uploads/games/files",
+    multiples: true,
+  }),
+  jwtVerification,
+  async (req, res) => {
+    const user = await User.findOne({
+      email: req.user.email,
+    });
+    if (!user) return res.json("Internal Server Error");
+    console.log(req.files);
+    console.log(req.fields);
+    let filename = [];
+    for (let i = 0; i < req.files.files.length; i++) {
+      filename.push(req.files.files[i].path.match(/(\upload_.*)/g).toString());
+      fs.renameSync(
+        `./uploads/games/files/${filename[i]}`,
+        `./uploads/games/files/${filename[i]}.png`
+      );
+    }
+
+    for (let i = 0; i < filename.length; i++) {
+      filename[i] = filename[i] + ".png";
+    }
+
+    const videoname = req.files.video.path.match(/(\upload_.*)/g).toString();
+    const newvideoname = videoname + ".mp4";
+
+    console.log(newvideoname);
+    fs.renameSync(
+      `./uploads/games/files/${videoname}`,
+      `./uploads/games/files/${videoname}.mp4`
+    );
+
+    const newteaser = new Teaser({
+      name: req.fields.name,
+      releaseDate: req.fields.release,
+      description: req.fields.desc,
+      creator: user.username,
+      category: req.fields.category,
+      platform: req.fields.platform,
+      images: filename,
+      video: newvideoname,
+    });
+    console.log(newteaser);
+
+    await newteaser
+      .save()
+      .then()
+      .catch((err) => {
+        res.json("Internal Server Error");
+      });
+
+    res.json("OK");
   }
 );
 

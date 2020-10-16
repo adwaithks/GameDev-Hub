@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./GamePage.css";
 import Alert from "@material-ui/lab/Alert";
 import Markdown from "markdown-to-jsx";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import Collapse from "@material-ui/core/Collapse";
 import CloseIcon from "@material-ui/icons/Close";
 import GetAppIcon from "@material-ui/icons/GetApp";
-import DeleteIcon from '@material-ui/icons/Delete';
+import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import ThumbDownAltIcon from "@material-ui/icons/ThumbDownAlt";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -241,7 +241,6 @@ function GamePage() {
     }
   };
 
-
   const submitComment = async (id, comment) => {
     //console.log(1111111);
     const token = localStorage.getItem("Access-Token");
@@ -252,8 +251,8 @@ function GamePage() {
         "Access-Token": "Bearer " + token,
       },
       body: JSON.stringify({
-          comment: comment
-      })
+        comment: comment,
+      }),
     })
       .then((res) => res.json())
       .then((finalRes) => {
@@ -265,7 +264,7 @@ function GamePage() {
       .catch((err) => {
         console.log(err);
       });
-  } 
+  };
 
   const ButtonSelect = (props) => {
     const price = props.price;
@@ -313,7 +312,7 @@ function GamePage() {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
-      }
+      },
     })
       .then((res) => res.json())
       .then((finalRes) => {
@@ -325,9 +324,7 @@ function GamePage() {
       .catch((err) => {
         console.log(err);
       });
-  }
-
-
+  };
 
   return (
     <div className="gamepage">
@@ -410,34 +407,43 @@ function GamePage() {
       <div className="hline"></div>
 
       <div className="commentsContainer">
-                  <div className="commentInput">
-                      <input placeholder="Comment..." onChange={e => setinputcomment(e.target.value)} value={inputcomment}></input>
-                      <button onClick={(e) => {submitComment(info._id, inputcomment)}}>Post</button>
-                  </div>
-                  <div className="showComments">
-                    {
-                      comments.length == 0 ? <h1 style={{padding: '10px'}}>No Comments</h1> : null
-                    }
-                    {
-                    comments.map(each => (
-                            <div key={each._id} className="comment">
-                                  <div className="header_">
-                                      <Link style={{textDecoration: 'none'}} to={'/profile/' + each.commentBy }><h3 className="comment_user">@{each.commentBy}</h3></Link>
-                                      <div className="comment_delete">
-                                        {
-                                          me.comments.includes(each._id) ?
-                                        <DeleteIcon onClick={() => deleteMessage(each._id)} />
-                                          : null
-                                        }
-                                        
-                                      </div>
-                                  </div>
-                                  <p className="ocomment">{each.comment}</p>
-                              </div>                    
-                              ))
-                    }
-                  </div>
-
+        <div className="commentInput">
+          <input
+            placeholder="Comment..."
+            onChange={(e) => setinputcomment(e.target.value)}
+            value={inputcomment}
+          ></input>
+          <button
+            onClick={(e) => {
+              submitComment(info._id, inputcomment);
+            }}
+          >
+            Post
+          </button>
+        </div>
+        <div className="showComments">
+          {comments.length == 0 ? (
+            <h1 style={{ padding: "10px" }}>No Comments</h1>
+          ) : null}
+          {comments.map((each) => (
+            <div key={each._id} className="comment">
+              <div className="header_">
+                <Link
+                  style={{ textDecoration: "none" }}
+                  to={"/profile/" + each.commentBy}
+                >
+                  <h3 className="comment_user">@{each.commentBy}</h3>
+                </Link>
+                <div className="comment_delete">
+                  {me.comments.includes(each._id) ? (
+                    <DeleteIcon onClick={() => deleteMessage(each._id)} />
+                  ) : null}
+                </div>
+              </div>
+              <p className="ocomment">{each.comment}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
