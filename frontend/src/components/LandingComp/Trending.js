@@ -4,7 +4,7 @@ import "./Trending.css";
 function Trending(props) {
   return (
     <div className="trending">
-      <img className="trending_images" src={props.image} />
+      <img alt="trending" className="trending_images" src={props.image} />
     </div>
   );
 }

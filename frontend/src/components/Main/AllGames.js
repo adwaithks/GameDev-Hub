@@ -15,7 +15,7 @@ function AllGames() {
   //const [likeState, setLIkeState] = useState('Like');
   //const [fav, setFav] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  const [search, setSearch] = useState("");
+  //const [search, setSearch] = useState("");
   //const [favState, setFavState] = useState('Fav');
   //const [open, setOpen] = useState(false);
   //const [response, setResponse] = useState('');
@@ -103,27 +103,35 @@ function AllGames() {
       });
   };
 
-
   return (
     <div className="allgames">
-      <div style={{display: 'flex', width: 'fit-content', marginLeft: 'auto', marginRight: 'auto', textAlign: 'center', alignItems: 'center'}}>
-      <h1
+      <div
         style={{
-          color: "white",
-          fontSize: "30px",
+          display: "flex",
+          width: "fit-content",
+          marginLeft: "auto",
+          marginRight: "auto",
           textAlign: "center",
-          marginTop: "150px",
-          fontWeight: "400",
+          alignItems: "center",
         }}
       >
-        ALL GAMES
-      </h1>
-      {/**<input type="text" placeholder="Search..." onChange={searchHandler} value={search} />**/}
+        <h1
+          style={{
+            color: "white",
+            fontSize: "30px",
+            textAlign: "center",
+            marginTop: "150px",
+            fontWeight: "400",
+          }}
+        >
+          ALL GAMES
+        </h1>
+        {/**<input type="text" placeholder="Search..." onChange={searchHandler} value={search} />**/}
       </div>
       <div className="gamesRow">
-        {
-          allGames.length === 0 ? <h1 style={{marginTop: '100px', color: 'darkgray'}}>Loading ...</h1> : null
-        }
+        {allGames.length === 0 ? (
+          <h1 style={{ marginTop: "100px", color: "darkgray" }}>Loading ...</h1>
+        ) : null}
         {allGames.map((eachGame) => (
           <div key={eachGame._id} className="game">
             <h2 className="heading">{eachGame.name}</h2>

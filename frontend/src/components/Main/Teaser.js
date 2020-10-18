@@ -10,6 +10,7 @@ function Teaser() {
   const [schedule, setSchedule] = useState("");
   const [video, setVideo] = useState();
   const [name, setName] = useState("");
+  const [url, setUrl] = useState("");
   const [files, setFiles] = useState();
 
   const submitHandler = async (e) => {
@@ -20,6 +21,7 @@ function Teaser() {
     formData.append("name", name);
     formData.append("desc", desc);
     formData.append("fee", fee);
+    formData.append("img", url);
     formData.append("platform", platform);
     formData.append("category", category);
     let count = 0;
@@ -40,8 +42,9 @@ function Teaser() {
       },
       body: formData,
     });
-
     console.log(response);
+    window.location.href = "/myprofile";
+    return false;
   };
 
   const onDrop = (acceptedFiles) => {
@@ -66,7 +69,6 @@ function Teaser() {
     <div className="teaser">
       <h1
         style={{
-          color: "white",
           marginTop: "150px",
           fontSize: "800",
           color: "red",
@@ -91,9 +93,7 @@ function Teaser() {
             />
           </div>
           <div className="name">
-            <label className="descl" htmlFor="">
-              Short Description:{" "}
-            </label>
+            <label className="descl">Short Description:</label>
             <input
               type="text"
               name="sdescription"
@@ -106,9 +106,19 @@ function Teaser() {
           </div>
 
           <div className="name3">
-            <label className="imgl" htmlFor="">
-              Purchase Fee($):
-            </label>
+            <label className="imgl">Cover image URL:</label>
+            <input
+              type="text"
+              name="imgurl"
+              onChange={(event) => setUrl(event.target.value)}
+              value={url}
+              placeholder="Cover image of the game."
+              required
+            />
+          </div>
+
+          <div className="name3">
+            <label className="imgl">Purchase Fee($):</label>
             <input
               type="text"
               name="fee"
@@ -119,9 +129,7 @@ function Teaser() {
             />
           </div>
           <div className="name4">
-            <label className="imgl" htmlFor="">
-              Select category:
-            </label>
+            <label className="imgl">Select category:</label>
             <select
               onChange={categoryHandler}
               className="categories"

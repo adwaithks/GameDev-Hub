@@ -8,6 +8,7 @@ function Landing() {
   const [trending, setTrending] = useState([]);
   const [mostfavourites, setmostfavourites] = useState([]);
   const [upcomingreleases, setupcomingreleases] = useState([]);
+  const [trailers, setTrailers] = useState([]);
 
   useEffect(() => {
     const getTrending = async () => {
@@ -21,6 +22,22 @@ function Landing() {
         .then((finalRes3) => {
           console.log(finalRes3);
           setTrending(finalRes3);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    const getTrailers = async () => {
+      await fetch(`http://localhost:8000/teasers`, {
+        method: "GET",
+        headers: {
+          "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+        },
+      })
+        .then((res) => res.json())
+        .then((finalRes3) => {
+          setTrailers(finalRes3);
         })
         .catch((err) => {
           console.log(err);
@@ -61,6 +78,7 @@ function Landing() {
         });
     };
     getReleases();
+    getTrailers();
     getMostFavourites();
     getTrending();
   }, []);
@@ -68,32 +86,7 @@ function Landing() {
   return (
     <div className="landing">
       <div className="banner">
-        <img className="banner_img" src={banner_img} />
-      </div>
-      <div style={{ border: "white" }} className="trending_">
-        <h1
-          style={{
-            color: "red",
-            marginTop: "30px",
-            marginBottom: "20px",
-            marginLeft: "auto",
-            marginRight: "auto",
-            width: "95%",
-          }}
-        >
-          Trending Now
-        </h1>
-        <div className="trendingrow">
-          {trending.map((each) => (
-            <Link
-              style={{ textDecoration: "none", color: "darkgray" }}
-              to={"/game/" + each._id}
-            >
-              <Trending image={each.imageURL} />
-              <h3>{each.name}</h3>
-            </Link>
-          ))}
-        </div>
+        <img alt="bannerimg" className="banner_img" src={banner_img} />
       </div>
 
       <div className="trending_">
@@ -111,38 +104,97 @@ function Landing() {
         </h1>
         <div className="upcomingreleases">
           {upcomingreleases.map((each) => (
-            <div className="upcoming">
-              <img
-                style={{
-                  textAlign: "center",
-                  borderRadius: "50%",
-                  height: "250px",
-                  width: "250px",
-                }}
-                className="upcoming_img"
-                src={each.imageURL}
-              />
-              <div className="textContain">
-                <h3
+            <div className="eachUpcoming">
+              <div key={each._id} className="upcoming">
+                <img
+                  alt="upcomgin release"
                   style={{
                     textAlign: "center",
-                    marginTop: "10px",
-                    marginLeft: "-20px",
-                    color: "white",
+                    borderRadius: "50%",
+                    height: "250px",
+                    width: "250px",
                   }}
-                >
-                  {each.name}
-                </h3>
-                <p
-                  style={{
-                    textAlign: "center",
-                    color: "darkgray",
-                    marginLeft: "-15px",
-                  }}
-                >
-                  Releasing on {each.release}
-                </p>
+                  className="upcoming_img"
+                  src={each.imageURL}
+                />
+                <div className="textContain">
+                  <h3
+                    style={{
+                      textAlign: "center",
+                      marginTop: "10px",
+                      marginLeft: "-20px",
+                      color: "white",
+                    }}
+                  >
+                    {each.name}
+                  </h3>
+                  <p
+                    style={{
+                      textAlign: "center",
+                      color: "darkgray",
+                      marginLeft: "-15px",
+                    }}
+                  >
+                    Releasing on {each.release}
+                  </p>
+                </div>
               </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <h1
+        style={{
+          color: "red",
+          marginTop: "30px",
+          marginBottom: "20px",
+          marginLeft: "auto",
+          marginRight: "auto",
+          width: "95%",
+        }}
+      >
+        Trailers
+      </h1>
+
+      <div className="trailers_row">
+        {trailers.map((each) => (
+          <div className="eachTrailer">
+            <img alt="trailers" src={each.coverimageurl} />
+            <div className="trailerinfo">
+              <h3 style={{ color: "red" }}>{each.name}</h3>
+              <h4>{each.description}</h4>
+              <Link className="trailer_view" to={"/teaser/" + each._id}>
+                <button>Read More</button>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="trending_">
+        <h1
+          style={{
+            color: "red",
+            marginTop: "30px",
+            marginBottom: "20px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "95%",
+          }}
+        >
+          Trending Now
+        </h1>
+        <div className="trendingrow">
+          {trending.map((each) => (
+            <div className="eachTrending">
+              <Link
+                style={{ textDecoration: "none", color: "darkgray" }}
+                to={"/game/" + each._id}
+              >
+                <Trending image={each.imageURL} />
+                <h3>{each.name}</h3>
+              </Link>
             </div>
           ))}
         </div>
@@ -165,13 +217,15 @@ function Landing() {
         </h1>
         <div className="favsrow">
           {mostfavourites.map((each) => (
-            <Link
-              style={{ textDecoration: "none", color: "darkgray" }}
-              to={"/game/" + each._id}
-            >
-              <Trending image={each.imageURL} />
-              <h3>{each.name}</h3>
-            </Link>
+            <div className="eachfav">
+              <Link
+                style={{ textDecoration: "none", color: "darkgray" }}
+                to={"/game/" + each._id}
+              >
+                <Trending image={each.imageURL} />
+                <h3 className="eachfav_name">{each.name}</h3>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

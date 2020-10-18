@@ -94,7 +94,6 @@ router.post(
         const game = await Schedule.findOne({
           _id: id,
         });
-        console.log("after finding the game from schedule::::" + game);
 
         const newgame_ = new Game({
           name: game.name,
@@ -109,11 +108,6 @@ router.post(
           hostURL: game.hostURL,
         });
 
-        /**await Schedule.deleteOne({ _id: id }, (err) => {
-          if (err) console.log(err);
-          console.log(":::::::successfully deleted from schedule!");
-        });**/
-
         await user.createdGames.push(newgame_._id);
         user.noOfCreatedGames += 1;
 
@@ -124,6 +118,14 @@ router.post(
           .catch((err) => {
             console.log(err);
           });
+
+        await Schedule.deleteOne({ _id: id }, (err) => {
+          if (err) {
+            console.log(err);
+          }
+          console.log(":::::::successfully deleted from schedule!");
+        });
+
         console.log("Now Released:::::" + newgame_);
       });
     };
@@ -227,7 +229,9 @@ router.post(
       email: req.user.email,
     });
     if (!user) return res.json("Internal Server Error");
-    console.log(req.files);
+    if (req.fields.fileCount === 0 || !req.files.video) {
+      return res.status(500).json("No files uploaded!!!");
+    }
     console.log(req.fields);
     let filename = [];
     for (let i = 0; i < req.files.files.length; i++) {
@@ -246,6 +250,7 @@ router.post(
     const newvideoname = videoname + ".mp4";
 
     console.log(newvideoname);
+    console.log(filename);
     fs.renameSync(
       `./uploads/games/files/${videoname}`,
       `./uploads/games/files/${videoname}.mp4`
@@ -260,6 +265,7 @@ router.post(
       platform: req.fields.platform,
       images: filename,
       video: newvideoname,
+      coverimageurl: req.fields.img,
     });
     console.log(newteaser);
 
@@ -270,10 +276,54 @@ router.post(
         res.json("Internal Server Error");
       });
 
+    const date = req.fields.release.split("-");
+    console.log(date);
+
+    const scheduleTeaserDelete = async (year, month, day, id) => {
+      console.log(year + "  " + month + "  " + day + "  " + id);
+      const scheduledate = new Date(year, month, day, 17, 50, 1);
+      console.log(scheduledate);
+      let j = schedule.scheduleJob(scheduledate, async function () {
+        await Teaser.deleteOne({ _id: id }, (err) => {
+          if (err) {
+            console.log("Scheduled delete error");
+          }
+          console.log("teaser deleted successfully");
+        });
+      });
+    };
+
+    scheduleTeaserDelete(date[0], date[1] - 1, date[2], newteaser._id);
+
     res.json("OK");
   }
 );
 
+router.get("/teasers", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.status(500).json("Internal Server Error");
+
+  const teaser = await Teaser.find();
+  console.log(teaser);
+
+  res.status(200).json(teaser);
+});
+
+router.get("/teaser/:id", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.status(500).json("Internal Server Error");
+
+  const teaser = await Teaser.findOne({
+    _id: req.params.id,
+  });
+  console.log(teaser);
+
+  res.status(200).json(teaser);
+});
 /**           COMMENT ROUTES  START        **/
 
 router.post("/game/:gameid/makecomment", jwtVerification, async (req, res) => {

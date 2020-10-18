@@ -48,7 +48,7 @@ function Upload() {
       },
       body: formData,
     });
-
+    console.log(response);
     window.location.href = "/myprofile";
     return false;
   };

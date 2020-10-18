@@ -20,10 +20,33 @@
   margin-right: auto;
 }
 
+.eachUpcoming {
+  background-color: rgb(17, 17, 17);
+  border-radius: 10px;
+  width: 260px;
+}
+
+.trailer_view > button {
+  border: none;
+  outline: none;
+  width: 120px;
+  color: white;
+  font-size: 16px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  background-color: rgb(92, 4, 4);
+}
+
+.trailer_view > button:hover {
+  background-color: red;
+}
+
 .upcomingreleases {
   padding: 5px;
   display: flex;
-  background-color: rgb(14, 14, 14);
+  background-color: rgb(92, 4, 4);
   border-radius: 10px;
   width: 95%;
   margin-left: auto;
@@ -37,10 +60,10 @@
 
 .upcoming_img {
   height: 320px;
+  padding: 10px;
   width: 270px;
   border-radius: 10px;
   transition: ease-in 0.1s;
-  margin-right: 20px;
 }
 
 .upcoming {
@@ -81,6 +104,10 @@
 .trendingrow > img {
   display: flex;
 }
+.trendingrow {
+  text-align: center;
+  background-color: rgb(92, 4, 4);
+}
 
 .textContain {
   display: flex;
@@ -88,9 +115,81 @@
   width: 200px;
 }
 
+.trailers_row::-webkit-scrollbar {
+  display: none;
+}
+
+.eachTrending {
+  border-radius: 10px;
+  text-align: center;
+  height: 380px;
+  background-color: rgb(17, 17, 17);
+  width: fit-content;
+}
+
+.eachfav {
+  border-radius: 10px;
+  text-align: center;
+  height: 380px;
+  background-color: rgb(17, 17, 17);
+  width: fit-content;
+}
+
+.eachfav_name {
+  margin-top: 5px;
+}
+
 .favsrow {
   padding: 5px;
+  background-color: rgb(92, 4, 4);
+  border-radius: 10px;
+  display: flex;
+  width: 95%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  cursor: pointer;
+  height: fit-content;
+  overflow-x: scroll;
+}
+
+.eachTrailer {
+  display: flex;
+  color: white;
+}
+
+.trailerinfo > h3 {
+  font-weight: bolder;
+  font-size: 35px;
+}
+
+.trailerinfo > h3,
+h4 {
+  font-weight: 400;
+}
+
+.trailerinfo {
+  padding: 20px;
+  width: 300px;
+}
+
+.eachTrailer {
   background-color: rgb(14, 14, 14);
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.eachTrailer > img {
+  width: 260px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.trailers_row {
+  padding: 5px;
+  background-color: rgb(92, 4, 4);
   border-radius: 10px;
   display: flex;
   width: 95%;
@@ -101,6 +200,10 @@
   cursor: pointer;
   height: fit-content;
   overflow-x: scroll;
+}
+
+.trailers_row::-webkit-scrollbar {
+  display: none;
 }
 
 .favsrow::-webkit-scrollbar {

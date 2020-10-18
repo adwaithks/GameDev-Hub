@@ -65,6 +65,10 @@ const teaserSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  coverimageurl: {
+    type: String,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Teaser", teaserSchema);

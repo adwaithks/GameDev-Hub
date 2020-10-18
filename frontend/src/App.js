@@ -16,6 +16,7 @@ import Teaser from "./components/Main/Teaser";
 import PaymentPage from "./components/Main/PaymentPage";
 import OtherProfile from "./components/Main/OtherProfile";
 import NotFound from "./components/Main/NotFound";
+import OtherTeasers from "./components/Teasers/OtherTeasers";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/profile/*" component={OtherProfile} />
           <Route path="/game/*" component={GamePage} />
           <Route path="/createteaser" component={Teaser} />
+          <Route path="/teaser/*" component={OtherTeasers} />
 
           {localStorage.getItem("Access-Token") && (
             <Route path="/home" component={Landing} />

@@ -328,7 +328,7 @@ function GamePage() {
 
   return (
     <div className="gamepage">
-      {/**<Collapse
+      <Collapse
         style={{ position: "fixed", zIndex: "-1", top: "0", width: "100%" }}
         in={open}
       >
@@ -345,7 +345,7 @@ function GamePage() {
         >
           {response}
         </Alert>
-        </Collapse>**/}
+      </Collapse>
       <div className="mainsection">
         <img className="infoimage" src={info.imageURL} alt="" />
         <div className="gameInformation">
@@ -422,7 +422,7 @@ function GamePage() {
           </button>
         </div>
         <div className="showComments">
-          {comments.length == 0 ? (
+          {comments.length === 0 ? (
             <h1 style={{ padding: "10px" }}>No Comments</h1>
           ) : null}
           {comments.map((each) => (

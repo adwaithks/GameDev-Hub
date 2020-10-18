@@ -8,13 +8,12 @@ const allRoutes = require("./routes/allRoutes");
 const authRoute = require("./routes/authRoute");
 const cors = require("cors");
 const cookieparser = require("cookie-parser");
-const scheduleModel = require("./models/scheduleModel");
 
 app.use(express.json());
 app.use(cookieparser());
 app.use(morgan("dev"));
 app.use(cors());
-app.set("view engine", "ejs");
+app.use(express.static(path.join(__dirname, "uploads", "games", "files")));
 
 mongoose
   .connect(process.env.DB_CONNECTION_URI, {
@@ -31,6 +30,8 @@ mongoose
 app.use("/api/user", authRoute);
 app.use("/", allRoutes);
 
-app.listen(8000, () => {
+const port = process.env.PORT || 8000;
+
+app.listen(port, () => {
   console.log("Server up and running !");
 });
