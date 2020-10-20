@@ -24,6 +24,7 @@
   background-color: rgb(17, 17, 17);
   border-radius: 10px;
   width: 260px;
+  margin-right: 20px;
 }
 
 .trailer_view > button {
@@ -114,6 +115,9 @@
   flex-direction: column;
   width: 200px;
 }
+.upload_form {
+  margin-top: 40px;
+}
 
 .trailers_row::-webkit-scrollbar {
   display: none;
@@ -123,19 +127,22 @@
   border-radius: 10px;
   text-align: center;
   height: 380px;
+  margin-right: 20px;
+
   background-color: rgb(17, 17, 17);
   width: fit-content;
 }
 
 .eachfav {
   border-radius: 10px;
+  margin-right: 20px;
   text-align: center;
   height: 380px;
   background-color: rgb(17, 17, 17);
   width: fit-content;
 }
 
-.eachfav_name {
+.eachfav_ {
   margin-top: 5px;
 }
 

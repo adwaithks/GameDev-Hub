@@ -99,9 +99,6 @@ function Upload() {
   return (
     <div className="upload">
       <div className="upload_options">
-        <div className="uploadHeading">
-          <h1>Create Your Game</h1>
-        </div>
         {schedule ? (
           <button onClick={changeScheduleOption}>Dont Schedule?</button>
         ) : (
@@ -115,13 +112,15 @@ function Upload() {
       {schedule ? (
         <div className="upload_form">
           <form onSubmit={scheduledFormHandler}>
-            <label for="datetime">Schedule date and time:</label>
-            <input
-              className="date_time"
-              type="datetime-local"
-              name="datetime"
-              onChange={(e) => setdatetime(e.target.value)}
-            />
+            <div className="name4">
+              <label for="datetime">Schedule date and time:</label>
+              <input
+                className="date_time"
+                type="datetime-local"
+                name="datetime"
+                onChange={(e) => setdatetime(e.target.value)}
+              />
+            </div>
             <div className="name4">
               <label className="namel" htmlFor="">
                 AM/PM:

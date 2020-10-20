@@ -45,7 +45,7 @@ function Landing() {
     };
 
     const getReleases = async () => {
-      await fetch(`http://localhost:8000/myschedules`, {
+      await fetch(`http://localhost:8000/schedules`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

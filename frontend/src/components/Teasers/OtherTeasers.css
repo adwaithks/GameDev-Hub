@@ -1,13 +1,19 @@
 .otherteasers {
   text-align: center;
+  color: white;
+}
+
+.teaserinfo {
+  display: flex;
+  flex-direction: column;
 }
 
 .horizline {
   height: 3px;
-  color: red;
+  color: rgb(0, 0, 0);
   border-radius: 5px;
   width: 80%;
-  background-color: red;
+  background-color: black;
   margin-left: auto;
   margin-right: auto;
 }
@@ -18,13 +24,18 @@
   -moz-box-shadow: 1px 1px 12px 2px rgb(15, 15, 15); /* Firefox 3.5 - 3.6 */
   box-shadow: 1px 1px 12px 2px rgb(17, 17, 17); /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
   margin-top: 20px;
+  transition: ease-in 0.3s;
   margin-left: auto;
   margin-right: auto;
   height: 720px;
 }
 
+.trailervideo:hover {
+  transform: scale(1.02);
+}
+
 .teaserdescription {
-  width: 90%;
+  width: 80%;
   border-radius: 10px;
   margin-bottom: 80px;
   background-color: rgb(15, 15, 15);
@@ -41,7 +52,8 @@
 
 .earlypics {
   display: flex;
-  width: 90%;
+  border-radius: 10px;
+  width: fit-content;
   overflow-x: scroll;
   margin-left: auto;
   margin-right: auto;
@@ -69,5 +81,9 @@
     margin-left: auto;
     margin-right: auto;
     height: 420px;
+  }
+
+  .mainsection {
+    height: fit-content;
   }
 }

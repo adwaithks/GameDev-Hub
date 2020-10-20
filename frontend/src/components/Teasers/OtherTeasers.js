@@ -30,17 +30,43 @@ function OtherTeasers() {
 
   return (
     <div className="otherteasers">
+    <div className="mainsection" style={{marginTop: '100px', width: "80%", marginLeft: 'auto', marginRight: 'auto'}}>
+        <img className="teaserimage" src={teaser.coverimageurl} alt="" />
+        <div className="gameInformation">
+          <div>
+            <h1 style={{ textTransform: "uppercase", fontWeight: "800" }}>
+              {teaser.name}
+            </h1>
+          </div>
+
+          <p className="short_desc">{teaser.description}</p>
+
+          <div className="gameteaser2">
+            <h3>Author: {teaser.creator}</h3>
+            <h3>Price: ${teaser.price}</h3>
+          </div>
+          <div className="tagContainer_">
+                <div className="category">
+                  <p>{teaser.category}</p>
+                </div>
+                <div className="platform">
+                  <p>{teaser.platform}</p>
+                </div>
+              </div>
+        </div>
+      </div>
+      
+
       <h1
         style={{
+          marginTop: "20px",
+          fontWeight: "800",
+          marginBottom: "20px",
           color: "white",
-          marginTop: "100px",
-          textTransform: "uppercase",
         }}
       >
-        {teaser.name}
+        Description
       </h1>
-
-      <h1 style={{ marginTop: "50px", color: "red" }}>Description</h1>
       <div className="teaserdescription">
         <h3>{teaser.description}</h3>
       </div>
@@ -55,7 +81,16 @@ function OtherTeasers() {
 
       <div style={{ marginTop: "50px" }} className="horizline"></div>
 
-      <h1 style={{ marginTop: "20px", color: "red" }}>Early In-Game pics</h1>
+      <h1
+        style={{
+          marginTop: "20px",
+          fontWeight: "800",
+          marginBottom: "20px",
+          color: "white",
+        }}
+      >
+        Early In-Game pics
+      </h1>
       <div className="earlypics">
         {images.map((each) => (
           <div className="eachpic">

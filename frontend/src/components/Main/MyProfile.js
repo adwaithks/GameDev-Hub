@@ -95,12 +95,14 @@ function MyProfile() {
       <div className="usersection">
         <div className="logo__username">
           <div className="avatar">
-            <h1>{letter}</h1>
+            <h1 style={{ color: "white" }}>{letter}</h1>
           </div>
           <h3>{me.username}</h3>
         </div>
         <div className="stats">
-          <h2 style={{ marginTop: "20px", fontWeight: "800" }}>STATS</h2>
+          <h2 style={{ marginTop: "20px", fontWeight: "800", color: "white" }}>
+            STATS
+          </h2>
           <div className="statsoptions">
             <p>Rating: -</p>
             <p>Created Games: {me.noOfCreatedGames}</p>
@@ -123,15 +125,15 @@ function MyProfile() {
       <div className="gamesection">
         <div className="createdgamesRow">
           <div className="createdgame">
-            <h1>Created Games</h1>
+            <h1 style={{ color: "white" }}>Created Games</h1>
           </div>
           {mygames.map((each) => (
             <div key={each._id} className="eachgame">
               <div className="gameimg">
                 <img
                   style={{
-                    height: "240px",
-                    width: "190px",
+                    height: "290px",
+                    width: "250px",
                     marginBottom: "20px",
                   }}
                   src={each.imageURL}
@@ -139,7 +141,7 @@ function MyProfile() {
                 />
               </div>
               <div className="gameinfo">
-                <Link to={"/game/" + each._id}>
+                <Link className="gameinfo_link" to={"/game/" + each._id}>
                   <h1>{each.name}</h1>
                 </Link>
                 <h3>{each.description}</h3>
@@ -162,7 +164,7 @@ function MyProfile() {
         ></div>
         <div className="favgamesRow">
           <div className="favgame">
-            <h1>My Favourites</h1>
+            <h1 style={{ color: "white" }}>My Favourites</h1>
           </div>
           {myfavourites.map((each) => (
             <div key={each._id} className="faveachgame">
@@ -178,7 +180,7 @@ function MyProfile() {
                 />
               </div>
               <div className="gameinfo">
-                <Link to={"/game/" + each._id}>
+                <Link className="gameinfo_link" to={"/game/" + each._id}>
                   <h1>{each.name}</h1>
                 </Link>
                 <h3>{each.description}</h3>

@@ -81,7 +81,7 @@ function GamePage() {
       })
         .then((res) => res.json())
         .then((finalRes2) => {
-          ////console.log(finalRes2);
+          console.log(finalRes2);
           setPurchasedGames(finalRes2.purchasedGames);
           setFav(finalRes2.favouriteGames);
           setMe(finalRes2);
@@ -158,36 +158,26 @@ function GamePage() {
     window.open(`http://localhost:8000/download/${id}`);
   };
 
-  const purchaseHandler = async (me, info) => {
+  const purchaseHandler = async (info) => {
     //console.log("purchased");
     //console.log(me);
-    //console.log(info);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/game/${info._id}/purchase`, {
-      method: "POST",
+    await fetch(`http://localhost:8000/purchase/game/${info._id}`, {
+      method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
-        "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        stripeEmail: me.email,
-        stripeToken: process.env.STRIPE_TOKEN,
-        name: me.username,
-        amount: info.price * 100,
-        description: info.name,
-      }),
     })
-      .then((res) => {
-        res.json();
-        //console.log(res.json());
-      })
+      .then((res) => res.json())
       .then((finalRes) => {
+        console.log(finalRes);
+        window.open(finalRes.link, "_blank");
         //console.log(finalRes.json());
         //setOpen(true);
         //setResponse(finalRes);
       })
       .catch((err) => {
-        //console.log(err);
+        console.log(err);
       });
   };
 
@@ -270,10 +260,23 @@ function GamePage() {
     const price = props.price;
     const gameid = props.gameid;
     const purchasedGames = props.purchasedGames;
+    console.log(purchasedGames);
     ////console.log(price);
     ////console.log(gameid);
     ////console.log(purchasedGames);
-    if (price === "Free") {
+
+    if (price !== "Free" && !purchasedGames.includes(gameid)) {
+      return (
+        <button
+          className="downloadbtn"
+          onClick={() => {
+            purchaseHandler(info);
+          }}
+        >
+          Purchase
+        </button>
+      );
+    } else if (purchasedGames.includes(gameid)) {
       return (
         <button
           className="downloadbtn"
@@ -285,13 +288,8 @@ function GamePage() {
         </button>
       );
     }
-    if (price !== "Free" && !purchasedGames.includes(gameid)) {
-      return (
-        <button className="downloadbtn" onClick={purchaseHandler}>
-          Purchase
-        </button>
-      );
-    } else if (price !== "Free" && purchasedGames.includes(gameid)) {
+
+    if (price === "Free") {
       return (
         <button
           className="downloadbtn"

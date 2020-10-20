@@ -13,7 +13,6 @@ app.use(express.json());
 app.use(cookieparser());
 app.use(morgan("dev"));
 app.use(cors());
-app.use(express.static(path.join(__dirname, "uploads", "games", "files")));
 
 mongoose
   .connect(process.env.DB_CONNECTION_URI, {
@@ -29,6 +28,7 @@ mongoose
 
 app.use("/api/user", authRoute);
 app.use("/", allRoutes);
+app.use(express.static(path.join(__dirname, "uploads", "games", "files")));
 
 const port = process.env.PORT || 8000;
 

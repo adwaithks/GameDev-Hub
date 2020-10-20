@@ -99,8 +99,8 @@ function Teaser() {
               name="sdescription"
               onChange={(event) => setDesc(event.target.value)}
               value={desc}
-              placeholder="Not more than 200 chars"
-              maxLength="200"
+              placeholder="Description"
+              maxLength="500"
               required
             />
           </div>

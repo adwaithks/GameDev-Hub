@@ -135,6 +135,11 @@
   margin-top: 20px;
 }
 
+.gameinfo_link {
+  font-size: 16px;
+  color: red;
+}
+
 .gameinfo > h1 {
   color: red;
   text-transform: uppercase;
@@ -191,5 +196,10 @@
     display: flex;
     height: fit-content;
     width: fit-content;
+  }
+
+  .gameinfo_link {
+    font-size: 14px;
+    color: red;
   }
 }

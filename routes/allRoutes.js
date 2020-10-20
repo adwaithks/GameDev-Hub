@@ -1,8 +1,8 @@
 const jwtVerification = require("./jwtVerification");
 const router = require("express").Router();
 const Game = require("../models/gameModel");
-const mongoose = require("mongoose");
 const Teaser = require("../models/teaserModel");
+const paypal = require("paypal-rest-sdk");
 const User = require("../models/userModel");
 const formidable = require("express-formidable");
 const Schedule = require("../models/scheduleModel");
@@ -12,6 +12,12 @@ const path = require("path");
 const Comment = require("../models/commentModel");
 
 // Schedule routes
+
+paypal.configure({
+  mode: "sandbox", //sandbox or live
+  client_id: process.env.PAYPAL_CLIENT_ID,
+  client_secret: process.env.PAYPAL_CLIENT_SECRET,
+});
 
 router.post(
   "/schedule",
@@ -146,7 +152,113 @@ router.post(
   }
 );
 
-router.get("/myschedules", jwtVerification, async (req, res) => {
+router.get("/purchase/game/:id", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.json("Internal Server Error");
+
+  const game = await Game.findOne({
+    _id: req.params.id,
+  });
+  if (!game) return res.json("Internal Server Error");
+
+  const create_payment_json = {
+    intent: "sale",
+    payer: {
+      payment_method: "paypal",
+    },
+    redirect_urls: {
+      return_url: `http://localhost:8000/payment/${game._id}/success`,
+      cancel_url: "http://localhost:8000/payment/cancel",
+    },
+    transactions: [
+      {
+        item_list: {
+          items: [
+            {
+              name: game.name,
+              sku: "item",
+              price: game.price,
+              currency: "USD",
+              quantity: 1,
+            },
+          ],
+        },
+        amount: {
+          currency: "USD",
+          total: game.price,
+        },
+        description: `purchase of ${game.name}`,
+      },
+    ],
+  };
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+      throw error;
+    }
+    for (let i = 0; i < payment.links.length; i++) {
+      if (payment.links[i].rel === "approval_url") {
+        const response = {
+          link: payment.links[i].href,
+        };
+        console.log(response);
+        res.json(response);
+      }
+    }
+  });
+});
+
+router.get("/payment/:id/success", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    email: req.user.email,
+  });
+  if (!user) return res.json("Internal Server Error");
+
+  const game = await Game.findOne({
+    _id: req.params.id,
+  });
+  if (!game) return res.json("Internal Server Error");
+
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    payer_id: payerId,
+    transactions: [
+      {
+        amount: {
+          currency: "USD",
+          total: game.price,
+        },
+      },
+    ],
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, function (
+    error,
+    payment
+  ) {
+    if (error) {
+      res.status(500).json("Internal Server Error");
+    } else {
+      console.log("Get Payment Response");
+      console.log(JSON.stringify(payment));
+    }
+  });
+
+  user.purchasedGames.push(game._id);
+  await user
+    .save()
+    .then()
+    .catch((err) => {
+      res.status(500).json("Internal Server Error");
+    });
+  res.redirect("http://localhost:3000/myprofile");
+});
+
+router.get("/schedules", jwtVerification, async (req, res) => {
   const user = await User.findOne({
     email: req.user.email,
   });
