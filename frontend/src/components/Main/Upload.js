@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Upload.css";
 import Dropzone from "react-dropzone";
 import { Link } from "react-router-dom";
+import CloseIcon from "@material-ui/icons/Close";
 
 function Upload() {
   const [desc, setDesc] = useState("");
@@ -11,6 +12,7 @@ function Upload() {
   const [platform, setplatform] = useState("Mac");
   const [datetime, setdatetime] = useState("");
   const [imgurl, setImgURL] = useState("");
+  const [filename, setFilename] = useState("");
   const [amorpm, setamorpm] = useState("0");
   const [hosturl, setHostURL] = useState("");
   const [schedule, setSchedule] = useState(false);
@@ -41,7 +43,7 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("/proxy/create/game", {
+    const response = await fetch("http://localhost:5000/proxy/create/game", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -78,7 +80,7 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("/proxy/schedule", {
+    const response = await fetch("http://localhost:5000/proxy/schedule", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -92,8 +94,11 @@ function Upload() {
   };
 
   const onDrop = (acceptedFiles) => {
+    console.log(acceptedFiles[0].name);
+    setFilename(acceptedFiles[0].name);
     console.log("zip dropped");
     setFiles(acceptedFiles);
+    console.log(files);
   };
 
   return (
@@ -249,18 +254,33 @@ function Upload() {
                 placeholder="URL to hosted game"
               />
             </div>
-            <div className="">
-              <Dropzone className="dropzone" onDrop={onDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <div className="droparea" {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <h3 style={{ color: "darkgray", padding: "80px" }}>
-                      Drag & Drop File (.zip)
-                    </h3>
-                  </div>
-                )}
-              </Dropzone>
-            </div>
+            {filename ? (
+              <div className="filenameContainer">
+              <div style={{ color: "white" }} className="filenameindicator">
+                <h3>{filename}</h3>
+              </div>
+              <div>
+                <CloseIcon style={{color: 'white'}} onClick={() => {
+                  setFilename("");
+                  setFiles();
+                  }} />
+              </div>
+              </div>
+              
+            ) : (
+              <div className="">
+                <Dropzone className="dropzone" onDrop={onDrop}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div className="droparea" {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <h3 style={{ color: "darkgray", padding: "80px" }}>
+                        Drag & Drop File (.zip)
+                      </h3>
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+            )}
             <button className="create" type="submit" value="Create">
               Submit
             </button>
@@ -384,18 +404,35 @@ function Upload() {
                 placeholder="URL to hosted game"
               />
             </div>
-            <div className="">
-              <Dropzone className="dropzone" onDrop={onDrop}>
-                {({ getRootProps, getInputProps }) => (
-                  <div className="droparea" {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <h3 style={{ color: "darkgray", padding: "80px" }}>
-                      Drag & Drop File (.zip)
-                    </h3>
-                  </div>
-                )}
-              </Dropzone>
-            </div>
+
+            {filename ? (
+              <div className="filenameContainer">
+              <div style={{ color: "white" }} className="filenameindicator">
+                <h3>{filename}</h3>
+              </div>
+              <div>
+                <CloseIcon style={{color: 'white'}} onClick={() => {
+                  setFilename("");
+                  setFiles();
+                  }} />
+              </div>
+              </div>
+              
+            ) : (
+              <div className="">
+                <Dropzone className="dropzone" onDrop={onDrop}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div className="droparea" {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <h3 style={{ color: "darkgray", padding: "80px" }}>
+                        Drag & Drop File (.zip)
+                      </h3>
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+            )}
+
             <button className="create" type="submit" value="Create">
               Submit
             </button>

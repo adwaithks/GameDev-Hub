@@ -66,6 +66,28 @@
   padding: 10px;
 }
 
+.filenameContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 12px;
+  background-color: rgb(56, 56, 56);
+  border-radius: 10px;
+  height: 50px;
+}
+
+.filenameindicator {
+  width: fit-content;
+}
+
+.filenameindicator > h3 {
+  float: left;
+  color: red;
+  font-weight: 500;
+}
+
 .name2 > textarea:hover {
   opacity: 1;
 }

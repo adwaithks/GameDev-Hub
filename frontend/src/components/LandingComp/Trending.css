@@ -5,10 +5,6 @@
   transition: ease-in 0.1s;
 }
 
-.trending_images:hover {
-  transform: scale(1.02);
-}
-
 @media (max-width: 500px) {
   .trending_images {
     height: 300px;

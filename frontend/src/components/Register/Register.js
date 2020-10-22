@@ -19,7 +19,7 @@ function Register() {
       password: password,
     };
     event.preventDefault();
-    await fetch("/api/user/register", {
+    await fetch("http://localhost:5000/api/user/register", {
       method: "POST",
       cache: "no-cache",
       headers: {

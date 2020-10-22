@@ -12,7 +12,7 @@ function MyProfile() {
 
   useEffect(() => {
     const myCreatedGames = async () => {
-      await fetch("/proxy/mycreatedgames", {
+      await fetch("http://localhost:5000/proxy/mycreatedgames", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -30,7 +30,7 @@ function MyProfile() {
     };
 
     const myfav = async () => {
-      await fetch("/proxy/myfavouritegames", {
+      await fetch("http://localhost:5000/proxy/myfavouritegames", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -48,7 +48,7 @@ function MyProfile() {
     };
 
     const me = async () => {
-      await fetch("/api/user/me", {
+      await fetch("http://localhost:5000/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -72,12 +72,15 @@ function MyProfile() {
 
   const removefavHandler = async (event) => {
     event.preventDefault();
-    await fetch(`/proxy/${event.target.value}/removefavourite`, {
-      method: "GET",
-      headers: {
-        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
-      },
-    })
+    await fetch(
+      `http://localhost:5000/proxy/${event.target.value}/removefavourite`,
+      {
+        method: "GET",
+        headers: {
+          "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((finalRes3) => {
         console.log(finalRes3);

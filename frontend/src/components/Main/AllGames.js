@@ -23,7 +23,7 @@ function AllGames() {
 
   useEffect(() => {
     const fetchAllGames = async () => {
-      await fetch("/proxy/allgames", {
+      await fetch("http://localhost:5000/proxy/allgames", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -58,7 +58,7 @@ function AllGames() {
 
   const visitProfile = async (author) => {
     const me = async () => {
-      await fetch("/api/user/me", {
+      await fetch("http://localhost:5000/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -91,7 +91,7 @@ function AllGames() {
   };
 
   const playHandler = async (id) => {
-    await fetch(`/proxy/game/getready/${id}`, {
+    await fetch(`http://localhost:5000/proxy/game/getready/${id}`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

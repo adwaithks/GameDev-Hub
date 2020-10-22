@@ -34,7 +34,12 @@ router.post(
     if (!user) return res.json("Internal Server Error");
 
     const filename = req.files.files.path.match(/(\upload_.*)/g).toString();
-    newfilename = filename + ".zip";
+    let newfilename;
+    if (req.files.files.type === "application/x-zip-compressed") {
+      newfilename = filename + ".zip";
+    } else {
+      newfilename = filename + ".rar";
+    }
 
     fs.renameSync(
       `./uploads/games/zips/${filename}`,
@@ -255,7 +260,7 @@ router.get("/payment/:id/success", jwtVerification, async (req, res) => {
     .catch((err) => {
       res.status(500).json("Internal Server Error");
     });
-  res.redirect("http://localhost:3000/myprofile");
+  res.redirect("http://localhost:8000/myprofile");
 });
 
 router.get("/schedules", jwtVerification, async (req, res) => {
@@ -282,22 +287,21 @@ router.post(
       email: req.user.email,
     });
     if (!user) return res.json("Internal Server Error");
-    console.log(req.files.files);
 
     const filename = req.files.files.path.match(/(\upload_.*)/g).toString();
-    const newfilename = filename + ".zip";
+    let newfilename;
+    if (req.files.files.type === "application/x-zip-compressed") {
+      newfilename = filename + ".zip";
+    } else {
+      newfilename = filename + ".rar";
+    }
     fs.renameSync(
       `./uploads/games/zips/${filename}`,
-      `./uploads/games/zips/${filename}.zip`
+      `./uploads/games/zips/${newfilename}`
     );
-    console.log("filename" + filename);
+    console.log("filename" + newfilename);
+    console.log(req.files.files.type);
 
-    if (!req.fields.fee) {
-      req.fields.fee = "Free";
-    }
-    if (!req.fields.hosturl) {
-      req.fields.hostURL = "";
-    }
     console.log(req.fields);
 
     const newGame = new Game({
@@ -315,7 +319,7 @@ router.post(
 
     await user.createdGames.push(newGame._id);
     user.noOfCreatedGames += 1;
-
+    console.log(newGame);
     await user.save().then().catch();
     await newGame
       .save()
@@ -329,7 +333,7 @@ router.post(
 );
 
 router.post(
-  "/uploadsss",
+  "/teaser/upload/new",
   formidable({
     encoding: "utf-8",
     uploadDir: "./uploads/games/files",
@@ -340,34 +344,52 @@ router.post(
     const user = await User.findOne({
       email: req.user.email,
     });
+    console.log(req.fields);
+    console.log(req.files);
     if (!user) return res.json("Internal Server Error");
     if (req.fields.fileCount === 0 || !req.files.video) {
       return res.status(500).json("No files uploaded!!!");
     }
     console.log(req.fields);
     let filename = [];
+    let extensions = [];
     for (let i = 0; i < req.files.files.length; i++) {
       filename.push(req.files.files[i].path.match(/(\upload_.*)/g).toString());
+      if (req.files.files[i].type === "image/jpeg") {
+        extensions.push(".jpeg");
+      } else if (req.files.files[i].type === "image/png") {
+        extensions.push(".png");
+      } else {
+        extensions.push(".jpg");
+      }
       fs.renameSync(
         `./uploads/games/files/${filename[i]}`,
-        `./uploads/games/files/${filename[i]}.png`
+        `./uploads/games/files/${filename[i]}${extensions[i]}`
       );
     }
 
     for (let i = 0; i < filename.length; i++) {
-      filename[i] = filename[i] + ".png";
+      filename[i] = filename[i] + extensions[i];
     }
 
     const videoname = req.files.video.path.match(/(\upload_.*)/g).toString();
-    const newvideoname = videoname + ".mp4";
+    console.log("type of video:::::" + req.files.video.type);
+    let videoExtension = "";
+    if (req.files.video.type === "video/x-matroska") {
+      videoExtension = ".mkv";
+    } else {
+      videoExtension = ".mp4";
+    }
+    const newvideoname = videoname + videoExtension;
 
     console.log(newvideoname);
     console.log(filename);
     fs.renameSync(
       `./uploads/games/files/${videoname}`,
-      `./uploads/games/files/${videoname}.mp4`
+      `./uploads/games/files/${newvideoname}`
     );
 
+    console.log(11111111111);
     const newteaser = new Teaser({
       name: req.fields.name,
       releaseDate: req.fields.release,
@@ -655,7 +677,7 @@ router.get("/:author/favouritegames", async (req, res) => {
 
 router.get("/download/:id", jwtVerification, async (req, res) => {
   const game = await Game.findOne({
-    gameFile: req.params.id,
+    _id: req.params.id,
   });
   if (!game) return res.status(500).json("Internal Server Error");
   game.downloads += 1;
@@ -665,11 +687,12 @@ router.get("/download/:id", jwtVerification, async (req, res) => {
     .catch((err) => {
       return res.status(500).json("Internal Server Error");
     });
+  console.log(game);
 
   const file = path
-    .join(__dirname, `../uploads/games/zips/${req.params.id}`)
+    .join(__dirname, `../uploads/games/zips/${game.gameFile}`)
     .toString();
-  res.status(200).download(file, "game.zip");
+  res.download(file);
 });
 
 router.get("/myfavouritegames", jwtVerification, async (req, res) => {

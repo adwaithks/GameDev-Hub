@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
+import CloseIcon from "@material-ui/icons/Close";
+
 import "./Teaser.css";
 
 function Teaser() {
@@ -9,6 +11,8 @@ function Teaser() {
   const [platform, setplatform] = useState("Mac");
   const [schedule, setSchedule] = useState("");
   const [video, setVideo] = useState();
+  const [imagenames, setimagenames] = useState([]);
+  const [videoname, setvideoname] = useState("");
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [files, setFiles] = useState();
@@ -25,25 +29,29 @@ function Teaser() {
     formData.append("platform", platform);
     formData.append("category", category);
     let count = 0;
+    console.log(files);
     for (const i in files) {
       formData.append("files", files[i]);
       count = count + 1;
     }
     for (const i in video) {
-      formData.append("video", files[i]);
+      formData.append("video", video[i]);
     }
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("/proxy/uploadsss", {
-      method: "POST",
-      headers: {
-        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
-      },
-      body: formData,
-    });
+    const response = await fetch(
+      "http://localhost:5000/proxy/teaser/upload/new",
+      {
+        method: "POST",
+        headers: {
+          "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+        },
+        body: formData,
+      }
+    );
     console.log(response);
-    window.location.href = "/myprofile";
+    window.open("/home");
     return false;
   };
 
@@ -54,6 +62,7 @@ function Teaser() {
 
   const onDrop2 = (acceptedFiles) => {
     console.log("dropped");
+    setvideoname(acceptedFiles[0].name);
     setVideo(acceptedFiles);
   };
 
@@ -182,18 +191,35 @@ function Teaser() {
             </Dropzone>
           </div>
 
-          <div style={{ marginTop: "40px" }}>
-            <Dropzone className="dropzone" onDrop={onDrop2}>
-              {({ getRootProps, getInputProps }) => (
-                <div className="droparea" {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <h3 style={{ color: "darkgray", padding: "80px" }}>
-                    Drag & Drop video trailer (.mp4)
-                  </h3>
-                </div>
-              )}
-            </Dropzone>
-          </div>
+          {videoname ? (
+            <div className="filenameContainer" style={{ marginTop: "40px" }}>
+              <div style={{ color: "white" }} className="filenameindicator">
+                <h3>{videoname}</h3>
+              </div>
+              <div>
+                <CloseIcon
+                  style={{ color: "white" }}
+                  onClick={() => {
+                    setvideoname("");
+                    setVideo();
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="" style={{ marginTop: "40px" }}>
+              <Dropzone className="dropzone" onDrop={onDrop2}>
+                {({ getRootProps, getInputProps }) => (
+                  <div className="droparea" {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    <h3 style={{ color: "darkgray", padding: "80px" }}>
+                      Drag & Drop Trailer movie (.mp4)
+                    </h3>
+                  </div>
+                )}
+              </Dropzone>
+            </div>
+          )}
 
           <button className="create" type="submit" value="Create">
             Publish

@@ -12,7 +12,7 @@ function Landing() {
 
   useEffect(() => {
     const getTrending = async () => {
-      await fetch(`/proxy/trending`, {
+      await fetch(`http://localhost:5000/proxy/trending`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -29,7 +29,7 @@ function Landing() {
     };
 
     const getTrailers = async () => {
-      await fetch(`/proxy/teasers`, {
+      await fetch(`http://localhost:5000/proxy/teasers`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -45,7 +45,7 @@ function Landing() {
     };
 
     const getReleases = async () => {
-      await fetch(`/proxy/schedules`, {
+      await fetch(`http://localhost:5000/proxy/schedules`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -62,7 +62,7 @@ function Landing() {
     };
 
     const getMostFavourites = async () => {
-      await fetch(`/proxy/mostfavourites`, {
+      await fetch(`http://localhost:5000/proxy/mostfavourites`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -107,7 +107,7 @@ function Landing() {
             <div className="eachUpcoming">
               <div key={each._id} className="upcoming">
                 <img
-                  alt="upcomgin release"
+                  alt="upcomging release"
                   style={{
                     textAlign: "center",
                     borderRadius: "50%",
