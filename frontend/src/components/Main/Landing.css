@@ -2,7 +2,7 @@
   display: flex;
   width: 95%;
   margin-left: auto;
-  background-color: rgb(14, 14, 14);
+  background-color: rgb(54, 6, 6);
   border-radius: 10px;
   padding: 5px;
   margin-right: auto;
@@ -47,7 +47,7 @@
 .upcomingreleases {
   padding: 5px;
   display: flex;
-  background-color: rgb(92, 4, 4);
+  background-color: rgb(70, 7, 7);
   border-radius: 10px;
   width: 95%;
   margin-left: auto;
@@ -107,7 +107,7 @@
 }
 .trendingrow {
   text-align: center;
-  background-color: rgb(92, 4, 4);
+  background-color: rgb(66, 4, 4);
 }
 
 .textContain {
@@ -148,7 +148,7 @@
 
 .favsrow {
   padding: 5px;
-  background-color: rgb(92, 4, 4);
+  background-color: rgb(54, 6, 6);
   border-radius: 10px;
   display: flex;
   width: 95%;
@@ -196,7 +196,7 @@ h4 {
 
 .trailers_row {
   padding: 5px;
-  background-color: rgb(92, 4, 4);
+  background-color: rgb(54, 6, 6);
   border-radius: 10px;
   display: flex;
   width: 95%;

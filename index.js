@@ -28,7 +28,17 @@ mongoose
 
 app.use("/api/user", authRoute);
 app.use("/", allRoutes);
-app.use(express.static(path.join(__dirname, "uploads", "games", "files")));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("frontend/build"));
+  console.log("prod");
+  app.get("*", async (req, res) => {
+    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+  });
+} else {
+  console.log("stage");
+  app.use(express.static(path.join(__dirname, "uploads")));
+}
 
 const port = process.env.PORT || 8000;
 

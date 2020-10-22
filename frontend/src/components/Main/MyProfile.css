@@ -15,6 +15,7 @@
 
 .statsoptions > p {
   letter-spacing: 1px;
+  margin-bottom: 5px;
   position: relative;
   padding: 17px;
   font-size: 20px;
@@ -141,7 +142,7 @@
 }
 
 .gameinfo > h1 {
-  color: red;
+  color: red !important;
   text-transform: uppercase;
   margin-bottom: 5px;
 }
@@ -167,13 +168,14 @@
   height: 240px;
   width: 240px;
   border-radius: 50%;
+  text-align: center;
   margin-top: 50px;
   background-color: orange;
 }
 
 .avatar > h1 {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px;
   font-size: 150px;
 }
 

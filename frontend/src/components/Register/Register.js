@@ -60,56 +60,54 @@ function Register() {
           {response}
         </Alert>
       </Collapse>
-      <div className="login__container">
-        <h1 className="mainheading">Register</h1>
+      <div className="register__container">
+        <h1 className="mainheading2">Register</h1>
         <form onSubmit={sendRegisterInfo}>
-          <div className="form-group-login">
-            <label>Username</label>
-            <input
-              className="form-control"
-              type="text"
-              name="username"
-              onChange={(event) => setUsername(event.target.value)}
-              value={username}
-              placeholder="adwaith"
-              required
-            />
+          <div className="formContainer2">
+            <div className="form-group-login2">
+              <label>Username</label>
+              <input
+                className="form-control2"
+                type="text"
+                name="email"
+                onChange={(event) => setUsername(event.target.value)}
+                value={username}
+                placeholder="username"
+                required
+              />
+            </div>
+            <div className="form-group-login2">
+              <label>Email</label>
+              <input
+                className="form-control2"
+                type="text"
+                name="email"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+                placeholder="email"
+                required
+              />
+            </div>
+            <div className="form-group-login2">
+              <label>Password</label>
+              <input
+                className="form-control2"
+                type="password"
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+                name="password"
+                placeholder="********"
+                required
+              />
+            </div>
           </div>
-          <div className="form-group-login">
-            <label>Email</label>
-            <input
-              className="form-control"
-              type="text"
-              name="email"
-              onChange={(event) => setEmail(event.target.value)}
-              value={email}
-              placeholder="james.bond@spectre.com"
-              required
-            />
-          </div>
-          <div className="form-group-login">
-            <label>Password</label>
-            <input
-              className="form-control"
-              type="password"
-              onChange={(event) => setPassword(event.target.value)}
-              value={password}
-              name="password"
-              placeholder="********"
-              required
-            />
-          </div>
-          <div className="m-t-lg">
-            <ul className="list-inline">
-              <li>
-                <button className="loginbtn" type="submit">
-                  Login
-                </button>
-              </li>
-              <Link className="link" to="/login">
-                <h4>New to Community?</h4>
-              </Link>
-            </ul>
+          <div className="buttonlinkContainer2">
+            <button className="loginbtn2" type="submit">
+              Register
+            </button>
+            <Link className="link2" to="/login">
+              <h4>Login instead?</h4>
+            </Link>
           </div>
         </form>
       </div>

@@ -61,41 +61,39 @@ function Login() {
       <div className="login__container">
         <h1 className="mainheading">Login</h1>
         <form onSubmit={sendLoginInfo}>
-          <div className="form-group-login">
-            <label>Email</label>
-            <input
-              className="form-control"
-              type="text"
-              name="email"
-              onChange={(event) => setEmail(event.target.value)}
-              value={email}
-              placeholder="james.bond@spectre.com"
-              required
-            />
+          <div className="formContainer">
+            <div className="form-group-login">
+              <label>Email</label>
+              <input
+                className="form-control"
+                type="text"
+                name="email"
+                onChange={(event) => setEmail(event.target.value)}
+                value={email}
+                placeholder="email id"
+                required
+              />
+            </div>
+            <div className="form-group-login">
+              <label>Password</label>
+              <input
+                className="form-control"
+                type="password"
+                onChange={(event) => setPassword(event.target.value)}
+                value={password}
+                name="password"
+                placeholder="********"
+                required
+              />
+            </div>
           </div>
-          <div className="form-group-login">
-            <label>Password</label>
-            <input
-              className="form-control"
-              type="password"
-              onChange={(event) => setPassword(event.target.value)}
-              value={password}
-              name="password"
-              placeholder="********"
-              required
-            />
-          </div>
-          <div className="m-t-lg">
-            <ul className="list-inline">
-              <li>
-                <button className="loginbtn" type="submit">
-                  Login
-                </button>
-              </li>
-              <Link className="link" to="/register">
-                <h4>New to Community?</h4>
-              </Link>
-            </ul>
+          <div className="buttonlinkContainer">
+            <button className="loginbtn" type="submit">
+              Login
+            </button>
+            <Link className="link" to="/register">
+              <h4>New to Community?</h4>
+            </Link>
           </div>
         </form>
       </div>

@@ -247,6 +247,7 @@ function GamePage() {
       .then((res) => res.json())
       .then((finalRes) => {
         console.log(finalRes);
+        setinputcomment("");
         setTemp(Date.now());
         setOpen(true);
         setResponse(finalRes);
@@ -408,7 +409,9 @@ function GamePage() {
         <div className="commentInput">
           <input
             placeholder="Comment..."
-            onChange={(e) => setinputcomment(e.target.value)}
+            onChange={(e) => {
+              setinputcomment(e.target.value);
+            }}
             value={inputcomment}
           ></input>
           <button

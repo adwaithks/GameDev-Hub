@@ -106,8 +106,6 @@ function MyProfile() {
           <div className="statsoptions">
             <p>Rating: -</p>
             <p>Created Games: {me.noOfCreatedGames}</p>
-            <p>Popularity: -</p>
-            <p>Signal: -</p>
           </div>
         </div>
       </div>
@@ -125,7 +123,7 @@ function MyProfile() {
       <div className="gamesection">
         <div className="createdgamesRow">
           <div className="createdgame">
-            <h1 style={{ color: "white" }}>Created Games</h1>
+            <h1 style={{ color: "red" }}>Created Games</h1>
           </div>
           {mygames.map((each) => (
             <div key={each._id} className="eachgame">
@@ -164,7 +162,7 @@ function MyProfile() {
         ></div>
         <div className="favgamesRow">
           <div className="favgame">
-            <h1 style={{ color: "white" }}>My Favourites</h1>
+            <h1 style={{ color: "red" }}>My Favourites</h1>
           </div>
           {myfavourites.map((each) => (
             <div key={each._id} className="faveachgame">

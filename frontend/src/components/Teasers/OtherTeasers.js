@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./OtherTeasers.css";
+import { Link } from "react-router-dom";
 
 function OtherTeasers() {
   const [teaser, setTeaser] = useState({});
@@ -30,7 +31,15 @@ function OtherTeasers() {
 
   return (
     <div className="otherteasers">
-    <div className="mainsection" style={{marginTop: '100px', width: "80%", marginLeft: 'auto', marginRight: 'auto'}}>
+      <div
+        className="mainsection"
+        style={{
+          marginTop: "100px",
+          width: "80%",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
         <img className="teaserimage" src={teaser.coverimageurl} alt="" />
         <div className="gameInformation">
           <div>
@@ -42,20 +51,21 @@ function OtherTeasers() {
           <p className="short_desc">{teaser.description}</p>
 
           <div className="gameteaser2">
-            <h3>Author: {teaser.creator}</h3>
+            <Link to={"/profile/" + teaser.creator}>
+              <h3>Author: {teaser.creator}</h3>
+            </Link>
             <h3>Price: ${teaser.price}</h3>
           </div>
           <div className="tagContainer_">
-                <div className="category">
-                  <p>{teaser.category}</p>
-                </div>
-                <div className="platform">
-                  <p>{teaser.platform}</p>
-                </div>
-              </div>
+            <div className="category">
+              <p>{teaser.category}</p>
+            </div>
+            <div className="platform">
+              <p>{teaser.platform}</p>
+            </div>
+          </div>
         </div>
       </div>
-      
 
       <h1
         style={{
@@ -73,7 +83,7 @@ function OtherTeasers() {
       <div className="trailervideo">
         <video width="100%" height="100%" controls>
           <source
-            src={"http://localhost:8000/" + teaser.video}
+            src={"http://localhost:8000/games/files/" + teaser.video}
             type="video/mp4"
           />
         </video>
@@ -97,7 +107,7 @@ function OtherTeasers() {
             <img
               alt="gameplay-pics"
               className="pics"
-              src={"http://localhost:8000/" + each}
+              src={"http://localhost:8000/games/files/" + each}
             />
           </div>
         ))}

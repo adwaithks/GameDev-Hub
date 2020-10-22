@@ -13,7 +13,6 @@ import GamePage from "./components/Main/GamePage";
 import Landing from "./components/Main/Landing";
 import Play from "./components/Main/Play";
 import Teaser from "./components/Main/Teaser";
-import PaymentPage from "./components/Main/PaymentPage";
 import OtherProfile from "./components/Main/OtherProfile";
 import NotFound from "./components/Main/NotFound";
 import OtherTeasers from "./components/Teasers/OtherTeasers";
@@ -40,9 +39,7 @@ function App() {
           {localStorage.getItem("Access-Token") && (
             <Route path="/myprofile" component={MyProfile} />
           )}
-          {localStorage.getItem("Access-Token") && (
-            <Route path="/pay" component={PaymentPage} />
-          )}
+
           {localStorage.getItem("Access-Token") && (
             <Route path="/upload" component={Upload} />
           )}
