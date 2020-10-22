@@ -27,18 +27,17 @@ mongoose
   });
 
 app.use("/api/user", authRoute);
-app.use("/", allRoutes);
+app.use("/proxy", allRoutes);
 
 app.use(express.static("frontend/build"));
 app.use(express.static(path.join(__dirname, "uploads")));
-//console.log("prod");
 app.get("*", async (req, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
 });
 //console.log("stage");
 //app.use(express.static(path.join(__dirname, "uploads")));
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
   console.log("Server up and running !");

@@ -23,7 +23,7 @@ function AllGames() {
 
   useEffect(() => {
     const fetchAllGames = async () => {
-      await fetch("http://localhost:8000/allgames", {
+      await fetch("http://localhost:8000/proxy/allgames", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -80,18 +80,18 @@ function AllGames() {
     };
     me();
     if (isAuth) {
-      window.location.href = "http://localhost:3000/myprofile";
+      window.location.href = "myprofile";
     } else {
-      window.open(`http://localhost:3000/profile/${author}`, "_blank");
+      window.open(`/profile/${author}`, "_blank");
     }
   };
 
   const gameExplore = (id) => {
-    window.location.href = `http://localhost:3000/game/${id}`;
+    window.open(`/game/${id}`);
   };
 
   const playHandler = async (id) => {
-    await fetch(`http://localhost:8000/game/getready/${id}`, {
+    await fetch(`http://localhost:8000/proxy/game/getready/${id}`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

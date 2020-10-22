@@ -12,7 +12,7 @@ function Landing() {
 
   useEffect(() => {
     const getTrending = async () => {
-      await fetch(`http://localhost:8000/trending`, {
+      await fetch(`http://localhost:8000/proxy/trending`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -29,7 +29,7 @@ function Landing() {
     };
 
     const getTrailers = async () => {
-      await fetch(`http://localhost:8000/teasers`, {
+      await fetch(`http://localhost:8000/proxy/teasers`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -45,7 +45,7 @@ function Landing() {
     };
 
     const getReleases = async () => {
-      await fetch(`http://localhost:8000/schedules`, {
+      await fetch(`http://localhost:8000/proxy/schedules`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -62,7 +62,7 @@ function Landing() {
     };
 
     const getMostFavourites = async () => {
-      await fetch(`http://localhost:8000/mostfavourites`, {
+      await fetch(`http://localhost:8000/proxy/mostfavourites`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

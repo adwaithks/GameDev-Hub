@@ -12,7 +12,7 @@ function OtherProfile() {
     const author = window.location.href.split("/")[4];
     console.log(author);
     const myCreatedGames = async () => {
-      await fetch(`http://localhost:8000/${author}/createdgames`, {
+      await fetch(`http://localhost:8000/proxy/${author}/createdgames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -26,7 +26,7 @@ function OtherProfile() {
     };
 
     const myfav = async () => {
-      await fetch(`http://localhost:8000/${author}/favouritegames`, {
+      await fetch(`http://localhost:8000/proxy/${author}/favouritegames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -41,14 +41,14 @@ function OtherProfile() {
     };
 
     const me = async () => {
-      await fetch(`http://localhost:8000/profile/${author}`, {
+      await fetch(`http://localhost:8000/proxy/profile/${author}`, {
         method: "GET",
       })
         .then((res) => res.json())
         .then((finalRes2) => {
           console.log(finalRes2);
           if (finalRes2.message === "User does not exist") {
-            window.location.href = "http://localhost:3000/404";
+            window.location.href = "/404";
           }
           setLetter(finalRes2.username.slice(0, 1).toUpperCase());
           setMe(finalRes2);

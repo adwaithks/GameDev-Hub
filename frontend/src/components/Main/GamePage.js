@@ -35,7 +35,7 @@ function GamePage() {
     const gameid_ = window.location.href.split("/")[4];
 
     const fetchGame = async () => {
-      await fetch(`http://localhost:8000/game/${gameid_}/view`, {
+      await fetch(`http://localhost:8000/proxy/game/${gameid_}/view`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -56,7 +56,7 @@ function GamePage() {
     };
 
     const fetchComments = async () => {
-      await fetch(`http://localhost:8000/game/${gameid_}/comments`, {
+      await fetch(`http://localhost:8000/proxy/game/${gameid_}/comments`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -98,7 +98,7 @@ function GamePage() {
 
   const likeHandler = async (id) => {
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/${id}/like`, {
+    await fetch(`http://localhost:8000/proxy/${id}/like`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -116,7 +116,7 @@ function GamePage() {
 
   const dislikeHandler = async (id) => {
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/${id}/dislike`, {
+    await fetch(`http://localhost:8000/proxy/${id}/dislike`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -137,7 +137,7 @@ function GamePage() {
     setSeverity("success");
     setFav(true);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/${id}/makefavourite`, {
+    await fetch(`http://localhost:8000/proxy/${id}/makefavourite`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -155,14 +155,14 @@ function GamePage() {
   };
 
   const downloadHandler = async (id) => {
-    window.open(`http://localhost:8000/download/${id}`);
+    window.open(`http://localhost:8000/proxy/download/${id}`);
   };
 
   const purchaseHandler = async (info) => {
     //console.log("purchased");
     //console.log(me);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/purchase/game/${info._id}`, {
+    await fetch(`http://localhost:8000/proxy/purchase/game/${info._id}`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -185,7 +185,7 @@ function GamePage() {
     setSeverity("error");
     setFav(false);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/${id}/removefavourite`, {
+    await fetch(`http://localhost:8000/proxy/${id}/removefavourite`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -234,7 +234,7 @@ function GamePage() {
   const submitComment = async (id, comment) => {
     //console.log(1111111);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/game/${id}/makecomment`, {
+    await fetch(`http://localhost:8000/proxy/game/${id}/makecomment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -307,12 +307,15 @@ function GamePage() {
   const deleteMessage = async (cid) => {
     console.log(gameid);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`http://localhost:8000/game/${gameid}/removecomment/${cid}`, {
-      method: "GET",
-      headers: {
-        "Access-Token": "Bearer " + token,
-      },
-    })
+    await fetch(
+      `http://localhost:8000/proxy/game/${gameid}/removecomment/${cid}`,
+      {
+        method: "GET",
+        headers: {
+          "Access-Token": "Bearer " + token,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((finalRes) => {
         console.log(finalRes);
