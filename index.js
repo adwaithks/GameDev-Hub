@@ -29,16 +29,14 @@ mongoose
 app.use("/api/user", authRoute);
 app.use("/", allRoutes);
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("frontend/build"));
-  console.log("prod");
-  app.get("*", async (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-  });
-} else {
-  console.log("stage");
-  app.use(express.static(path.join(__dirname, "uploads")));
-}
+app.use(express.static("frontend/build"));
+app.use(express.static(path.join(__dirname, "uploads")));
+//console.log("prod");
+app.get("*", async (req, res) => {
+  res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
+});
+//console.log("stage");
+//app.use(express.static(path.join(__dirname, "uploads")));
 
 const port = process.env.PORT || 8000;
 
