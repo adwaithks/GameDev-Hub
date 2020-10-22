@@ -11,7 +11,7 @@ const cookieparser = require("cookie-parser");
 
 app.use(express.json());
 app.use(cookieparser());
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(cors());
 
 mongoose
