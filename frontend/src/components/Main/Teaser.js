@@ -35,7 +35,7 @@ function Teaser() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("http://localhost:8000/proxy/uploadsss", {
+    const response = await fetch("/proxy/uploadsss", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

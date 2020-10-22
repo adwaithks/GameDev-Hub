@@ -41,7 +41,7 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("http://localhost:8000/proxy/create/game", {
+    const response = await fetch("/proxy/create/game", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -78,7 +78,7 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("http://localhost:8000/proxy/schedule", {
+    const response = await fetch("/proxy/schedule", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

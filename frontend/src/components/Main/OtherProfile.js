@@ -12,7 +12,7 @@ function OtherProfile() {
     const author = window.location.href.split("/")[4];
     console.log(author);
     const myCreatedGames = async () => {
-      await fetch(`http://localhost:8000/proxy/${author}/createdgames`, {
+      await fetch(`/proxy/${author}/createdgames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -26,7 +26,7 @@ function OtherProfile() {
     };
 
     const myfav = async () => {
-      await fetch(`http://localhost:8000/proxy/${author}/favouritegames`, {
+      await fetch(`/proxy/${author}/favouritegames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -41,7 +41,7 @@ function OtherProfile() {
     };
 
     const me = async () => {
-      await fetch(`http://localhost:8000/proxy/profile/${author}`, {
+      await fetch(`/proxy/profile/${author}`, {
         method: "GET",
       })
         .then((res) => res.json())

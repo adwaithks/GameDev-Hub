@@ -17,7 +17,7 @@ function Login() {
       password: password,
     };
     event.preventDefault();
-    await fetch("http://localhost:8000/api/user/login", {
+    await fetch("/api/user/login", {
       method: "POST",
       cache: "no-cache",
       headers: {
