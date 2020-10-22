@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt");
 const { registerValidation } = require("../validation");
 const jwt = require("jsonwebtoken");
 const jwtVerification = require("./jwtVerification");
-const { v4: uuidv4 } = require("uuid");
 
 router.post("/register", async (req, res) => {
   const email = req.body.email;
