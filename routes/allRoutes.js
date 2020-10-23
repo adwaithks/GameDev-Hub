@@ -201,7 +201,9 @@ router.get("/purchase/game/:id", jwtVerification, async (req, res) => {
 
   paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
-      throw error;
+      return res.json({
+        link: "http://localhost:3000/paymenterror",
+      });
     }
     for (let i = 0; i < payment.links.length; i++) {
       if (payment.links[i].rel === "approval_url") {
@@ -290,6 +292,10 @@ router.post(
 
     const filename = req.files.files.path.match(/(\upload_.*)/g).toString();
     let newfilename;
+    if (!req.fields.fee || req.fields.fee === "0") {
+      req.fields.fee = "Free";
+    }
+
     if (req.files.files.type === "application/x-zip-compressed") {
       newfilename = filename + ".zip";
     } else {

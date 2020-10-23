@@ -40,7 +40,7 @@ function GamePage() {
       })
         .then((res) => res.json())
         .then((finalRes) => {
-          ////console.log(finalRes._id);
+          console.log(finalRes);
           setInfo(finalRes);
           setGameid(finalRes._id);
           setPrice(finalRes.price);
@@ -161,6 +161,7 @@ function GamePage() {
   const purchaseHandler = async (info) => {
     //console.log("purchased");
     //console.log(me);
+    console.log(info._id);
     const token = localStorage.getItem("Access-Token");
     await fetch(`http://localhost:5000/proxy/purchase/game/${info._id}`, {
       method: "GET",

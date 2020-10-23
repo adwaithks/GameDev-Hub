@@ -16,6 +16,7 @@ import Teaser from "./components/Main/Teaser";
 import OtherProfile from "./components/Main/OtherProfile";
 import NotFound from "./components/Main/NotFound";
 import OtherTeasers from "./components/Teasers/OtherTeasers";
+import PaymentError from "./components/Main/PaymentError";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/allgames" component={AllGames} />
           <Route path="/play" component={Play} />
           <Route path="/404" component={NotFound} />
+          <Route path="/paymenterror" component={PaymentError} />
           <Route path="/profile/*" component={OtherProfile} />
           <Route path="/game/*" component={GamePage} />
           <Route path="/createteaser" component={Teaser} />
