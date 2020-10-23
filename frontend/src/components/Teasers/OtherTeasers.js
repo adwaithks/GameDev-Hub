@@ -20,6 +20,7 @@ function OtherTeasers() {
         .then((finalRes3) => {
           setTeaser(finalRes3);
           setImages(finalRes3.images);
+          console.log(teaser);
         })
         .catch((err) => {
           console.log(err);
@@ -82,10 +83,7 @@ function OtherTeasers() {
       </div>
       <div className="trailervideo">
         <video width="100%" height="100%" controls>
-          <source
-            src={"http://localhost:5000/games/files/" + teaser.video}
-            type="video/mp4"
-          />
+          <source src={"http://localhost:5000/games/files/" + teaser.video} />
         </video>
       </div>
 

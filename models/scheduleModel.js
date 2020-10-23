@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const scheduleModel = mongoose.Schema({
   release: {
-    type: Date,
+    type: String,
     required: true,
   },
   name: {

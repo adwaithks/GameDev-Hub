@@ -53,8 +53,15 @@ router.post(
       req.fields.hosturl = "";
     }
 
+    let datetime = req.fields.datetime;
+    let amorpm = req.fields.amorpm;
+    let temp = datetime.split("T");
+    let date = temp[0].split("-");
+    let time = temp[1].split(":");
+    const releaseDate = date[2] + "/" + date[1] + "/" + date[0];
+
     const newSchedule = new Schedule({
-      release: req.fields.datetime,
+      release: releaseDate,
       name: req.fields.name,
       gameFile: newfilename,
       longdescription: req.fields.ldesc,
@@ -66,13 +73,6 @@ router.post(
       imageURL: req.fields.imgurl,
       hostURL: req.fields.hosturl,
     });
-
-    let datetime = req.fields.datetime;
-    let amorpm = req.fields.amorpm;
-
-    let temp = datetime.split("T");
-    let date = temp[0].split("-");
-    let time = temp[1].split(":");
 
     console.log(
       date[0] +
@@ -199,7 +199,7 @@ router.get("/purchase/game/:id", jwtVerification, async (req, res) => {
     ],
   };
 
-  paypal.payment.create(create_payment_json, function (error, payment) {
+  await paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
       return res.json({
         link: "http://localhost:3000/paymenterror",

@@ -249,12 +249,4 @@ h4 {
     margin-left: auto;
     margin-right: auto;
   }
-
-  .upcoming_img {
-    height: 300px;
-    width: 250px;
-    border-radius: 10px;
-    transition: ease-in 0.1s;
-    margin-right: 20px;
-  }
 }
