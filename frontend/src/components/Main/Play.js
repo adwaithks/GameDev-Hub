@@ -21,7 +21,7 @@ function Play() {
           id="iframe-id"
           title="iframe-title"
           className="gameiframe"
-          src={url}
+          src={"http://localhost:5000/games/zips/" + url + "/index.html"}
         ></iframe>
       </div>
       <div className="iframe-btn-group">

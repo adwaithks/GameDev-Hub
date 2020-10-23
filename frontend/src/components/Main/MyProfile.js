@@ -91,6 +91,10 @@ function MyProfile() {
       });
   };
 
+  const playHandler = (id) => {
+    window.open(`http://localhost:3000/play?game=${id}`, "_blank");
+  };
+
   return (
     <div className="profile">
       {(document.cookie = `token=${localStorage.getItem("Access-Token")}`)}
@@ -146,7 +150,12 @@ function MyProfile() {
                   <h1>{each.name}</h1>
                 </Link>
                 <h3>{each.description}</h3>
-                <PlayCircleOutlineIcon className="play_btn">
+                <PlayCircleOutlineIcon
+                  className="play_btn"
+                  onClick={() => {
+                    playHandler(each._id);
+                  }}
+                >
                   Play
                 </PlayCircleOutlineIcon>
               </div>

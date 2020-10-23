@@ -3,6 +3,7 @@ const router = require("express").Router();
 const Game = require("../models/gameModel");
 const Teaser = require("../models/teaserModel");
 const paypal = require("paypal-rest-sdk");
+const decompress = require("decompress");
 const User = require("../models/userModel");
 const formidable = require("express-formidable");
 const Schedule = require("../models/scheduleModel");
@@ -18,6 +19,25 @@ paypal.configure({
   client_id: process.env.PAYPAL_CLIENT_ID,
   client_secret: process.env.PAYPAL_CLIENT_SECRET,
 });
+
+const unzipRar = async (targetPath, gameid) => {
+  let extension = targetPath.substr(targetPath.length - 4);
+  console.log(extension);
+  if (extension === ".zip") {
+    fs.mkdir(`./uploads/games/zips/${gameid}`, (err) => {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("folder created:::" + gameid);
+    });
+
+    await decompress(targetPath, `./uploads/games/zips/${gameid}`).then(
+      (files) => {
+        console.log(files);
+      }
+    );
+  }
+};
 
 router.post(
   "/schedule",
@@ -335,6 +355,7 @@ router.post(
       .catch((err) => {
         return res.status(500).json("Internal Server Error");
       });
+    unzipRar(`./uploads/games/zips/${newfilename}`, newGame._id);
   }
 );
 
