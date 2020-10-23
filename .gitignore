@@ -1,5 +1,5 @@
 /node_modules
 .env
 apitest.rest
-/uploads/games/files/*
-/uploads/games/zips/*
+/uploads/games/files/
+/uploads/games/zips/
