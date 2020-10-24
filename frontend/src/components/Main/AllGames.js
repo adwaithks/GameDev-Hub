@@ -23,7 +23,7 @@ function AllGames() {
 
   useEffect(() => {
     const fetchAllGames = async () => {
-      await fetch("http://localhost:5000/proxy/allgames", {
+      await fetch("/proxy/allgames", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -58,7 +58,7 @@ function AllGames() {
 
   const visitProfile = async (author) => {
     const me = async () => {
-      await fetch("http://localhost:5000/api/user/me", {
+      await fetch("/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -90,17 +90,8 @@ function AllGames() {
     window.open(`/game/${id}`);
   };
 
-  const playHandler = async (id) => {
-    await fetch(`http://localhost:5000/proxy/game/getready/${id}`, {
-      method: "GET",
-      headers: {
-        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
-      },
-    })
-      .then((res) => res.json())
-      .catch((err) => {
-        console.log(err);
-      });
+  const playHandler = (id) => {
+    window.open(`http://localhost:3000/play?game=${id}`, "_blank");
   };
 
   return (
@@ -229,12 +220,21 @@ function AllGames() {
               <p className="likes">{eachGame.dislikes}</p>
               <FavoriteIcon className="thumbsup"></FavoriteIcon>
               <p className="likes">{eachGame.favourites}</p>
-              <PlayCircleOutlineIcon
-                className="playbtn"
-                onClick={() => playHandler(eachGame._id)}
-              >
-                Play
-              </PlayCircleOutlineIcon>
+              {eachGame.platform[0] === "WebGL" ? (
+                <PlayCircleOutlineIcon
+                  className="playbtnactive"
+                  onClick={() => playHandler(eachGame._id)}
+                >
+                  Play
+                </PlayCircleOutlineIcon>
+              ) : (
+                <PlayCircleOutlineIcon
+                  className="playbtninactive"
+                  onClick={() => playHandler(eachGame._id)}
+                >
+                  Play
+                </PlayCircleOutlineIcon>
+              )}
             </div>
           </div>
         ))}

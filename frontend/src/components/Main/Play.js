@@ -15,19 +15,11 @@ function Play() {
   }, []);
 
   return (
-    <div className="play">
-      <div className="iframeContainer">
-        <iframe
-          id="iframe-id"
-          title="iframe-title"
-          className="gameiframe"
-          src={"http://localhost:5000/games/zips/" + url + "/index.html"}
-        ></iframe>
-      </div>
-      <div className="iframe-btn-group">
-        <button>Donate</button>
-      </div>
-    </div>
+    <iframe
+      title="iframe-title"
+      className="gameiframe"
+      src={"http://localhost:5000/games/zips/" + url + "/index.html"}
+    ></iframe>
   );
 }
 

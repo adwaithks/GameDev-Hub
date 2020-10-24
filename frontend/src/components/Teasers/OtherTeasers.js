@@ -10,7 +10,7 @@ function OtherTeasers() {
     const teaserid = window.location.href.split("/")[4];
 
     const getTeaser = async () => {
-      await fetch(`http://localhost:5000/proxy/teaser/${teaserid}`, {
+      await fetch(`/proxy/teaser/${teaserid}`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -83,7 +83,7 @@ function OtherTeasers() {
       </div>
       <div className="trailervideo">
         <video width="100%" height="100%" controls>
-          <source src={"http://localhost:5000/games/files/" + teaser.video} />
+          <source src={"/games/files/" + teaser.video} />
         </video>
       </div>
 
@@ -105,7 +105,7 @@ function OtherTeasers() {
             <img
               alt="gameplay-pics"
               className="pics"
-              src={"http://localhost:5000/games/files/" + each}
+              src={"/games/files/" + each}
             />
           </div>
         ))}

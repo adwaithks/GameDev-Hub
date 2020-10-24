@@ -40,16 +40,13 @@ function Teaser() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch(
-      "http://localhost:5000/proxy/teaser/upload/new",
-      {
-        method: "POST",
-        headers: {
-          "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
-        },
-        body: formData,
-      }
-    );
+    const response = await fetch("/proxy/teaser/upload/new", {
+      method: "POST",
+      headers: {
+        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+      },
+      body: formData,
+    });
     console.log(response);
     window.open("/home");
     return false;
@@ -161,6 +158,7 @@ function Teaser() {
               name="platform"
             >
               <option value="Mac">Mac</option>
+              <option value="WebGL">WebGL</option>
               <option value="windows">Windows</option>
               <option value="Android">Android</option>
               <option value="iOS">iOS</option>

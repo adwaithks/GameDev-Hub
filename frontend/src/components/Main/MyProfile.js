@@ -12,7 +12,7 @@ function MyProfile() {
 
   useEffect(() => {
     const myCreatedGames = async () => {
-      await fetch("http://localhost:5000/proxy/mycreatedgames", {
+      await fetch("/proxy/mycreatedgames", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -25,12 +25,12 @@ function MyProfile() {
         })
         .catch((err) => {
           console.log(err);
-          window.location.href = "/404";
+          window.location.href = "/login";
         });
     };
 
     const myfav = async () => {
-      await fetch("http://localhost:5000/proxy/myfavouritegames", {
+      await fetch("/proxy/myfavouritegames", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -48,7 +48,7 @@ function MyProfile() {
     };
 
     const me = async () => {
-      await fetch("http://localhost:5000/api/user/me", {
+      await fetch("/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -72,15 +72,12 @@ function MyProfile() {
 
   const removefavHandler = async (event) => {
     event.preventDefault();
-    await fetch(
-      `http://localhost:5000/proxy/${event.target.value}/removefavourite`,
-      {
-        method: "GET",
-        headers: {
-          "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
-        },
-      }
-    )
+    await fetch(`/proxy/${event.target.value}/removefavourite`, {
+      method: "GET",
+      headers: {
+        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+      },
+    })
       .then((res) => res.json())
       .then((finalRes3) => {
         console.log(finalRes3);

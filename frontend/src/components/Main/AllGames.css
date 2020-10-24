@@ -32,7 +32,7 @@
 }
 
 .thumbsup {
-  color: white !important;
+  color: darkgray !important;
   cursor: pointer;
   font-size: 25px !important;
 }
@@ -44,6 +44,7 @@
 .descriptionContainer {
   color: white;
   margin-top: 15px;
+  height: 110px;
   font-family: "Karla";
   transition: ease-in 0.5s;
   width: 50%;
@@ -96,11 +97,10 @@
 }
 
 .explore:hover {
-  background-color: red;
+  background-color: rgb(255, 0, 0);
 }
 
 .allgames {
-  background-color: black;
   width: 100%;
 }
 
@@ -110,7 +110,7 @@
   width: 90%;
   text-align: center;
   align-items: center;
-  transition: ease-in 0.05s;
+  transition: ease-in 0.2s;
   box-shadow: 0px 5px 20px -1px black;
   margin-right: auto;
   margin-bottom: 20px;
@@ -124,8 +124,7 @@
 }
 
 .game:hover {
-  box-shadow: 0px 1px 20px -1px red;
-  transform: scale(1.005);
+  transform: scale(1.05);
   opacity: 1;
 }
 
@@ -158,13 +157,19 @@
   word-wrap: break-word;
 }
 
-.playbtn {
+.playbtnactive {
   color: white;
   cursor: pointer;
-  font-size: 35px !important;
+  font-size: 50px !important;
 }
 
-.playbtn:hover {
+.playbtninactive {
+  color: darkgray;
+  cursor: pointer;
+  font-size: 50px !important;
+}
+
+.playbtnactive:hover {
   color: rgb(148, 0, 0);
   transition: ease-in 0.1s;
 }
