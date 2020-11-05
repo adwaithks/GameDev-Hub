@@ -1,7 +1,9 @@
 
 
 
+# Screenshots
 
+![all games section](https://imgur.com/moCAuKN)
 
 
 # API endpoints
