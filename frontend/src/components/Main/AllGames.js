@@ -80,47 +80,17 @@ function AllGames() {
   const searchHandler = (letter) => {
     setSearchGames(
       allGames.filter((each) => {
-        return each.name.toLowerCase().match(letter);
+        return each.name.toLowerCase().match(letter.toLowerCase());
       })
     );
   };
 
   return (
     <div className="allgames">
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          width: "fit-content",
-          justifyContent: "space-between",
-          marginLeft: "auto",
-          marginRight: "auto",
-          marginTop: "100px",
-          textAlign: "center",
-          alignItems: "center",
-        }}
-      >
-        <h1
-          style={{
-            color: "white",
-            fontSize: "30px",
-            textAlign: "center",
-            fontWeight: "400",
-          }}
-        >
-          ALL GAMES
-        </h1>
+      <div className="searchGamesContainer">
         <input
           type="text"
-          style={{
-            width: "300px",
-            height: "40px",
-            borderRadius: "8px",
-            outline: "none",
-            border: "none",
-            fontSize: "16px",
-            padding: "10px",
-          }}
+          className="searchGames"
           placeholder="Search..."
           onChange={(e) => {
             setSearch(e.target.value);

@@ -421,7 +421,7 @@ function GamePage() {
 
       <div className="gamedescription">
         <p>
-          <Markdown>{ldesc}</Markdown>
+          <Markdown className="markdown">{ldesc}</Markdown>
         </p>
       </div>
 

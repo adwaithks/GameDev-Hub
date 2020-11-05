@@ -4,7 +4,7 @@
   display: flex;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 100px;
+  margin-top: 80px;
   justify-content: space-around;
   flex-wrap: wrap;
   align-items: center;
@@ -192,6 +192,26 @@
   margin-right: 10px;
 }
 
+.searchGamesContainer {
+  width: 90%;
+  margin-top: 130px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchGames {
+  width: 700px;
+  outline: none;
+  border: none;
+  color: white;
+  padding: 10px;
+  font-size: 17px;
+  border-radius: 5px;
+  background-color: rgb(51, 51, 51);
+  height: 50px;
+}
+
 .button_group > button {
   background-color: rgb(34, 33, 33);
   height: 40px;
@@ -213,6 +233,8 @@
   .gamesRow {
     width: 100%;
     height: 100%;
+    margin-top: 30px;
+
     text-align: center;
     align-items: center;
     display: flex;
@@ -250,9 +272,6 @@
     opacity: 0.9;
   }
 
-  .heading {
-  }
-
   .button_group {
     display: flex;
     height: 50px;
@@ -276,5 +295,23 @@
     cursor: pointer;
     color: white;
     background-color: rgb(34, 33, 33);
+  }
+
+  .searchGamesContainer {
+    margin-top: 20px;
+  }
+
+  .searchGames {
+    margin-top: 100px;
+    background-color: white;
+    width: 80%;
+    outline: none;
+    border: none;
+    color: white;
+    padding: 10px;
+    font-size: 17px;
+    border-radius: 5px;
+    background-color: rgb(51, 51, 51);
+    height: 50px;
   }
 }

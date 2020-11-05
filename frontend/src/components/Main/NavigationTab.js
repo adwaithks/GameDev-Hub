@@ -91,9 +91,9 @@ function NavigationTab() {
           </Link>
         )}
 
-        <h4 className="logout" onClick={logoutHandler}>
+        {/**<h4 className="logout" onClick={logoutHandler}>
           Logout
-        </h4>
+          </h4>**/}
       </div>
 
       {burgerOpen ? (

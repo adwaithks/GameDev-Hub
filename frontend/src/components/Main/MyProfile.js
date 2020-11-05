@@ -62,7 +62,7 @@ function MyProfile() {
       })
         .then((res) => res.json())
         .then((finalRes2) => {
-          console.log("me::::" + finalRes2);
+          console.log("me::::" + finalRes2.username);
           setLetter(finalRes2.username.slice(0, 1).toUpperCase());
           setMe(finalRes2);
         })
@@ -76,6 +76,11 @@ function MyProfile() {
     myCreatedGames();
     myfav();
   }, [temp]);
+
+  const logoutHandler = () => {
+    localStorage.removeItem("Access-Token");
+    window.location.href = "/login";
+  };
 
   const removefavHandler = async (event) => {
     event.preventDefault();
@@ -257,6 +262,10 @@ function MyProfile() {
             </div>
           ) : null}
         </div>
+      </div>
+      <div style={{width: "fit-content", marginLeft: "auto", marginRight: "auto"}}>
+      <button onClick={logoutHandler} className="logout">Logout</button>
+
       </div>
     </div>
   );

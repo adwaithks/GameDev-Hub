@@ -24,7 +24,8 @@ function Landing() {
           setTrending(finalRes3);
         })
         .catch((err) => {
-          console.log(err);
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
         });
     };
 
@@ -40,7 +41,8 @@ function Landing() {
           setTrailers(finalRes3);
         })
         .catch((err) => {
-          console.log(err);
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
         });
     };
 
@@ -57,7 +59,8 @@ function Landing() {
           setupcomingreleases(finalRes3);
         })
         .catch((err) => {
-          console.log(err);
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
         });
     };
 
@@ -74,7 +77,8 @@ function Landing() {
           setmostfavourites(finalRes3);
         })
         .catch((err) => {
-          console.log(err);
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
         });
     };
     getReleases();

@@ -32,6 +32,8 @@
 .profile {
   width: 100%;
   height: 100%;
+  transition: ease-in 0.2s;
+
   overflow-x: hidden;
 }
 
@@ -142,13 +144,32 @@
   width: 300px;
 }
 
+.logout {
+  height: 40px;
+  font-size: 17px;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  margin-top: 20px;
+  cursor: pointer;
+  width: 120px;
+  background-color: rgb(112, 12, 12);
+  color: white;
+  border: none;
+  outline: none;
+}
+
+.logout:hover {
+  background: red;
+}
+
 .otherinfoexpanded > .upcomingPayments > h3 {
   margin-right: 10px;
 }
 
 .otherinfoexpanded {
-  height: 400px;
+  height: 200px;
   padding: 10px;
+  transition: ease-in 0.2s;
   color: white;
   font-weight: 400;
   width: 72%;

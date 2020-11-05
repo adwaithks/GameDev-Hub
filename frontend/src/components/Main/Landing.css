@@ -138,10 +138,9 @@
 .eachTrending {
   border-radius: 10px;
   text-align: center;
-  height: 350px;
+  height: fit-content;
   margin-right: 20px;
   transition: ease-in 0.2s;
-  background-color: black;
   width: fit-content;
 }
 
@@ -150,8 +149,7 @@
   transition: ease-in 0.2s;
   margin-right: 20px;
   text-align: center;
-  height: 350px;
-  background-color: black;
+  height: fit-content;
   width: fit-content;
 }
 
