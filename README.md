@@ -3,10 +3,12 @@
 
 # Screenshots
 
-<img src="/screenshots/login.JPG" alt="login" width="380px" height="220px" />
-<img src="/screenshots/register.JPG" alt="register" width="380px" height="220px" />
-<img src="/screenshots/allgames.JPG" alt="allgames" width="380px" height="220px" />
-<img src="/screenshots/myprofile.JPG" alt="myprofile" width="380px" height="220px" />
+<p float="left">
+<img src="/screenshots/login.JPG" alt="login" width="480px" height="320px" />
+<img src="/screenshots/register.JPG" alt="register" width="480px" height="320px" />
+<img src="/screenshots/allgames.JPG" alt="allgames" width="480px" height="320px" />
+<img src="/screenshots/myprofile.JPG" alt="myprofile" width="480px" height="320px" />
+</p>
 
 # API endpoints
 
