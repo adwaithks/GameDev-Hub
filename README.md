@@ -3,7 +3,7 @@
 
 # Screenshots
 
-![all games section](screenshots/allgames)
+![all games section](screenshots/allgames.JPG)
 
 
 # API endpoints
