@@ -12,7 +12,7 @@ function Landing() {
 
   useEffect(() => {
     const getTrending = async () => {
-      await fetch(`/proxy/trending`, {
+      await fetch(`http://localhost:5000/proxy/trending`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -29,7 +29,7 @@ function Landing() {
     };
 
     const getTrailers = async () => {
-      await fetch(`/proxy/teasers`, {
+      await fetch(`http://localhost:5000/proxy/teasers`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -45,7 +45,7 @@ function Landing() {
     };
 
     const getReleases = async () => {
-      await fetch(`/proxy/schedules`, {
+      await fetch(`http://localhost:5000/proxy/schedules`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -62,7 +62,7 @@ function Landing() {
     };
 
     const getMostFavourites = async () => {
-      await fetch(`/proxy/mostfavourites`, {
+      await fetch(`http://localhost:5000/proxy/mostfavourites`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -90,10 +90,11 @@ function Landing() {
       </div>
 
       <div className="trending_">
-        <h1
+        <h2
           style={{
             color: "red",
             marginTop: "30px",
+            letterSpacing: "1",
             marginBottom: "20px",
             marginLeft: "auto",
             marginRight: "auto",
@@ -101,11 +102,11 @@ function Landing() {
           }}
         >
           Upcoming Releases
-        </h1>
+        </h2>
         <div className="upcomingreleases">
           {upcomingreleases.map((each) => (
-            <div className="eachUpcoming">
-              <div key={each._id} className="upcoming">
+            <div key={each._id} className="eachUpcoming">
+              <div className="upcoming">
                 <img
                   alt="upcomging release"
                   style={{
@@ -144,25 +145,26 @@ function Landing() {
         </div>
       </div>
 
-      <h1
+      <h2
         style={{
           color: "red",
           marginTop: "30px",
           marginBottom: "20px",
           marginLeft: "auto",
+          letterSpacing: "1",
           marginRight: "auto",
           width: "95%",
         }}
       >
         Trailers
-      </h1>
+      </h2>
 
       <div className="trailers_row">
         {trailers.map((each) => (
-          <div className="eachTrailer">
+          <div key={each._id} className="eachTrailer">
             <img alt="trailers" src={each.coverimageurl} />
             <div className="trailerinfo">
-              <h3 style={{ color: "red" }}>{each.name}</h3>
+              <h2 style={{ color: "red" }}>{each.name}</h2>
               <h4>{each.description}</h4>
               <Link className="trailer_view" to={"/teaser/" + each._id}>
                 <button>Read More</button>
@@ -173,7 +175,7 @@ function Landing() {
       </div>
 
       <div className="trending_">
-        <h1
+        <h2
           style={{
             color: "red",
             marginTop: "30px",
@@ -184,10 +186,10 @@ function Landing() {
           }}
         >
           Trending Now
-        </h1>
+        </h2>
         <div className="trendingrow">
           {trending.map((each) => (
-            <div className="eachTrending">
+            <div key={each._id} className="eachTrending">
               <Link
                 style={{ textDecoration: "none", color: "darkgray" }}
                 to={"/game/" + each._id}
@@ -204,7 +206,7 @@ function Landing() {
         style={{ marginTop: "20px", marginBottom: "80px" }}
         className="mostfavs_"
       >
-        <h1
+        <h2
           style={{
             color: "red",
             marginBottom: "20px",
@@ -214,10 +216,10 @@ function Landing() {
           }}
         >
           Most Favourites
-        </h1>
+        </h2>
         <div className="favsrow">
           {mostfavourites.map((each) => (
-            <div className="eachfav">
+            <div key={each._id} className="eachfav">
               <Link
                 style={{ textDecoration: "none", color: "darkgray" }}
                 to={"/game/" + each._id}

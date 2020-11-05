@@ -22,7 +22,7 @@
 }
 
 .stats {
-  background-color: rgb(39, 38, 38);
+  background-color: rgb(27, 27, 27);
   width: 600px;
   margin-top: 10px;
   border-radius: 5px;
@@ -35,11 +35,31 @@
   overflow-x: hidden;
 }
 
-.createdgame {
-  margin-bottom: 50px;
+.createdgamesSection {
+  width: 80%;
+  height: 500px;
+  margin-top: 20px;
+  overflow-y: scroll;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(27, 27, 27);
   border-radius: 10px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.createdgamesSection::-webkit-scrollbar {
+  display: none;
+}
+
+.createdgame {
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  color: red;
+  justify-content: space-between;
   padding: 10px;
-  background-color: rgb(34, 33, 33);
+  background-color: rgb(27, 27, 27);
   margin-left: auto;
   margin-right: auto;
   width: 80%;
@@ -74,7 +94,7 @@
   border-radius: 10px;
   margin-left: auto;
   height: fit-content;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
   margin-right: auto;
   width: 90%;
 }
@@ -85,7 +105,7 @@
   height: fit-content;
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
+  width: 92%;
 }
 
 .faveachgame {
@@ -94,25 +114,99 @@
   flex-wrap: wrap;
 }
 
+.otherInfoHeading {
+  width: 72%;
+  border-radius: 10px;
+  height: 50px;
+  padding: 10px;
+  background-color: rgb(27, 27, 27);
+  align-items: center;
+  color: red;
+  font-size: 16px;
+  margin-left: auto;
+  margin-bottom: 20px;
+  margin-right: auto;
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+}
+
+.otherInfoHeading > h1 {
+  color: red;
+  font-weight: 400 !important;
+}
+
+.otherinfoexpanded > .upcomingPayments {
+  display: flex;
+  align-items: center;
+  width: 300px;
+}
+
+.otherinfoexpanded > .upcomingPayments > h3 {
+  margin-right: 10px;
+}
+
+.otherinfoexpanded {
+  height: 400px;
+  padding: 10px;
+  color: white;
+  font-weight: 400;
+  width: 72%;
+  margin-left: auto;
+  background-color: rgb(27, 27, 27);
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow-y: scroll;
+
+  margin-right: auto;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.otherinfoexpanded::-webkit-scrollbar {
+  display: none;
+}
+
 .favgame {
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  color: red;
+  justify-content: space-between;
   padding: 10px;
   margin-left: auto;
-  background-color: rgb(34, 33, 33);
+  background-color: rgb(27, 27, 27);
   border-radius: 10px;
   margin-right: auto;
   width: 80%;
 }
 
+.favgamessection {
+  width: 80%;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  height: 500px;
+  overflow-y: scroll;
+
+  border-radius: 10px;
+  background-color: rgb(27, 27, 27);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.favgamessection::-webkit-scrollbar {
+  display: none;
+}
+
 .eachgame {
   display: flex;
-
+  padding: 20px;
   justify-content: space-around;
   flex-wrap: wrap;
 }
 
 .gameinfo {
-  margin-left: 20px;
   color: white;
   height: fit-content;
   width: 500px;
@@ -133,19 +227,13 @@
   padding: 10px;
   cursor: pointer;
   color: white;
-  background-color: rgb(34, 33, 33);
+  background-color: rgb(27, 27, 27);
   margin-top: 20px;
 }
 
 .gameinfo_link {
   font-size: 16px;
   color: red;
-}
-
-.gameinfo > h1 {
-  color: red !important;
-  text-transform: uppercase;
-  margin-bottom: 5px;
 }
 
 .gameinfo > h3 {
@@ -183,15 +271,17 @@
 @media (max-width: 890px) {
   .favgame {
     padding: 10px;
-    background-color: rgb(34, 33, 33);
+    background-color: rgb(27, 27, 27);
     border-radius: 10px;
     width: 100%;
   }
 
   .createdgame {
     border-radius: 10px;
+    display: flex;
+
     padding: 10px;
-    background-color: rgb(34, 33, 33);
+    background-color: rgb(27, 27, 27);
     width: 100%;
   }
 
@@ -204,5 +294,63 @@
   .gameinfo_link {
     font-size: 14px;
     color: red;
+  }
+
+  .otherInfoHeading {
+    width: 90%;
+    border-radius: 10px;
+    height: 50px;
+    padding: 10px;
+    background-color: rgb(27, 27, 27);
+    align-items: center;
+    color: red;
+    font-size: 16px;
+    margin-left: auto;
+    margin-bottom: 20px;
+    margin-right: auto;
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+  }
+
+  .otherinfoexpanded {
+    height: 400px;
+    width: 90%;
+    overflow-y: scroll;
+    margin-left: auto;
+    background-color: rgb(27, 27, 27);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    margin-right: auto;
+  }
+
+  .createdgamesSection {
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(27, 27, 27);
+    border-radius: 10px;
+  }
+
+  .favgamesRow {
+    width: 95%;
+  }
+
+  .favgamessection {
+    width: 100%;
+    height: 500px;
+    overflow-y: scroll;
+    border-radius: 10px;
+    background-color: rgb(27, 27, 27);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gameinfo > h3 {
+    display: none;
   }
 }

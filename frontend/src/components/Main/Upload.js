@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Upload.css";
 import Dropzone from "react-dropzone";
+import { BeatLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -11,6 +12,7 @@ function Upload() {
   const [category, setcategory] = useState("action");
   const [platform, setplatform] = useState("Mac");
   const [datetime, setdatetime] = useState("");
+  const [uploading, setuploading] = useState(false);
   const [imgurl, setImgURL] = useState("");
   const [filename, setFilename] = useState("");
   const [amorpm, setamorpm] = useState("0");
@@ -25,6 +27,7 @@ function Upload() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    setuploading(true);
     console.log(files);
     const formData = new FormData();
     formData.append("name", name);
@@ -43,7 +46,7 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("/proxy/create/game", {
+    const response = await fetch("http://localhost:5000/proxy/create/game", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -80,7 +83,7 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("/proxy/schedule", {
+    const response = await fetch("http://localhost:5000/proxy/schedule", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -116,6 +119,11 @@ function Upload() {
 
       {schedule ? (
         <div className="upload_form">
+          <div
+            className={uploading ? "uploadspinnerContainer" : "nouploadSpinner"}
+          >
+            <BeatLoader size={50} color="red" loading />
+          </div>
           <form onSubmit={scheduledFormHandler}>
             <div className="name4">
               <label for="datetime">Schedule date and time:</label>
@@ -291,6 +299,11 @@ function Upload() {
         </div>
       ) : (
         <div className="upload_form">
+          <div
+            className={uploading ? "uploadspinnerContainer" : "nouploadSpinner"}
+          >
+            <BeatLoader size={50} color="red" loading />
+          </div>
           <form onSubmit={submitHandler}>
             <div className="name">
               <label className="namel" htmlFor="">
@@ -364,6 +377,7 @@ function Upload() {
                 <option value="strategy">Strategy</option>
               </select>
             </div>
+
             <div className="name4">
               <label className="imgl" htmlFor="">
                 Select Platform:

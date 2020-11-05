@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 function OtherProfile() {
   const [mygames, setMygames] = useState([]);
   const [me, setMe] = useState([]);
   const [letter, setLetter] = useState("");
+  const [createdgamesexpanded, setCreatedgamesexpanded] = useState(false);
+  const [myfavsexpanded, setMyfavsexpanded] = useState(false);
+
   const [myfavourites, setmyfavourites] = useState([]);
 
   useEffect(() => {
     const author = window.location.href.split("/")[4];
     console.log(author);
     const myCreatedGames = async () => {
-      await fetch(`/proxy/${author}/createdgames`, {
+      await fetch(`http://localhost:5000/proxy/${author}/createdgames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -26,7 +30,7 @@ function OtherProfile() {
     };
 
     const myfav = async () => {
-      await fetch(`/proxy/${author}/favouritegames`, {
+      await fetch(`http://localhost:5000/proxy/${author}/favouritegames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -41,7 +45,7 @@ function OtherProfile() {
     };
 
     const me = async () => {
-      await fetch(`/proxy/profile/${author}`, {
+      await fetch(`http://localhost:5000/proxy/profile/${author}`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -65,8 +69,7 @@ function OtherProfile() {
 
   return (
     <div className="profile">
-      {(document.cookie = `token=${localStorage.getItem("Access-Token")}`)}
-      <h1 className="profile__heading">MY PROFILE</h1>
+      <h1 className="profile__heading">{me.username}'s PROFILE</h1>
       <div className="usersection">
         <div className="logo__username">
           <div className="avatar">
@@ -81,8 +84,6 @@ function OtherProfile() {
           <div className="statsoptions">
             <p>Rating: -</p>
             <p>Created Games: {me.noOfCreatedGames}</p>
-            <p>Popularity: -</p>
-            <p>Signal: -</p>
           </div>
         </div>
       </div>
@@ -100,32 +101,38 @@ function OtherProfile() {
       <div className="gamesection">
         <div className="createdgamesRow">
           <div className="createdgame">
-            <h1 style={{ color: "red" }}>Created Games</h1>
+            <h2 style={{ color: "red", fontWeight: "400" }}>Created Games</h2>
+            <KeyboardArrowDownIcon
+              onClick={() => {
+                setCreatedgamesexpanded(!createdgamesexpanded);
+              }}
+            />
           </div>
-          {mygames.map((each) => (
-            <div key={each._id} className="eachgame">
-              <div className="gameimg">
-                <img
-                  style={{
-                    height: "290px",
-                    width: "250px",
-                    marginBottom: "20px",
-                  }}
-                  src={each.imageURL}
-                  alt=""
-                />
-              </div>
-              <div className="gameinfo">
-                <Link className="gameinfo_link" to={"/game/" + each._id}>
-                  <h1>{each.name}</h1>
-                </Link>
-                <h3>{each.description}</h3>
-                <PlayCircleOutlineIcon className="play_btn">
-                  Play
-                </PlayCircleOutlineIcon>
-              </div>
+          {createdgamesexpanded ? (
+            <div className="createdgamesSection">
+              {mygames.map((each) => (
+                <div key={each._id} className="eachgame">
+                  <div className="gameimg">
+                    <img
+                      style={{
+                        height: "260px",
+                        width: "240px",
+                        marginBottom: "10px",
+                      }}
+                      src={each.imageURL}
+                      alt=""
+                    />
+                  </div>
+                  <div className="gameinfo">
+                    <Link className="gameinfo_link" to={"/game/" + each._id}>
+                      <h2>{each.name}</h2>
+                    </Link>
+                    <h3>{each.description}</h3>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          ) : null}
         </div>
         <div
           style={{
@@ -139,32 +146,38 @@ function OtherProfile() {
         ></div>
         <div className="favgamesRow">
           <div className="favgame">
-            <h1 style={{ color: "red" }}>My Favourites</h1>
+            <h2 style={{ color: "red", fontWeight: "400" }}>My Favourites</h2>
+            <KeyboardArrowDownIcon
+              onClick={() => {
+                setMyfavsexpanded(!myfavsexpanded);
+              }}
+            />
           </div>
-          {myfavourites.map((each) => (
-            <div key={each._id} className="faveachgame">
-              <div className="favgameimg">
-                <img
-                  style={{
-                    height: "240px",
-                    width: "190px",
-                    marginBottom: "20px",
-                  }}
-                  src={each.imageURL}
-                  alt=""
-                />
-              </div>
-              <div className="gameinfo">
-                <Link className="gameinfo_link" to={"/game/" + each._id}>
-                  <h1>{each.name}</h1>
-                </Link>
-                <h3>{each.description}</h3>
-                <div>
-                  <button>Play</button>
+          {myfavsexpanded ? (
+            <div className="favgamessection">
+              {myfavourites.map((each) => (
+                <div key={each._id} className="faveachgame">
+                  <div className="favgameimg">
+                    <img
+                      style={{
+                        height: "240px",
+                        width: "190px",
+                        marginBottom: "20px",
+                      }}
+                      src={each.imageURL}
+                      alt=""
+                    />
+                  </div>
+                  <div className="gameinfo">
+                    <Link className="gameinfo_link" to={"/game/" + each._id}>
+                      <h2>{each.name}</h2>
+                    </Link>
+                    <h3>{each.description}</h3>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
+          ) : null}
         </div>
       </div>
     </div>

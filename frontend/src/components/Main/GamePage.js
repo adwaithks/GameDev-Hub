@@ -3,6 +3,7 @@ import "./GamePage.css";
 import Alert from "@material-ui/lab/Alert";
 import Markdown from "markdown-to-jsx";
 import { Link } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 import Collapse from "@material-ui/core/Collapse";
 import CloseIcon from "@material-ui/icons/Close";
 import GetAppIcon from "@material-ui/icons/GetApp";
@@ -15,6 +16,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 function GamePage() {
   const [info, setInfo] = useState({});
   const [price, setPrice] = useState("");
+  const [paymentProgress, setpaymentProgress] = useState(false);
   const [liked, setLiked] = useState(0);
   const [sdesc, setsDesc] = useState("");
   const [ldesc, setlDesc] = useState("");
@@ -35,7 +37,7 @@ function GamePage() {
     const gameid_ = window.location.href.split("/")[4];
 
     const fetchGame = async () => {
-      await fetch(`/proxy/game/${gameid_}/view`, {
+      await fetch(`http://localhost:5000/proxy/game/${gameid_}/view`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -51,12 +53,14 @@ function GamePage() {
           setDownloads(finalRes.downloads);
         })
         .catch((err) => {
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
           //console.log(err);
         });
     };
 
     const fetchComments = async () => {
-      await fetch(`/proxy/game/${gameid_}/comments`, {
+      await fetch(`http://localhost:5000/proxy/game/${gameid_}/comments`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -68,12 +72,14 @@ function GamePage() {
           setComments(finalRes);
         })
         .catch((err) => {
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
           //console.log(err);
         });
     };
 
     const my = async () => {
-      await fetch("/api/user/me", {
+      await fetch("http://localhost:5000/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -88,6 +94,8 @@ function GamePage() {
           ////console.log(fav);
         })
         .catch((err) => {
+          localStorage.removeItem("Access-Token");
+          window.location.href = "/login";
           //console.log(err);
         });
     };
@@ -98,7 +106,7 @@ function GamePage() {
 
   const likeHandler = async (id) => {
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/${id}/like`, {
+    await fetch(`http://localhost:5000/proxy/${id}/like`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -116,7 +124,7 @@ function GamePage() {
 
   const dislikeHandler = async (id) => {
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/${id}/dislike`, {
+    await fetch(`http://localhost:5000/proxy/${id}/dislike`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -137,7 +145,7 @@ function GamePage() {
     setSeverity("success");
     setFav(true);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/${id}/makefavourite`, {
+    await fetch(`http://localhost:5000/proxy/${id}/makefavourite`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -155,15 +163,15 @@ function GamePage() {
   };
 
   const downloadHandler = async (id) => {
-    window.open(`/proxy/download/${id}`, "_blank");
+    window.open(`http://localhost:5000/proxy/download/${id}`, "_blank");
   };
 
   const purchaseHandler = async (info) => {
-    //console.log("purchased");
-    //console.log(me);
+    setpaymentProgress(true);
+
     console.log(info._id);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/purchase/game/${info._id}`, {
+    await fetch(`http://localhost:5000/proxy/purchase/game/${info._id}`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -172,6 +180,7 @@ function GamePage() {
       .then((res) => res.json())
       .then((finalRes) => {
         console.log(finalRes);
+        setpaymentProgress(false);
         window.open(finalRes.link, "_blank");
         //console.log(finalRes.json());
         //setOpen(true);
@@ -186,7 +195,7 @@ function GamePage() {
     setSeverity("error");
     setFav(false);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/${id}/removefavourite`, {
+    await fetch(`http://localhost:5000/proxy/${id}/removefavourite`, {
       method: "GET",
       headers: {
         "Access-Token": "Bearer " + token,
@@ -235,7 +244,7 @@ function GamePage() {
   const submitComment = async (id, comment) => {
     console.log(comment);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/game/${id}/makecomment`, {
+    await fetch(`http://localhost:5000/proxy/game/${id}/makecomment`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -309,12 +318,15 @@ function GamePage() {
   const deleteMessage = async (cid) => {
     console.log(gameid);
     const token = localStorage.getItem("Access-Token");
-    await fetch(`/proxy/game/${gameid}/removecomment/${cid}`, {
-      method: "GET",
-      headers: {
-        "Access-Token": "Bearer " + token,
-      },
-    })
+    await fetch(
+      `http://localhost:5000/proxy/game/${gameid}/removecomment/${cid}`,
+      {
+        method: "GET",
+        headers: {
+          "Access-Token": "Bearer " + token,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((finalRes) => {
         console.log(finalRes);
@@ -329,6 +341,11 @@ function GamePage() {
 
   return (
     <div className="gamepage">
+      <div
+        className={paymentProgress ? "spinnerContainer " : "nopaymentSpinner"}
+      >
+        <BeatLoader size={50} color="red" loading />
+      </div>
       <Collapse
         style={{ position: "fixed", zIndex: "-1", top: "0", width: "100%" }}
         in={open}
@@ -347,6 +364,7 @@ function GamePage() {
           {response}
         </Alert>
       </Collapse>
+
       <div className="mainsection">
         <img className="infoimage" src={info.imageURL} alt="" />
         <div className="gameInformation">
@@ -355,6 +373,7 @@ function GamePage() {
               {info.name}
             </h1>
           </div>
+
           <ButtonSelect
             gameid={info._id}
             price={price}
@@ -385,6 +404,7 @@ function GamePage() {
                 <p>{disliked}</p>
                 <FavButtonSelect key={fav} gameid={info._id} favourites={fav} />
               </div>
+
               <div className="tagContainer_">
                 <div className="category">
                   <p>{info.category}</p>

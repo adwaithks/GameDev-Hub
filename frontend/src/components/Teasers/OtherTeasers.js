@@ -10,7 +10,7 @@ function OtherTeasers() {
     const teaserid = window.location.href.split("/")[4];
 
     const getTeaser = async () => {
-      await fetch(`/proxy/teaser/${teaserid}`, {
+      await fetch(`http://localhost:5000/proxy/teaser/${teaserid}`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

@@ -15,6 +15,28 @@
   margin-bottom: 20px;
 }
 
+.nogamepage {
+  background-color: black;
+  margin-top: 120px;
+  margin-left: auto;
+  width: 100%;
+  margin-right: auto;
+}
+
+.nopaymentSpinner {
+  z-index: -1;
+  display: none;
+}
+
+.spinnerContainer {
+  position: absolute;
+  z-index: 100;
+  width: 80%;
+  background: none;
+  margin-top: 300px;
+  text-align: center;
+}
+
 .short_desc {
   width: fit-content;
   margin-top: 40px;
@@ -52,7 +74,7 @@ p > img {
 }
 
 .tagContainer_ > .platform {
-  background-color: green;
+  background-color: rgb(17, 102, 17);
   letter-spacing: 0.5;
   width: 100px;
   font-size: 15px;
@@ -62,7 +84,7 @@ p > img {
 }
 
 .tagContainer_ > .category {
-  background-color: red;
+  background-color: rgb(173, 18, 18);
   color: white;
   font-weight: 400;
   letter-spacing: 0.5;
@@ -82,7 +104,7 @@ code {
 
 .hline {
   height: 3px;
-  background-color: red;
+  background-color: rgb(105, 16, 16);
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -163,7 +185,7 @@ code {
 
 .comment_user {
   width: fit-content;
-  color: rgb(255, 0, 0);
+  color: red;
   font-weight: 400;
 }
 
@@ -219,7 +241,7 @@ code {
   width: 100px;
   font-size: 17px;
   cursor: pointer;
-  background-color: rgb(104, 0, 0);
+  background-color: rgb(110, 7, 7);
   color: white;
   outline: none;
   border: none;

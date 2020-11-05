@@ -71,7 +71,13 @@ const gameSchema = mongoose.Schema({
     type: String,
     default: "Free",
   },
-  editorsChocie: {
+  purchasedUsers: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  editorsChoice: {
     type: Boolean,
     default: false,
   },

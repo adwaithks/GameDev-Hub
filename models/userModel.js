@@ -62,6 +62,12 @@ const userSchema = mongoose.Schema({
       ref: "Comment",
     },
   ],
+  upcomingPayments: [
+    {
+      type: String,
+      default: 0,
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

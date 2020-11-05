@@ -57,7 +57,7 @@ router.post("/register", async (req, res) => {
     });
 });
 
-router.get("/profile/:author", jwtVerification, async (req, res) => {
+/**router.get("/profile/:author", jwtVerification, async (req, res) => {
   const user = await User.findOne({
     email: req.user.email,
   });
@@ -72,12 +72,14 @@ router.get("/profile/:author", jwtVerification, async (req, res) => {
     username: doc.username,
     createdGames: doc.createdGames,
     favouriteGames: doc.favouriteGames,
+    purchasedGames: doc.purchasedGames,
+    upcomingPayments: doc.upcomingPayments,
     noOfCreatedGames: doc.noOfCreatedGames,
     rating: doc.rating,
     signal: doc.signal,
     popularity: doc.popularity,
   });
-});
+});**/
 
 router.get("/me", jwtVerification, async (req, res) => {
   try {
@@ -92,6 +94,7 @@ router.get("/me", jwtVerification, async (req, res) => {
       username: user.username,
       createdGames: user.createdGames,
       purchasedGames: user.purchasedGames,
+      upcomingPayments: user.upcomingPayments,
       comments: user.comments,
       favouriteGames: user.favouriteGames,
       noOfCreatedGames: user.noOfCreatedGames,

@@ -2,7 +2,6 @@
   display: flex;
   width: 95%;
   margin-left: auto;
-  background-color: rgb(54, 6, 6);
   border-radius: 10px;
   padding: 5px;
   margin-right: auto;
@@ -21,7 +20,6 @@
 }
 
 .eachUpcoming {
-  background-color: rgb(17, 17, 17);
   border-radius: 10px;
   width: 260px;
   margin-right: 20px;
@@ -47,7 +45,6 @@
 .upcomingreleases {
   padding: 5px;
   display: flex;
-  background-color: rgb(70, 7, 7);
   border-radius: 10px;
   width: 95%;
   margin-left: auto;
@@ -123,7 +120,6 @@
 }
 .trendingrow {
   text-align: center;
-  background-color: rgb(66, 4, 4);
 }
 
 .textContain {
@@ -142,10 +138,10 @@
 .eachTrending {
   border-radius: 10px;
   text-align: center;
-  height: 380px;
+  height: 350px;
   margin-right: 20px;
   transition: ease-in 0.2s;
-  background-color: rgb(17, 17, 17);
+  background-color: black;
   width: fit-content;
 }
 
@@ -154,8 +150,8 @@
   transition: ease-in 0.2s;
   margin-right: 20px;
   text-align: center;
-  height: 380px;
-  background-color: rgb(17, 17, 17);
+  height: 350px;
+  background-color: black;
   width: fit-content;
 }
 
@@ -165,7 +161,6 @@
 
 .favsrow {
   padding: 5px;
-  background-color: rgb(54, 6, 6);
   border-radius: 10px;
   display: flex;
   width: 95%;
@@ -179,14 +174,21 @@
   overflow-x: scroll;
 }
 
-.trailerinfo > h3 {
+.trailerinfo > h2 {
   font-weight: bolder;
-  font-size: 35px;
+  font-size: 30px;
 }
 
-.trailerinfo > h3,
-h4 {
+.trailerinfo > h4 {
+  height: 115px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.trailerinfo > h2 {
   font-weight: 400;
+  margin-bottom: 10px;
 }
 
 .trailerinfo {
@@ -195,7 +197,7 @@ h4 {
 }
 
 .eachTrailer {
-  background-color: rgb(14, 14, 14);
+  background-color: rgb(0, 0, 0);
   border-radius: 10px;
   margin-right: 20px;
   display: flex;
@@ -204,14 +206,14 @@ h4 {
 }
 
 .eachTrailer > img {
-  width: fit-content;
+  width: 260px;
+  height: 330px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
 }
 
 .trailers_row {
   padding: 5px;
-  background-color: rgb(54, 6, 6);
   border-radius: 10px;
   display: flex;
   width: 95%;
@@ -248,5 +250,13 @@ h4 {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .eachTrending {
+    height: 320px;
+  }
+
+  .eachfav {
+    height: 320px;
   }
 }

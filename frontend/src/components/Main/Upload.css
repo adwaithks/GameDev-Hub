@@ -55,7 +55,7 @@
   width: 80%;
   opacity: 0.9;
   border: none;
-  color: rgb(255, 255, 255);
+  color: rgb(231, 7, 7);
   outline: none;
   margin-left: auto;
   background-color: rgb(48, 48, 48);
@@ -114,7 +114,7 @@
   font-size: 15px;
   margin-left: auto;
   opacity: 0.8;
-  color: white;
+  color: rgb(255, 0, 0);
   margin-right: auto;
   margin-bottom: 20px;
   border: none;
@@ -224,6 +224,18 @@
   border: red solid 1px;
 }
 
+.uploadspinnerContainer {
+  position: absolute;
+  z-index: 100;
+  width: 98%;
+  margin-top: 40%;
+  text-align: center;
+}
+
+.nouploadSpinner {
+  display: none;
+}
+
 .create {
   width: 100px;
   margin-top: 20px;
@@ -244,4 +256,17 @@
 }
 
 @media (max-width: 460px) {
+  .filenameindicator > h3 {
+    font-size: 13px;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
+
+  .uploadspinnerContainer {
+    position: absolute;
+    z-index: 100;
+    width: 98%;
+    margin-top: 900px;
+    text-align: center;
+  }
 }

@@ -161,7 +161,12 @@ router.post(
       });
     };
 
-    await newSchedule.save().then().catch();
+    await newSchedule
+      .save()
+      .then()
+      .catch((err) => {
+        res.status(500).json("Internal Server Error");
+      });
 
     scheduleNewJob(
       date[0],
@@ -173,7 +178,7 @@ router.post(
       newSchedule._id,
       user
     );
-    res.json("Scheduled successfully!!");
+    res.status(200).json("Scheduled successfully!!");
   }
 );
 
@@ -194,8 +199,8 @@ router.get("/purchase/game/:id", jwtVerification, async (req, res) => {
       payment_method: "paypal",
     },
     redirect_urls: {
-      return_url: `http://localhost:8000/payment/${game._id}/success`,
-      cancel_url: "http://localhost:8000/payment/cancel",
+      return_url: `http://localhost:5000/proxy/payment/${game._id}/success`,
+      cancel_url: "http://localhost:5000/proxy/payment/cancel",
     },
     transactions: [
       {
@@ -218,7 +223,6 @@ router.get("/purchase/game/:id", jwtVerification, async (req, res) => {
       },
     ],
   };
-
   await paypal.payment.create(create_payment_json, function (error, payment) {
     if (error) {
       return res.json({
@@ -227,10 +231,9 @@ router.get("/purchase/game/:id", jwtVerification, async (req, res) => {
     }
     for (let i = 0; i < payment.links.length; i++) {
       if (payment.links[i].rel === "approval_url") {
-        const response = {
+        let response = {
           link: payment.links[i].href,
         };
-        console.log(response);
         res.json(response);
       }
     }
@@ -276,13 +279,35 @@ router.get("/payment/:id/success", jwtVerification, async (req, res) => {
   });
 
   user.purchasedGames.push(game._id);
+  game.purchasedUsers.push(user._id);
+
+  const profitUser = await User.findOne({
+    username: game.creator,
+  });
+
+  profitUser.upcomingPayments += parseInt(game.price);
+  console.log("reached herrreeeeee");
+
+  await profitUser
+    .save()
+    .then()
+    .catch((err) => {
+      res.status(500).json("Internal Server Error");
+    });
+
+  await game
+    .save()
+    .then()
+    .catch((err) => {
+      res.status(500).json("Internal Server Error");
+    });
   await user
     .save()
     .then()
     .catch((err) => {
       res.status(500).json("Internal Server Error");
     });
-  res.redirect("http://localhost:8000/myprofile");
+  res.redirect("http://localhost:3000/myprofile");
 });
 
 router.get("/schedules", jwtVerification, async (req, res) => {
@@ -291,6 +316,7 @@ router.get("/schedules", jwtVerification, async (req, res) => {
   });
   if (!user) return res.json("Internal Server Error");
   const schedules = await Schedule.find();
+  console.log(schedules);
   res.json(schedules);
 });
 

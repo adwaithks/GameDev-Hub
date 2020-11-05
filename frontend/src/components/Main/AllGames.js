@@ -10,12 +10,13 @@ import GetAppIcon from "@material-ui/icons/GetApp";
 
 function AllGames() {
   const [allGames, setAllGames] = useState([]);
+  const [searchGame, setSearchGames] = useState([]);
   //const [collapseState, setCollapseState] = useState('success');
   //const [liked, setLiked] = useState(false);
   //const [likeState, setLIkeState] = useState('Like');
   //const [fav, setFav] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
-  //const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   //const [favState, setFavState] = useState('Fav');
   //const [open, setOpen] = useState(false);
   //const [response, setResponse] = useState('');
@@ -23,13 +24,13 @@ function AllGames() {
 
   useEffect(() => {
     const fetchAllGames = async () => {
-      await fetch("/proxy/allgames", {
+      await fetch("http://localhost:5000/proxy/allgames", {
         method: "GET",
       })
         .then((res) => res.json())
         .then((finalRes) => {
-          console.log(finalRes);
           setAllGames(finalRes);
+          setSearchGames(finalRes);
         })
         .catch((err) => {
           console.log(err);
@@ -38,27 +39,9 @@ function AllGames() {
     fetchAllGames();
   }, []);
 
-  /**const getAGame = async (event) => {
-        event.preventDefault();
-        await fetch(`/game/${event.target.value}`, {
-            method: 'GET',
-            headers: {
-                'Access-Token': 'Bearer ' + localStorage.getItem('Access-Token')
-            }
-        })
-        .then(res => res.json())
-            .then(finalRes => {
-                console.log(finalRes);
-                setgameId(event.target.value);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }**/
-
   const visitProfile = async (author) => {
     const me = async () => {
-      await fetch("/api/user/me", {
+      await fetch("http://localhost:5000/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -94,14 +77,25 @@ function AllGames() {
     window.open(`http://localhost:3000/play?game=${id}`, "_blank");
   };
 
+  const searchHandler = (letter) => {
+    setSearchGames(
+      allGames.filter((each) => {
+        return each.name.toLowerCase().match(letter);
+      })
+    );
+  };
+
   return (
     <div className="allgames">
       <div
         style={{
           display: "flex",
+          alignItems: "center",
           width: "fit-content",
+          justifyContent: "space-between",
           marginLeft: "auto",
           marginRight: "auto",
+          marginTop: "100px",
           textAlign: "center",
           alignItems: "center",
         }}
@@ -111,19 +105,35 @@ function AllGames() {
             color: "white",
             fontSize: "30px",
             textAlign: "center",
-            marginTop: "150px",
             fontWeight: "400",
           }}
         >
           ALL GAMES
         </h1>
-        {/**<input type="text" placeholder="Search..." onChange={searchHandler} value={search} />**/}
+        <input
+          type="text"
+          style={{
+            width: "300px",
+            height: "40px",
+            borderRadius: "8px",
+            outline: "none",
+            border: "none",
+            fontSize: "16px",
+            padding: "10px",
+          }}
+          placeholder="Search..."
+          onChange={(e) => {
+            setSearch(e.target.value);
+            searchHandler(e.target.value);
+          }}
+          value={search}
+        />
       </div>
       <div className="gamesRow">
-        {allGames.length === 0 ? (
+        {searchGame.length === 0 ? (
           <h1 style={{ marginTop: "100px", color: "darkgray" }}>Loading ...</h1>
         ) : null}
-        {allGames.map((eachGame) => (
+        {searchGame.map((eachGame) => (
           <div key={eachGame._id} className="game">
             <h2 className="heading">{eachGame.name}</h2>
 

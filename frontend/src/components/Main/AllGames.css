@@ -218,6 +218,10 @@
     display: flex;
   }
 
+  .allgames > div > h1 {
+    display: none;
+  }
+
   .descriptionContainer {
     display: none;
   }

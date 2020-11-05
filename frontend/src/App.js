@@ -7,7 +7,6 @@ import NavigationTab from "./components/Main/NavigationTab";
 import Home from "./components/Home/Home";
 import Upload from "./components/Main/Upload";
 import AllGames from "./components/Main/AllGames";
-import Favourites from "./components/Main/Favourites";
 import MyProfile from "./components/Main/MyProfile";
 import GamePage from "./components/Main/GamePage";
 import Landing from "./components/Main/Landing";
@@ -45,9 +44,7 @@ function App() {
           {localStorage.getItem("Access-Token") && (
             <Route path="/upload" component={Upload} />
           )}
-          {localStorage.getItem("Access-Token") && (
-            <Route path="/favourites" component={Favourites} />
-          )}
+
           {!localStorage.getItem("Access-Token") && (
             <Route path="/login" component={Login} />
           )}
@@ -57,6 +54,7 @@ function App() {
           {!localStorage.getItem("Access-Token") && (
             <Route path="/" component={Home} />
           )}
+          <Route path="/login" component={Login} />
         </Switch>
       </Router>
     </div>
