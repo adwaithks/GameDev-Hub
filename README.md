@@ -1,7 +1,9 @@
 
 
 
+# Screenshots
 
+![](https://imgur.com/moCAuKN)
 
 
 # API endpoints
