@@ -3,7 +3,7 @@
 
 # Screenshots
 
-![](https://imgur.com/moCAuKN)
+![all games section](https://imgur.com/moCAuKN)
 
 
 # API endpoints
