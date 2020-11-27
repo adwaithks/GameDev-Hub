@@ -17,6 +17,7 @@ import ForgotPassword from './components/Forgotpwd/ForgotPassword';
 import Landing from "./components/Main/Landing";
 import Play from "./components/Main/Play";
 import Chat from './components/chat/Chat';
+import {UserContext, UserProvider} from './components/Context/UserContext';
 import Teaser from "./components/Main/Teaser";
 import ForgotPasswordSuccess from './components/Forgotpwd/ForgotPasswordSuccess';
 import OtherProfile from "./components/Main/OtherProfile";
@@ -27,8 +28,10 @@ import PaymentError from "./components/Main/PaymentError";
 function App() {
   
   return (
+    <UserProvider>
     <div className="App">
-      <Chat />
+    {localStorage.getItem("Access-Token") && (
+      <Chat />)}
       <Router>
         {localStorage.getItem("Access-Token") && (
           <Route path="/" component={NavigationTab} />
@@ -77,6 +80,7 @@ function App() {
         </Switch>
       </Router>
     </div>
+    </UserProvider>
   );
 }
 

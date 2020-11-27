@@ -24,8 +24,8 @@ function NavigationTab() {
   return (
     <nav className="navigation">
       <div>
-        <Link to="/myprofile">
-          <h3 className="logo">Indi Gamers</h3>
+        <Link className="logoContainer" to="/myprofile">
+          <h3 className="logo">G</h3>
         </Link>
       </div>
       <div className="nav__options">

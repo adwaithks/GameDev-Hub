@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./MyProfile.css";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import { Link } from "react-router-dom";
+import {UserContext} from '../Context/UserContext';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 function MyProfile() {
@@ -24,11 +25,11 @@ function MyProfile() {
       })
         .then((res) => res.json())
         .then((finalRes) => {
-          console.log(finalRes);
+         // console.log(finalRes);
           setMygames(finalRes);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           localStorage.removeItem("Access-Token");
           window.location.href = "/login";
         });
@@ -43,15 +44,16 @@ function MyProfile() {
       })
         .then((res) => res.json())
         .then((finalRes3) => {
-          console.log(finalRes3);
+          //console.log(finalRes3);
           setmyfavourites(finalRes3);
         })
         .catch((err) => {
-          console.log(err);
+          //console.log(err);
           localStorage.removeItem("Access-Token");
           window.location.href = "/login";
         });
     };
+
 
     const me = async () => {
       await fetch("http://localhost:5000/api/user/me", {
@@ -62,7 +64,7 @@ function MyProfile() {
       })
         .then((res) => res.json())
         .then((finalRes2) => {
-          console.log("me::::" + finalRes2.username);
+          //console.log("me::::" + finalRes2.username);
           setLetter(finalRes2.username.slice(0, 1).toUpperCase());
           setMe(finalRes2);
         })
@@ -76,6 +78,9 @@ function MyProfile() {
     myCreatedGames();
     myfav();
   }, [temp]);
+
+  const [currentUser, setCurrentUser] = useContext(UserContext);
+  setCurrentUser(me.username);
 
   const logoutHandler = () => {
     localStorage.removeItem("Access-Token");
@@ -108,6 +113,7 @@ function MyProfile() {
   const playHandler = (id) => {
     window.open(`http://localhost:3000/play?game=${id}`, "_blank");
   };
+
 
   return (
     <div className="profile">
