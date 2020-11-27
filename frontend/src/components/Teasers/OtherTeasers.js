@@ -83,7 +83,7 @@ function OtherTeasers() {
       </div>
       <div className="trailervideo">
         <video width="100%" height="100%" controls>
-          <source src={"/games/files/" + teaser.video} />
+          <source src={"http://localhost:5000/games/files/" + teaser.video} type={'video/' + teaser.videoExtension} />
         </video>
       </div>
 
@@ -105,7 +105,7 @@ function OtherTeasers() {
             <img
               alt="gameplay-pics"
               className="pics"
-              src={"/games/files/" + each}
+              src={"http://localhost:5000/games/files/" + each}
             />
           </div>
         ))}

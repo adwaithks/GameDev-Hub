@@ -10,12 +10,12 @@ function NavigationTab() {
   };
 
   const [burgerOpen, setBurgerOpen] = useState(false);
-  const [active, setActive] = useState("home");
+  const [active, setActive] = useState("explore");
 
   useEffect(() => {
     const currentTab = window.location.href.split("/")[3];
     setActive(currentTab);
-  });
+  }, []);
 
   const activeHandler = (tab) => {
     setActive(tab);
@@ -29,19 +29,19 @@ function NavigationTab() {
         </Link>
       </div>
       <div className="nav__options">
-        {active === "home" ? (
-          <Link className="options_active" to="/home">
-            <h4 className="optionh4 redcolor">Home</h4>
+        {active === "explore" ? (
+          <Link className="options_active" to="/explore">
+            <h4 className="optionh4 redcolor">Explore</h4>
           </Link>
         ) : (
           <Link
             onClick={() => {
-              activeHandler("home");
+              activeHandler("explore");
             }}
             className="options_"
-            to="/home"
+            to="/explore"
           >
-            <h4 className="optionh4">Home</h4>
+            <h4 className="optionh4">Explore</h4>
           </Link>
         )}
 
@@ -91,6 +91,22 @@ function NavigationTab() {
           </Link>
         )}
 
+    {active === "news" ? (
+          <Link className="options_active" to="/feed">
+            <h4 className="optionh4 redcolor">News</h4>
+          </Link>
+        ) : (
+          <Link
+            onClick={() => {
+              activeHandler("news");
+            }}
+            className="options_"
+            to="/feed"
+          >
+            <h4 className="optionh4">News</h4>
+          </Link>
+        )}    
+
         {/**<h4 className="logout" onClick={logoutHandler}>
           Logout
           </h4>**/}
@@ -105,9 +121,16 @@ function NavigationTab() {
           <Link
             onClick={() => setBurgerOpen(false)}
             className="options"
-            to="/home"
+            to="/feed"
           >
-            <h4 className="option">Home</h4>
+            <h4 className="option">News</h4>
+          </Link>
+          <Link
+            onClick={() => setBurgerOpen(false)}
+            className="options"
+            to="/explore"
+          >
+            <h4 className="option">Explore</h4>
           </Link>
           <Link
             onClick={() => setBurgerOpen(false)}

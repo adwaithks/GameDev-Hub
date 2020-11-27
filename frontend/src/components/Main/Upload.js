@@ -92,7 +92,7 @@ function Upload() {
     });
 
     console.log(response);
-    window.location.href = "/myprofile";
+    window.location.href = "/myprofile?state=true";
     return false;
   };
 

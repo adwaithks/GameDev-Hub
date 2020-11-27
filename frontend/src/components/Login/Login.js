@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
+import { BeatLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import Collapse from "@material-ui/core/Collapse";
@@ -8,10 +9,12 @@ import CloseIcon from "@material-ui/icons/Close";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [uploading, setuploading] = useState(false);
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
 
   const sendLoginInfo = async (event) => {
+    setuploading(true);
     const data = {
       email: email,
       password: password,
@@ -43,6 +46,11 @@ function Login() {
 
   return (
     <div className="Login">
+      <div
+        className={uploading ? "uploadspinnerContainer" : "nouploadSpinner"}
+      >
+        <BeatLoader size={50} color="red" loading />
+      </div>
       <Collapse in={open}>
         <Alert
           severity="error"
@@ -91,11 +99,17 @@ function Login() {
             <button className="loginbtn" type="submit">
               Login
             </button>
-            <Link className="link" to="/register">
+
+            <Link className="linkl" to="/register">
               <h4>New to Community?</h4>
             </Link>
+            <Link className="linkl" to="/forgotpass">
+              <h4>Forgot password?</h4>
+            </Link>
           </div>
+
         </form>
+
       </div>
     </div>
   );

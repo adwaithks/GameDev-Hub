@@ -87,7 +87,7 @@ function GamePage() {
       })
         .then((res) => res.json())
         .then((finalRes2) => {
-          console.log(finalRes2);
+          console.log('favgames: ' + finalRes2.favouriteGames);
           setPurchasedGames(finalRes2.purchasedGames);
           setFav(finalRes2.favouriteGames);
           setMe(finalRes2);
@@ -143,7 +143,7 @@ function GamePage() {
   const favHandler = async (id) => {
     ////console.log(me.favouriteGames);
     setSeverity("success");
-    setFav(true);
+    //setFav(true);
     const token = localStorage.getItem("Access-Token");
     await fetch(`http://localhost:5000/proxy/${id}/makefavourite`, {
       method: "GET",
@@ -153,6 +153,7 @@ function GamePage() {
     })
       .then((res) => res.json())
       .then((finalRes) => {
+        setTemp(Date.now())
         //console.log(finalRes);
         setOpen(true);
         setResponse(finalRes);
@@ -193,7 +194,7 @@ function GamePage() {
 
   const unfavHandler = async (id) => {
     setSeverity("error");
-    setFav(false);
+    //setFav(false);
     const token = localStorage.getItem("Access-Token");
     await fetch(`http://localhost:5000/proxy/${id}/removefavourite`, {
       method: "GET",
@@ -202,8 +203,8 @@ function GamePage() {
       },
     })
       .then((res) => res.json())
-      .then((finalRes) => {
-        //console.log(finalRes);
+      .then((finalRes) => { 
+        setTemp(Date.now())
         setOpen(true);
         setResponse(finalRes);
       })
@@ -214,7 +215,7 @@ function GamePage() {
 
   const FavButtonSelect = (props) => {
     const favourites = props.favourites;
-    //console.log("fav" + props.favourites);
+    console.log("fav " + props.favourites);
     const gameid = props.gameid;
     //console.log(typeof gameid);
 
@@ -239,6 +240,8 @@ function GamePage() {
         ></FavoriteBorderIcon>
       );
     }
+
+    
   };
 
   const submitComment = async (id, comment) => {
@@ -271,10 +274,6 @@ function GamePage() {
     const price = props.price;
     const gameid = props.gameid;
     const purchasedGames = props.purchasedGames;
-    console.log(purchasedGames);
-    ////console.log(price);
-    ////console.log(gameid);
-    ////console.log(purchasedGames);
 
     if (price !== "Free" && !purchasedGames.includes(gameid)) {
       return (
@@ -402,7 +401,7 @@ function GamePage() {
                   className="downloadIcon"
                 ></ThumbDownAltIcon>
                 <p>{disliked}</p>
-                <FavButtonSelect key={fav} gameid={info._id} favourites={fav} />
+                <FavButtonSelect key={info._id} gameid={info._id} favourites={fav} />
               </div>
 
               <div className="tagContainer_">

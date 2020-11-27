@@ -1,0 +1,102 @@
+.chat {
+    height: 420px;
+    background-color: rgb(19, 19, 19);
+    width: 350px;
+    display: flex;
+    border-radius: 10px;
+    z-index: 500;
+    position: fixed;
+    flex-direction: column;
+    bottom: 30px;
+    right: 20px;
+}
+
+.chatScreen::-webkit-scrollbar {
+    display: none;
+}
+
+.eachMsg {
+    background-color:blueviolet;
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: fit-content;
+    font-size: 13px;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.chatIcon {
+    color: rgb(223, 0, 0) !important;
+    font-size: 55px !important;
+    cursor: pointer;
+    z-index:500;
+    bottom: 30px;
+    right: 50px;
+    position: fixed;
+}
+
+
+
+.eachMsg > h3 {
+    font-weight: 400;
+}
+
+
+.chat > .chatScreen {
+    height: 380px;
+    padding: 10px;
+    margin-bottom: 2px;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(36, 36, 36);
+    border:  rgb(51, 51, 51) solid 0.5px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    overflow-y: scroll;
+}
+
+
+
+.chatCloseIcon {
+    float: right; 
+    font-size: 25px;
+    margin-top: 3px;
+    cursor: pointer;
+    margin-bottom: 3px;
+    color: rgb(201, 0, 0);
+}
+
+
+.enterMsg > .enterMsgForm{
+    height: fit-content;
+    display: flex;
+}
+
+.enterMsg >  .enterMsgForm >input {
+    width: 100%;
+    color: white;
+    border-radius: 5px;
+    padding: 10px;
+    height: 40px;
+    background-color: rgb(37, 37, 37);
+    font-size: 15px;
+    outline: none;
+    border: none;
+}
+
+.enterMsg > .enterMsgForm > button {
+    border: none;
+    background-color: rgb(90, 11, 11);
+    color: white;
+    width: 90px;
+    border-radius: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    height: 40px;
+    font-size: 17px;
+}
+
+.enterMsg > button:hover {
+    background-color: red;
+}

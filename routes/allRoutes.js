@@ -426,14 +426,14 @@ router.post(
     }
 
     const videoname = req.files.video.path.match(/(\upload_.*)/g).toString();
-    console.log("type of video:::::" + req.files.video.type);
+
     let videoExtension = "";
     if (req.files.video.type === "video/x-matroska") {
-      videoExtension = ".mkv";
+      videoExtension = "mkv";
     } else {
-      videoExtension = ".mp4";
+      videoExtension = "mp4";
     }
-    const newvideoname = videoname + videoExtension;
+    const newvideoname = videoname + '.'+ videoExtension;
 
     console.log(newvideoname);
     console.log(filename);
@@ -442,7 +442,6 @@ router.post(
       `./uploads/games/files/${newvideoname}`
     );
 
-    console.log(11111111111);
     const newteaser = new Teaser({
       name: req.fields.name,
       releaseDate: req.fields.release,
@@ -451,8 +450,10 @@ router.post(
       category: req.fields.category,
       platform: req.fields.platform,
       images: filename,
+      price: req.fields.fee,
       video: newvideoname,
       coverimageurl: req.fields.img,
+      videoExtension: videoExtension
     });
     console.log(newteaser);
 

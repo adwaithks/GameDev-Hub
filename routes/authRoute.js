@@ -2,6 +2,7 @@ const router = require("express").Router();
 const User = require("../models/userModel");
 const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
+const { v4: uuidv4 } = require('uuid');
 const { registerValidation } = require("../validation");
 const jwt = require("jsonwebtoken");
 const jwtVerification = require("./jwtVerification");
@@ -140,34 +141,36 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/forgotpwd", async (req, res) => {
+  console.log(req.body.email);
   if (!req.body.email)
-    return res.status(400).status.json("No Email Parameter Passed");
+    return res.status(400).json("No Email Parameter Passed");
 
   const user = await User.findOne({
     email: req.body.email,
   });
+  console.log(user);
 
-  if (!user) return res.status(500).json("Internal Server Error");
+  if (!user) return res.status(500).json("No user exists with that email");
 
   const email = req.body.email;
   const token = uuidv4();
 
   async function main() {
     const transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+      host: 'smtp.ethereal.email',
       port: 587,
       auth: {
-        user: "myuser",
-        pass: "mypass",
-      },
-    });
+          user: 'gunner.mccullough@ethereal.email',
+          pass: 'eqnfBqf7TyVJjt4jdF'
+      }
+  });
 
     let info = await transporter.sendMail({
-      from: "myemail",
+      from: "gunner.mccullough@ethereal.email",
       to: `${req.body.email}`,
       subject: "Password reset",
       text: "Password Reset Email - Design Project",
-      html: `<b>Token: ${token}</b>`,
+      html: `<b>Token: http://localhost:3000/pswdreset/${token}</b>`,
     });
 
     console.log("Message sent: %s", info.messageId);
@@ -177,13 +180,13 @@ router.post("/forgotpwd", async (req, res) => {
     // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
 
     user.pwdResetToken = token;
+    user.password = "null";
     user
       .save()
       .then((doc) => {
-        res.status(200).json(`Password Reset Email sent to ${email}`);
+        return res.status(200).json(`Password Reset Email sent to ${email}`);
       })
       .catch((err) => {
-        res.status(500).json("Internal Server Error");
       });
   }
 

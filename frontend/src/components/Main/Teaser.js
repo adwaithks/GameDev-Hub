@@ -1,23 +1,26 @@
 import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import CloseIcon from "@material-ui/icons/Close";
+import { BeatLoader } from "react-spinners";
 
 import "./Teaser.css";
 
 function Teaser() {
   const [desc, setDesc] = useState("");
   const [fee, setFee] = useState("");
+  const [uploading, setuploading] = useState(false);
   const [category, setcategory] = useState("action");
   const [platform, setplatform] = useState("Mac");
   const [schedule, setSchedule] = useState("");
   const [video, setVideo] = useState();
-  const [imagenames, setimagenames] = useState([]);
+  //const [imagenames, setimagenames] = useState([]);
   const [videoname, setvideoname] = useState("");
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [files, setFiles] = useState();
 
   const submitHandler = async (e) => {
+    setuploading(true);
     e.preventDefault();
     console.log(files);
     const formData = new FormData();
@@ -51,7 +54,7 @@ function Teaser() {
       }
     );
     console.log(response);
-    window.open("/home");
+    window.location.href = "/myprofile";
     return false;
   };
 
@@ -76,6 +79,11 @@ function Teaser() {
 
   return (
     <div className="teaser">
+      <div
+            className={uploading ? "uploadspinnerContainer" : "nouploadSpinner"}
+          >
+            <BeatLoader size={50} color="red" loading />
+          </div>
       <h1
         style={{
           marginTop: "150px",

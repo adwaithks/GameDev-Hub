@@ -8,26 +8,40 @@ import Home from "./components/Home/Home";
 import Upload from "./components/Main/Upload";
 import AllGames from "./components/Main/AllGames";
 import MyProfile from "./components/Main/MyProfile";
+import Feed from './components/Feed/Feed';
+import Reset from './components/Forgotpwd/ResetToken';
 import GamePage from "./components/Main/GamePage";
+import ResetSuccess from './components/Forgotpwd/ResetSuccess';
+import ResetFail from './components/Forgotpwd/ResetFailed';
+import ForgotPassword from './components/Forgotpwd/ForgotPassword';
 import Landing from "./components/Main/Landing";
 import Play from "./components/Main/Play";
+import Chat from './components/chat/Chat';
 import Teaser from "./components/Main/Teaser";
+import ForgotPasswordSuccess from './components/Forgotpwd/ForgotPasswordSuccess';
 import OtherProfile from "./components/Main/OtherProfile";
 import NotFound from "./components/Main/NotFound";
 import OtherTeasers from "./components/Teasers/OtherTeasers";
 import PaymentError from "./components/Main/PaymentError";
 
 function App() {
+  
   return (
     <div className="App">
+      <Chat />
       <Router>
         {localStorage.getItem("Access-Token") && (
           <Route path="/" component={NavigationTab} />
         )}
         <Switch>
+          <Route path="/pswdreset/:id" component={Reset} />
+          <Route exact path="/resetfailed" component={ResetFail} />
+          <Route exact path="/resetsuccess" component={ResetSuccess} />
           <Route path="/allgames" component={AllGames} />
           <Route path="/play" component={Play} />
           <Route path="/404" component={NotFound} />
+          <Route exact path="/forgotpass/success" component={ForgotPasswordSuccess} />
+          <Route exact path="/forgotpass" component={ForgotPassword} />
           <Route path="/paymenterror" component={PaymentError} />
           <Route path="/profile/*" component={OtherProfile} />
           <Route path="/game/*" component={GamePage} />
@@ -35,8 +49,13 @@ function App() {
           <Route path="/teaser/*" component={OtherTeasers} />
 
           {localStorage.getItem("Access-Token") && (
-            <Route path="/home" component={Landing} />
+            <Route path="/explore" component={Landing} />
           )}
+
+          {localStorage.getItem("Access-Token") && (
+            <Route path="/feed" component={Feed} />
+          )}
+
           {localStorage.getItem("Access-Token") && (
             <Route path="/myprofile" component={MyProfile} />
           )}

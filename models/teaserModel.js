@@ -69,6 +69,9 @@ const teaserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  videoExtension: {
+    type: String
+  }
 });
 
 module.exports = mongoose.model("Teaser", teaserSchema);
