@@ -320,6 +320,72 @@ router.get("/schedules", jwtVerification, async (req, res) => {
   res.json(schedules);
 });
 
+// profile pic
+
+router.post(
+  "/me/profilepic/upload",
+  formidable({
+    encoding: "utf-8",
+    uploadDir: "./uploads/profilepic",
+    multiples: false,
+  }),
+  jwtVerification,
+  async (req, res) => {
+    const user = await User.findOne({
+      email: req.user.email,
+    });
+    if (!user) return res.json("Internal Server Error");
+
+    console.log(req.files);
+    const filename = req.files.image.path.match(/(\upload_.*)/g).toString();
+    let extension;
+
+      if (req.files.type === "image/jpeg") {
+        extension = "jpeg";
+      } else if (req.files.type === "image/png") {
+        extension = "png";
+      } else {
+        extension ="jpg";
+      }
+      fs.renameSync(
+        `./uploads/profilepic/${filename}`,
+        `./uploads/profilepic/${filename}.${extension}`
+      );
+      const newfilename = filename + '.' + extension;
+      user.profilepic = newfilename;
+      await user.save().then(() => {
+        return res.status(200).json({
+          filename: newfilename 
+        });
+      }).catch(err => {
+        return res.status(500).json('Internal Server Error');
+      });
+  }
+);
+
+// about me ----------------------------------------
+
+router.post("/me/aboutme/update", jwtVerification, async (req, res) => {
+  const user = await User.findOne({
+    username: req.user.username,
+  });
+  if (!user) return res.status(403);
+
+  const aboutme = req.body.aboutme;
+  console.log('body: ' + req.body.aboutme);
+
+  user.aboutme = aboutme;
+  await user
+    .save()
+    .then(() => {
+      return res.json({aboutme: aboutme});
+    })
+    .catch((err) => {
+      return res.status(500).json('Internal Server Error');
+    });
+});
+
+
 //game create routes
 
 router.post(
@@ -619,10 +685,12 @@ router.get("/profile/:username", async (req, res) => {
   });
   if (!user) return res.json({ message: "User does not exist" });
 
-  res.json({
+  res.status(200).json({
     _id: user._id,
     email: user.email,
     username: user.username,
+    aboutme: user.aboutme,
+    profilepic: user.profilepic,
     createdGames: user.createdGames,
     favouriteGames: user.favouriteGames,
     noOfCreatedGames: user.noOfCreatedGames,

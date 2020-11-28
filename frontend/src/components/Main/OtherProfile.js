@@ -73,7 +73,17 @@ function OtherProfile() {
       <div className="usersection">
         <div className="logo__username">
           <div className="avatar">
-            <h1 style={{ color: "white" }}>{letter}</h1>
+            {
+              me.profilepic ? (
+                <img style={{
+                  height: "240px",
+                  width: "240px",
+                  borderRadius: "50%"
+                }} src={'http://localhost:5000/profilepic/' + me.profilepic} />
+              ) : (
+                <h1 style={{ color: "white" }}>{letter}</h1>
+              )
+            }
           </div>
           <h3>{me.username}</h3>
         </div>
@@ -97,6 +107,15 @@ function OtherProfile() {
           width: "70%",
         }}
       ></div>
+
+<div className="aboutmetitlecontainer">
+        <h2>About Me</h2>
+      </div>
+      <div className="aboutme" style={{height: "fit-content"}}>
+        <div className="aboutmecontent">
+                <h2 style={{ color: "white", padding: "10px", fontSize: "20px", fontWeight: "400", textAlign: "center" }}>{me.aboutme}</h2>
+        </div>
+      </div>
 
       <div className="gamesection">
         <div className="createdgamesRow">

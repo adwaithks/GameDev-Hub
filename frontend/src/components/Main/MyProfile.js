@@ -2,18 +2,23 @@ import React, { useEffect, useState, useContext } from "react";
 import "./MyProfile.css";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import { Link } from "react-router-dom";
-import {UserContext} from '../Context/UserContext';
+import Dropzone from "react-dropzone";
+import EditIcon from '@material-ui/icons/Edit';
+import { UserContext } from '../Context/UserContext';
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 
 function MyProfile() {
   const [mygames, setMygames] = useState([]);
   const [me, setMe] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [aboutme, setAboutme] = useState('');
   const [otherinfoexpanded, setOtherinfoexpanded] = useState(false);
   const [letter, setLetter] = useState("");
   const [createdgamesexpanded, setCreatedgamesexpanded] = useState(false);
   const [myfavsexpanded, setMyfavsexpanded] = useState(false);
   const [myfavourites, setmyfavourites] = useState([]);
   const [temp, setTemp] = useState(0);
+  const [files, setFiles] = useState();
 
   useEffect(() => {
     const myCreatedGames = async () => {
@@ -25,7 +30,7 @@ function MyProfile() {
       })
         .then((res) => res.json())
         .then((finalRes) => {
-         // console.log(finalRes);
+          // console.log(finalRes);
           setMygames(finalRes);
         })
         .catch((err) => {
@@ -65,6 +70,7 @@ function MyProfile() {
         .then((res) => res.json())
         .then((finalRes2) => {
           //console.log("me::::" + finalRes2.username);
+          setAboutme(finalRes2.aboutme);
           setLetter(finalRes2.username.slice(0, 1).toUpperCase());
           setMe(finalRes2);
         })
@@ -115,6 +121,29 @@ function MyProfile() {
   };
 
 
+  const onDrop = async (acceptedFile) => {
+    console.log(acceptedFile[0]);
+    const formData = new FormData();
+    //for (const i in files) {
+    //console.log(files[i]);
+    formData.append("image", acceptedFile[0]);
+    //}
+    await fetch("http://localhost:5000/proxy/me/profilepic/upload", {
+      method: "POST",
+      headers: {
+        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+      },
+      body: formData,
+    }).then(res => res.json()).then(final => {
+      console.log(final);
+      setTemp(Date.now())
+    }).catch(err => {
+      console.log('finale');
+    })
+    console.log(formData);
+  };
+
+
   return (
     <div className="profile">
       {(document.cookie = `token=${localStorage.getItem("Access-Token")}`)}
@@ -122,7 +151,28 @@ function MyProfile() {
       <div className="usersection">
         <div className="logo__username">
           <div className="avatar">
-            <h1 style={{ color: "white" }}>{letter}</h1>
+            {
+              (me.profilepic) ? (
+                <Dropzone className="dropzone" onDrop={onDrop}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div className="imageUpload"  {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <img src={'http://localhost:5000/profilepic/' + me.profilepic} />
+                    </div>
+                  )}
+                </Dropzone>
+              ) : (
+                  <Dropzone className="dropzone" onDrop={onDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                      <div className="imageUpload" {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <h1 style={{ color: "white" }}>{letter}</h1>
+                      </div>
+                    )}
+                  </Dropzone>
+                )
+
+            }
           </div>
           <h3>{me.username}</h3>
         </div>
@@ -146,6 +196,45 @@ function MyProfile() {
           width: "70%",
         }}
       ></div>
+      <div className="aboutmetitlecontainer">
+        <h2>About Me</h2>
+      </div>
+      <div className="aboutme">
+        <div className="editIconcontainer">
+          <EditIcon className={editing ? "nodisp" : "editicon"} onClick={() => { setEditing(!editing) }} />
+        </div>
+        <div className="aboutmecontent">
+          {
+            editing ? (
+              <div className="content">
+                <textarea cols="20" rows="6" placeholder="Enter your bio..." onChange={(e) => { setAboutme(e.target.value) }} value={aboutme} style={{ color: 'white', height: 'fit-content' }} >{me.aboutme}</textarea>
+                <button onClick={async () => {
+                  setEditing(!editing)
+                  const data = {
+                    aboutme: aboutme
+                  }
+                  console.log(JSON.stringify(data));
+                  await fetch('http://localhost:5000/proxy/me/aboutme/update', {
+                    method: 'POST',
+                    headers: {
+                      "Access-Token": 'Bearer ' + localStorage.getItem('Access-Token'),
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                  }).then(res => res.json()).then(final => {
+                    setTemp(Date.now())
+                  }).catch(err => {
+                    console.log(err);
+                  })
+                }}>Save</button>
+              </div>
+
+            ) : (
+                <h2 style={{ color: "white", padding: "10px", fontSize: "19px", fontWeight: "400", textAlign: "center" }}>{me.aboutme}</h2>
+              )
+          }
+        </div>
+      </div>
 
       <div className="gamesection">
         <div className="otherInfoHeading">
@@ -159,7 +248,7 @@ function MyProfile() {
         {otherinfoexpanded ? <div className="otherinfoexpanded">
           <div className="upcomingPayments">
 
-          <h3 style={{fontWeight: '400'}}>Upcoming Payments: </h3><h1 style={{fontWeight: '400'}}>${me.upcomingPayments}</h1>
+            <h3 style={{ fontWeight: '400' }}>Upcoming Payments: </h3><h1 style={{ fontWeight: '400' }}>${me.upcomingPayments}</h1>
 
           </div>
         </div> : null}
@@ -269,8 +358,8 @@ function MyProfile() {
           ) : null}
         </div>
       </div>
-      <div style={{width: "fit-content", marginLeft: "auto", marginRight: "auto"}}>
-      <button onClick={logoutHandler} className="logout">Logout</button>
+      <div style={{ width: "fit-content", marginLeft: "auto", marginRight: "auto" }}>
+        <button onClick={logoutHandler} className="logout">Logout</button>
 
       </div>
     </div>

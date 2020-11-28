@@ -93,6 +93,8 @@ router.get("/me", jwtVerification, async (req, res) => {
       _id: user._id,
       email: user.email,
       username: user.username,
+      aboutme: user.aboutme,
+      profilepic: user.profilepic,
       createdGames: user.createdGames,
       purchasedGames: user.purchasedGames,
       upcomingPayments: user.upcomingPayments,
