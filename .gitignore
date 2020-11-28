@@ -3,3 +3,4 @@
 apitest.rest
 /uploads/games/files/*
 /uploads/games/zips/*
+/uploads/profilepic/*
