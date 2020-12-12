@@ -82,7 +82,7 @@ function OtherTeasers() {
         <h3>{teaser.description}</h3>
       </div>
       <div className="trailervideo">
-        <video width="100%" height="100%" controls>
+        <video width="100%" height="100%" autoplay="autoplay" controls>
           <source src={"http://localhost:5000/games/files/" + teaser.video} type={'video/' + teaser.videoExtension} />
         </video>
       </div>

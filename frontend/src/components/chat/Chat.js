@@ -46,7 +46,13 @@ function Chat() {
                                 (msg.username === currentUser) ? (
                                     <div className="mymsg">
                                         <div className="chatUsername">
-                                            <h5>@{msg.username}</h5>
+                                            {
+                                                msg.username == 'User' ? (
+                                                    <h5>@{localStorage.getItem('user')}</h5>
+                                                ) : (
+                                                    <h5>@{msg.username}</h5>
+                                                )
+                                            }
                                         </div>
                                         <h3>{msg.message}</h3>
                                     </div>

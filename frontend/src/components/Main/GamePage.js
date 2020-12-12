@@ -54,6 +54,7 @@ function GamePage() {
         })
         .catch((err) => {
           localStorage.removeItem("Access-Token");
+          localStorage.removeItem('user');
           window.location.href = "/login";
           //console.log(err);
         });
@@ -73,6 +74,7 @@ function GamePage() {
         })
         .catch((err) => {
           localStorage.removeItem("Access-Token");
+          localStorage.removeItem('user');
           window.location.href = "/login";
           //console.log(err);
         });
@@ -95,6 +97,7 @@ function GamePage() {
         })
         .catch((err) => {
           localStorage.removeItem("Access-Token");
+          localStorage.removeItem('user');
           window.location.href = "/login";
           //console.log(err);
         });
@@ -346,7 +349,7 @@ function GamePage() {
         <BeatLoader size={50} color="red" loading />
       </div>
       <Collapse
-        style={{ position: "fixed", zIndex: "-1", top: "0", width: "100%" }}
+        style={{ position: "fixed", zIndex: "100", top: "0", width: "90%", marginLeft: "auto", marginRight:"auto" }}
         in={open}
       >
         <Alert

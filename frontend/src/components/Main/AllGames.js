@@ -71,11 +71,11 @@ function AllGames() {
   };
 
   const gameExplore = (id) => {
-    window.open(`/game/${id}`);
+    window.location.href = `/game/${id}`;
   };
 
   const playHandler = (id) => {
-    window.open(`http://localhost:3000/play?game=${id}`, "_blank");
+    window.location.href = `http://localhost:3000/play?game=${id}`;
   };
 
   const searchHandler = (letter) => {
@@ -211,7 +211,6 @@ function AllGames() {
               ) : (
                 <PlayCircleOutlineIcon
                   className="playbtninactive"
-                  onClick={() => playHandler(eachGame._id)}
                 >
                   Play
                 </PlayCircleOutlineIcon>

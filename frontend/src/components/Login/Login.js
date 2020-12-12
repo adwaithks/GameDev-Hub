@@ -33,6 +33,7 @@ function Login() {
         if (!finalRes.accessToken) {
           setOpen(true);
           console.log(finalRes);
+          setuploading(false);
           setResponse(finalRes);
         } else {
           localStorage.setItem("Access-Token", finalRes.accessToken);
@@ -40,6 +41,7 @@ function Login() {
         }
       })
       .catch((err) => {
+        setuploading(false);
         console.log(err);
       });
   };

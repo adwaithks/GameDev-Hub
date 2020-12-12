@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from "react";
 import "./MyProfile.css";
+import DeleteIcon from '@material-ui/icons/Delete';
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import { Link } from "react-router-dom";
 import Dropzone from "react-dropzone";
@@ -36,6 +37,7 @@ function MyProfile() {
         .catch((err) => {
           //console.log(err);
           localStorage.removeItem("Access-Token");
+          localStorage.removeItem('user');
           window.location.href = "/login";
         });
     };
@@ -55,6 +57,7 @@ function MyProfile() {
         .catch((err) => {
           //console.log(err);
           localStorage.removeItem("Access-Token");
+          localStorage.removeItem('user');
           window.location.href = "/login";
         });
     };
@@ -77,6 +80,7 @@ function MyProfile() {
         .catch((err) => {
           console.log(err);
           localStorage.removeItem("Access-Token");
+          localStorage.removeItem('user');
           window.location.href = "/login";
         });
     };
@@ -86,10 +90,12 @@ function MyProfile() {
   }, [temp]);
 
   const [currentUser, setCurrentUser] = useContext(UserContext);
+  localStorage.setItem('user', me.username);
   setCurrentUser(me.username);
 
   const logoutHandler = () => {
     localStorage.removeItem("Access-Token");
+    localStorage.removeItem('user');
     window.location.href = "/login";
   };
 
@@ -112,6 +118,7 @@ function MyProfile() {
       .catch((err) => {
         console.log(err);
         localStorage.removeItem("Access-Token");
+        localStorage.removeItem('user');
         window.location.href = "/login";
       });
   };
@@ -237,7 +244,10 @@ function MyProfile() {
       </div>
 
       <div className="gamesection">
-        <div className="otherInfoHeading">
+        <div className="otherInfoHeading" style={{cursor: 
+        'pointer'}} onClick={() => {
+              setOtherinfoexpanded(!otherinfoexpanded);
+            }}>
           <h2 style={{ color: "red", fontWeight: "400" }}>Other Info</h2>
           <KeyboardArrowDownIcon
             onClick={() => {
@@ -264,12 +274,11 @@ function MyProfile() {
           }}
         ></div>
         <div className="createdgamesRow">
-          <div className="createdgame">
+          <div style={{cursor: 'pointer'}} className="createdgame" onClick={() => {
+                setCreatedgamesexpanded(!createdgamesexpanded);
+              }}>
             <h2 style={{ color: "red", fontWeight: "400" }}>Created Games</h2>
             <KeyboardArrowDownIcon
-              onClick={() => {
-                setCreatedgamesexpanded(!createdgamesexpanded);
-              }}
             />
           </div>
           {createdgamesexpanded ? (
@@ -316,13 +325,12 @@ function MyProfile() {
             width: "70%",
           }}
         ></div>
-        <div className="favgamesRow">
+        <div className="favgamesRow"  style={{cursor: 'pointer'}}  onClick={() => {
+                setMyfavsexpanded(!myfavsexpanded);
+              }}>
           <div className="favgame">
             <h2 style={{ color: "red", fontWeight: "400" }}>My Favourites</h2>
             <KeyboardArrowDownIcon
-              onClick={() => {
-                setMyfavsexpanded(!myfavsexpanded);
-              }}
             />
           </div>
           {myfavsexpanded ? (
@@ -346,9 +354,12 @@ function MyProfile() {
                     </Link>
                     <h3>{each.description}</h3>
                     <div>
-                      <button>Play</button>
-                      <button value={each._id} onClick={removefavHandler}>
-                        Remove
+                      <button style={{
+                        backgroundColor: 'rgb(156, 15, 15)',
+                        width: '100px',
+                        borderRadius: '10px'
+                      }} value={each._id} onClick={removefavHandler}>
+                       Remove
                       </button>
                     </div>
                   </div>

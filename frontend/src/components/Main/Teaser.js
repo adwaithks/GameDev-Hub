@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import CloseIcon from "@material-ui/icons/Close";
 import { BeatLoader } from "react-spinners";
-
 import "./Teaser.css";
 
 function Teaser() {
@@ -16,6 +15,7 @@ function Teaser() {
   //const [imagenames, setimagenames] = useState([]);
   const [videoname, setvideoname] = useState("");
   const [name, setName] = useState("");
+  const [imageCount, setImageCount] = useState(0);
   const [url, setUrl] = useState("");
   const [files, setFiles] = useState();
 
@@ -60,7 +60,9 @@ function Teaser() {
 
   const onDrop = (acceptedFiles) => {
     console.log("dropped");
+    console.log(acceptedFiles);
     setFiles(acceptedFiles);
+    setImageCount(acceptedFiles.length);
   };
 
   const onDrop2 = (acceptedFiles) => {
@@ -80,10 +82,10 @@ function Teaser() {
   return (
     <div className="teaser">
       <div
-            className={uploading ? "uploadspinnerContainer" : "nouploadSpinner"}
-          >
-            <BeatLoader size={50} color="red" loading />
-          </div>
+        className={uploading ? "uploadspinnerContainer" : "nouploadSpinner"}
+      >
+        <BeatLoader size={50} color="red" loading />
+      </div>
       <h1
         style={{
           marginTop: "150px",
@@ -187,18 +189,45 @@ function Teaser() {
               name="datetime"
             />
           </div>
-          <div style={{ marginTop: "40px" }}>
-            <Dropzone className="dropzone" onDrop={onDrop}>
-              {({ getRootProps, getInputProps }) => (
-                <div className="droparea" {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <h3 style={{ color: "darkgray", padding: "80px" }}>
-                    Drag & Drop some early game images Images (.png)
-                  </h3>
+          {
+
+            files ? (
+              <div className="imageContainer" style={{ width: "80%", marginLeft: "auto", marginRight: "auto" }}>
+                <div>
+                  <CloseIcon
+                    style={{ zIndex: "200", marginTop: "20px", color: "white", cursor: "pointer", float: "right", marginRight: "30px" }}
+                    onClick={() => {
+                      setFiles();
+                    }}
+                  />
                 </div>
-              )}
-            </Dropzone>
-          </div>
+                {
+                  files.map((each, index) => (
+                    <div key={index} className="filenameContainer" style={{ marginTop: "5px", width: "100%", marginLeft: "auto", marginRight: "auto" }}>
+                      <div style={{ color: "white" }} className="filenameindicator">
+                        <h3>{each.name}</h3>
+                      </div>
+
+                    </div>
+                  ))
+                }
+              </div>
+
+            ) : (
+                <div style={{ marginTop: "40px" }}>
+                  <Dropzone className="" onDrop={onDrop}>
+                    {({ getRootProps, getInputProps }) => (
+                      <div className="droparea" {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        <h3 style={{ color: "darkgray", padding: "80px" }}>
+                          Drag & Drop some early game images Images (.png)</h3>
+                      </div>
+                    )}
+                  </Dropzone>
+                </div>
+              )
+          }
+
 
           {videoname ? (
             <div className="filenameContainer" style={{ marginTop: "40px" }}>
@@ -207,7 +236,7 @@ function Teaser() {
               </div>
               <div>
                 <CloseIcon
-                  style={{ color: "white" }}
+                  style={{ color: "white", cursor: "pointer" }}
                   onClick={() => {
                     setvideoname("");
                     setVideo();
@@ -216,19 +245,19 @@ function Teaser() {
               </div>
             </div>
           ) : (
-            <div className="" style={{ marginTop: "40px" }}>
-              <Dropzone className="dropzone" onDrop={onDrop2}>
-                {({ getRootProps, getInputProps }) => (
-                  <div className="droparea" {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <h3 style={{ color: "darkgray", padding: "80px" }}>
-                      Drag & Drop Trailer movie (.mp4)
+              <div className="" style={{ marginTop: "40px" }}>
+                <Dropzone className="dropzone" onDrop={onDrop2}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div className="droparea" {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <h3 style={{ color: "darkgray", padding: "80px" }}>
+                        Drag & Drop Trailer movie (.mp4)
                     </h3>
-                  </div>
-                )}
-              </Dropzone>
-            </div>
-          )}
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
+            )}
 
           <button className="create" type="submit" value="Create">
             Publish
