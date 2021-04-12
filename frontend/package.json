@@ -18,6 +18,7 @@
     "react-spinners": "^0.9.0",
     "socket.io-client": "^3.0.0-rc1"
   },
+  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
