@@ -7,12 +7,12 @@ function Feed() {
 
     useEffect(() => {
         const getFeed = async () => {
-            await fetch(`http://newsapi.org/v2/everything?q=videogames&language=en&from=2020-11-18&sortBy=publishedAt&apiKey=966900a91f5744b7bc3ea5ca7014bed9`, {
+            await fetch(`http://newsapi.org/v2/everything?q=videogames&language=en&from=2020-12-18&sortBy=publishedAt&apiKey=966900a91f5744b7bc3ea5ca7014bed9`, {
                 method: "GET"
             })
                 .then((res) => res.json())
                 .then((finalRes) => {
-                    console.log(finalRes.articles);
+                    console.log(finalRes);
                     setFeed(finalRes.articles);
                 })
                 .catch((err) => {

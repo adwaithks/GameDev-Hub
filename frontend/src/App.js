@@ -74,7 +74,7 @@ function App() {
             <Route path="/register" component={Register} />
           )}
           {!localStorage.getItem("Access-Token") && (
-            <Route path="/" component={Home} />
+            <Route path="/" component={MyProfile} />
           )}
           <Route path="/login" component={Login} />
         </Switch>

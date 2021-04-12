@@ -130,3 +130,32 @@
 .enterMsg > .enterMsgForm > button:hover {
     background-color: red;
 }
+
+
+@media(max-width: 460px) {
+    .chatIcon {
+        color: rgb(223, 0, 0) !important;
+        font-size: 45px !important;
+        cursor: pointer;
+        z-index:500;
+        bottom: 30px;
+        right: 30px;
+        position: fixed;
+    }
+
+    .chat {
+        height: 380px;
+        background-color: rgb(19, 19, 19);
+        width: 280px;
+        display: flex;
+        opacity: 0.95;
+        -webkit-box-shadow: 5px 5px 15px 5px #222222; 
+        box-shadow: 5px 5px 15px 5px #2c2c2c;
+        border-radius: 10px;
+        z-index: 500;
+        position: fixed;
+        flex-direction: column;
+        bottom: 30px;
+        right: 20px;
+    }
+}
