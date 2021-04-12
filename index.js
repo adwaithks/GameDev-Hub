@@ -5,7 +5,7 @@ require("dotenv").config();
 const path = require("path");
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
-const morgan = require("morgan");
+//const morgan = require("morgan");
 const allRoutes = require("./routes/allRoutes");
 const authRoute = require("./routes/authRoute");
 const cors = require("cors");
@@ -15,7 +15,7 @@ const cookieparser = require("cookie-parser");
 
 app.use(express.json());
 app.use(cookieparser());
-app.use(morgan("dev"));
+//app.use(morgan("dev"));
 app.use(cors());  
 
 app.use(express.static(path.join(__dirname, "uploads")));
@@ -45,12 +45,10 @@ mongoose
 
 
 
-//app.use(express.static("frontend/build"));
-/**app.get("*", async (req, res) => {
+app.get("*", async (req, res) => {
   res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
-});**/
-//console.log("stage");
-//app.use(express.static(path.join(__dirname, "uploads")));
+});
+app.use(express.static(path.join(__dirname, "uploads")));
 
 const port = process.env.PORT || 5000;
 
