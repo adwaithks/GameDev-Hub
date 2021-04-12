@@ -24,7 +24,7 @@ function AllGames() {
 
   useEffect(() => {
     const fetchAllGames = async () => {
-      await fetch("http://localhost:5000/proxy/allgames", {
+      await fetch("https://gamehalt.herokuapp.com/proxy/allgames", {
         method: "GET",
       })
         .then((res) => res.json())
@@ -42,7 +42,7 @@ function AllGames() {
 
   const visitProfile = async (author) => {
     const me = async () => {
-      await fetch("http://localhost:5000/api/user/me", {
+      await fetch("https://gamehalt.herokuapp.com/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

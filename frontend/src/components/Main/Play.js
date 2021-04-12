@@ -18,7 +18,7 @@ function Play() {
     <iframe
       title="iframe-title"
       className="gameiframe"
-      src={"http://localhost:5000/games/zips/" + url + "/index.html"}
+      src={"https://gamehalt.herokuapp.com/games/zips/" + url + "/index.html"}
     ></iframe>
   );
 }

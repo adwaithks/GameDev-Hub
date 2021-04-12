@@ -20,7 +20,7 @@ function Login() {
       password: password,
     };
     event.preventDefault();
-    await fetch("http://localhost:5000/api/user/login", {
+    await fetch("https://gamehalt.herokuapp.com/api/user/login", {
       method: "POST",
       cache: "no-cache",
       headers: {
