@@ -15,11 +15,14 @@ function Play() {
   }, []);
 
   return (
+    <>
     <iframe
       title="iframe-title"
       className="gameiframe"
-      src={"https://gamehalt.herokuapp.com/games/zips/" + url + "/index.html"}
+      src={"http://localhost:5000/games/zips/" + new URLSearchParams(window.location.search).get("game") + "/index.html"}
     ></iframe>
+    <img src="http://localhost:5000/games/favicon.ico" />
+    </>
   );
 }
 

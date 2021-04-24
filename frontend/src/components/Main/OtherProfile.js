@@ -16,7 +16,7 @@ function OtherProfile() {
     const author = window.location.href.split("/")[4];
     console.log(author);
     const myCreatedGames = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/${author}/createdgames`, {
+      await fetch(`http://localhost:5000/proxy/${author}/createdgames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -30,7 +30,7 @@ function OtherProfile() {
     };
 
     const myfav = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/${author}/favouritegames`, {
+      await fetch(`http://localhost:5000/proxy/${author}/favouritegames`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -45,7 +45,7 @@ function OtherProfile() {
     };
 
     const me = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/profile/${author}`, {
+      await fetch(`http://localhost:5000/proxy/profile/${author}`, {
         method: "GET",
       })
         .then((res) => res.json())
@@ -79,7 +79,7 @@ function OtherProfile() {
                   height: "240px",
                   width: "240px",
                   borderRadius: "50%"
-                }} src={'https://gamehalt.herokuapp.com/profilepic/' + me.profilepic} />
+                }} src={'http://localhost:5000/profilepic/' + me.profilepic} />
               ) : (
                 <h1 style={{ color: "white" }}>{letter}</h1>
               )

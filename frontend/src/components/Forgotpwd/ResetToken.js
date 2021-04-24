@@ -12,7 +12,7 @@ function ResetToken() {
         const data = {
             password: pass
         }
-        await fetch(`https://gamehalt.herokuapp.com/api/user/reset/${window.location.href.split("/")[4]}`, {
+        await fetch(`http://localhost:5000/api/user/reset/${window.location.href.split("/")[4]}`, {
         method: "POST",
         cache: "no-cache",
         headers: {

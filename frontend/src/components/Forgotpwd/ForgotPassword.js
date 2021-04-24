@@ -12,7 +12,7 @@ function ForgotPassword() {
         const data = {
             "email": email
         };
-        await fetch("https://gamehalt.herokuapp.com/api/user/forgotpwd", {
+        await fetch("http://localhost:5000/api/user/forgotpwd", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

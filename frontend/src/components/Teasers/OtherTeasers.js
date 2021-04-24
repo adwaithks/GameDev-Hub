@@ -10,7 +10,7 @@ function OtherTeasers() {
     const teaserid = window.location.href.split("/")[4];
 
     const getTeaser = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/teaser/${teaserid}`, {
+      await fetch(`http://localhost:5000/proxy/teaser/${teaserid}`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -83,7 +83,7 @@ function OtherTeasers() {
       </div>
       <div className="trailervideo">
         <video width="100%" height="100%" autoplay="autoplay" controls>
-          <source src={"https://gamehalt.herokuapp.com/games/files/" + teaser.video} type={'video/' + teaser.videoExtension} />
+          <source src={"http://localhost:5000/games/files/" + teaser.video} type={'video/' + teaser.videoExtension} />
         </video>
       </div>
 
@@ -105,7 +105,7 @@ function OtherTeasers() {
             <img
               alt="gameplay-pics"
               className="pics"
-              src={"https://gamehalt.herokuapp.com/games/files/" + each}
+              src={"http://localhost:5000/games/files/" + each}
             />
           </div>
         ))}

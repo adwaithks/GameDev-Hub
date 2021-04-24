@@ -12,7 +12,7 @@ function Landing() {
 
   useEffect(() => {
     const getTrending = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/trending`, {
+      await fetch(`http://localhost:5000/proxy/trending`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -30,7 +30,7 @@ function Landing() {
     };
 
     const getTrailers = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/teasers`, {
+      await fetch(`http://localhost:5000/proxy/teasers`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -47,7 +47,7 @@ function Landing() {
     };
 
     const getReleases = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/schedules`, {
+      await fetch(`http://localhost:5000/proxy/schedules`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -65,7 +65,7 @@ function Landing() {
     };
 
     const getMostFavourites = async () => {
-      await fetch(`https://gamehalt.herokuapp.com/proxy/mostfavourites`, {
+      await fetch(`http://localhost:5000/proxy/mostfavourites`, {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),

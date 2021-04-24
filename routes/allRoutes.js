@@ -23,7 +23,7 @@ paypal.configure({
 const unzipRar = async (targetPath, gameid) => {
   let extension = targetPath.substr(targetPath.length - 4);
   console.log(extension);
-  if (extension === ".zip") {
+  if (extension === ".zip" || ".rar") {
     fs.mkdir(`./uploads/games/zips/${gameid}`, (err) => {
       if (err) {
         return console.log(err);
