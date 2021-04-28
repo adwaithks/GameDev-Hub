@@ -6,7 +6,7 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import { UserContext } from '../Context/UserContext';
 
 //wss://gamehalt.herokuapp.com
-const socket = io('http://localhost:5000', {
+const socket = io('wss://gamehalt.herokuapp.com', {
     transports: ['websocket'],
     forceNew: false
 })

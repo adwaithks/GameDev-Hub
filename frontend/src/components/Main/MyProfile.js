@@ -23,7 +23,7 @@ function MyProfile() {
 
   useEffect(() => {
     const myCreatedGames = async () => {
-      await fetch("http://localhost:5000/proxy/mycreatedgames", {
+      await fetch("https://gamehalt.herokuapp.com/proxy/mycreatedgames", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -43,7 +43,7 @@ function MyProfile() {
     };
 
     const myfav = async () => {
-      await fetch("http://localhost:5000/proxy/myfavouritegames", {
+      await fetch("https://gamehalt.herokuapp.com/proxy/myfavouritegames", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -64,7 +64,7 @@ function MyProfile() {
 
 
     const me = async () => {
-      await fetch("http://localhost:5000/api/user/me", {
+      await fetch("https://gamehalt.herokuapp.com/api/user/me", {
         method: "GET",
         headers: {
           "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -102,7 +102,7 @@ function MyProfile() {
   const removefavHandler = async (event) => {
     event.preventDefault();
     await fetch(
-      `http://localhost:5000/proxy/${event.target.value}/removefavourite`,
+      `https://gamehalt.herokuapp.com/proxy/${event.target.value}/removefavourite`,
       {
         method: "GET",
         headers: {
@@ -135,7 +135,7 @@ function MyProfile() {
     //console.log(files[i]);
     formData.append("image", acceptedFile[0]);
     //}
-    await fetch("http://localhost:5000/proxy/me/profilepic/upload", {
+    await fetch("https://gamehalt.herokuapp.com/proxy/me/profilepic/upload", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
@@ -164,7 +164,7 @@ function MyProfile() {
                   {({ getRootProps, getInputProps }) => (
                     <div className="imageUpload"  {...getRootProps()}>
                       <input {...getInputProps()} />
-                      <img src={'http://localhost:5000/profilepic/' + me.profilepic} />
+                      <img src={'https://gamehalt.herokuapp.com/profilepic/' + me.profilepic} />
                     </div>
                   )}
                 </Dropzone>
@@ -221,7 +221,7 @@ function MyProfile() {
                     aboutme: aboutme
                   }
                   console.log(JSON.stringify(data));
-                  await fetch('http://localhost:5000/proxy/me/aboutme/update', {
+                  await fetch('https://gamehalt.herokuapp.com/proxy/me/aboutme/update', {
                     method: 'POST',
                     headers: {
                       "Access-Token": 'Bearer ' + localStorage.getItem('Access-Token'),
