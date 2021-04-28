@@ -5,7 +5,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import CancelIcon from '@material-ui/icons/Cancel';
 import { UserContext } from '../Context/UserContext';
 
-
+//wss://gamehalt.herokuapp.com
 const socket = io('wss://gamehalt.herokuapp.com', {
     transports: ['websocket'],
     forceNew: false

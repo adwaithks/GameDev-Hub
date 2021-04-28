@@ -44,7 +44,7 @@ function Teaser() {
 
     console.log(formData);
     const response = await fetch(
-      "https://gamehalt.herokuapp.com/proxy/teaser/upload/new",
+      "http://localhost:5000/proxy/teaser/upload/new",
       {
         method: "POST",
         headers: {

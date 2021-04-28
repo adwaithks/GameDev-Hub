@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import Collapse from "@material-ui/core/Collapse";
 import CloseIcon from "@material-ui/icons/Close";
+import { BeatLoader } from "react-spinners";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -11,8 +12,10 @@ function Register() {
   const [username, setUsername] = useState("");
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState("");
+  const [registering, setregistering] = useState(false);
 
   const sendRegisterInfo = async (event) => {
+    setregistering(true);
     const data = {
       email: email,
       username: username,
@@ -41,10 +44,16 @@ function Register() {
         setOpen(true);
         setResponse("Interal Server Error");
       });
+      setregistering(false);
   };
 
   return (
     <div className="Register">
+      <div
+            className={registering ? "uploadspinnerContainer" : "nouploadSpinner"}
+          >
+            <BeatLoader size={50} color="red" loading />
+          </div>
       <Collapse in={open}>
         <Alert
           severity="error"

@@ -4,10 +4,17 @@ import Dropzone from "react-dropzone";
 import { BeatLoader } from "react-spinners";
 import { Link } from "react-router-dom";
 import CloseIcon from "@material-ui/icons/Close";
+import axios from "axios";
+import PropTypes from 'prop-types';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 function Upload() {
   const [desc, setDesc] = useState("");
   const [longdesc, setlongDesc] = useState("");
+  const [progress, setProgress] = useState(0);
   const [fee, setFee] = useState("");
   const [category, setcategory] = useState("action");
   const [platform, setplatform] = useState("Mac");
@@ -46,16 +53,39 @@ function Upload() {
     formData.append("fileCount", count);
 
     console.log(formData);
-    const response = await fetch("https://gamehalt.herokuapp.com/proxy/create/game", {
+
+    axios({
+      method: "post",
+      url: "https://gamehalt.herokuapp.com/proxy/create/game",
+      data: formData,
+      headers: {
+        "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
+      },
+      onUploadProgress: function(progressEvent) {
+        var percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        setProgress(percentCompleted);
+        console.log(percentCompleted);
+      }
+    })
+      .then(function (response) {
+        console.log('upload success')
+        console.log(response);
+      })
+      .catch(function (response) {
+        //handle error
+        console.log(response);
+      });
+
+    /*const response = await fetch("https://gamehalt.herokuapp.com/proxy/create/game", {
       method: "POST",
       headers: {
         "Access-Token": "Bearer " + localStorage.getItem("Access-Token"),
       },
       body: formData,
     });
-    console.log(response);
-    window.location.href = "/myprofile";
-    return false;
+    console.log(response);*/
+    //window.location.href = "/myprofile";
+    //return false;
   };
 
   const scheduledFormHandler = async (e) => {
@@ -101,8 +131,30 @@ function Upload() {
     setFilename(acceptedFiles[0].name);
     console.log("zip dropped");
     setFiles(acceptedFiles);
-    console.log(files);
+    console.log(acceptedFiles);
   };
+
+  function CircularProgressWithLabel(props) {
+    return (
+      <Box position="relative" display="inline-flex">
+        <CircularProgress variant="determinate" {...props} />
+        <Box
+          top={0}
+          left={0}
+          bottom={0}
+          right={0}
+          position="absolute"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Typography variant="caption" component="div" color="textSecondary">{`${Math.round(
+            props.value,
+          )}%`}</Typography>
+        </Box>
+      </Box>
+    );
+  }
 
   return (
     <div className="upload">
@@ -269,6 +321,7 @@ function Upload() {
                   <h3>{filename}</h3>
                 </div>
                 <div>
+                <CircularProgressWithLabel className="circularprogress" value={100} />
                   <CloseIcon
                     style={{ color: "white" }}
                     onClick={() => {
